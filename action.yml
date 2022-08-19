@@ -1,0 +1,55 @@
+---
+name: Build and Inspect a Python Package
+description: Builds the current package using standard PyPA tooling, keeps it as artifacts, then performs basic checks on it.
+author: Hynek Schlawack
+branding:
+  icon: package
+  color: purple
+
+inputs:
+  path:
+    description: Where to look for the Python package to inspect.
+    required: false
+    default: .
+
+runs:
+  using: composite
+  steps:
+    - run: python -m pip install build twine check-wheel-contents wheel
+      shell: bash
+
+    # Build SDist, then build wheel out of it.
+    - run: python -m build
+      shell: bash
+      working-directory: ${{ inputs.path }}
+
+    # Give user overview over what we've built.
+    - run: ls -l dist
+      shell: bash
+      working-directory: ${{ inputs.path }}
+
+    - name: Upload built artifacts.
+      uses: actions/upload-artifact@v3
+      with:
+        name: Packages
+        path: ${{ inputs.path }}/dist/*
+
+    - run: check-wheel-contents dist/*.whl
+      shell: bash
+      working-directory: ${{ inputs.path }}
+
+    - name: Check PyPI README
+      shell: bash
+      run: python -m twine check dist/*
+      working-directory: ${{ inputs.path }}
+
+    - name: Show wheel & SDist contents hierarchically.
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        cd dist
+        mkdir -p out/wheels
+        python -m wheel unpack --dest out/wheels *.whl
+        mkdir -p out/sdist
+        tar xf *.tar.gz -C out/sdist
+        tree -a out

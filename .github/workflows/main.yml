@@ -1,0 +1,31 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  FORCE_COLOR: "1" # Make tools pretty.
+
+jobs:
+  check-structlog:
+    name: Build & verify the structlog package.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: hynek/structlog
+          path: structlog
+
+      - uses: actions/checkout@v3
+        with:
+          path: action
+
+      - uses: ./action
+        with:
+          path: structlog
