@@ -46,7 +46,7 @@ runs:
 
     - name: Check PyPI README
       shell: bash
-      run: python -m twine check dist/*
+      run: python -m twine check --strict dist/*
       working-directory: ${{ inputs.path }}
 
     - name: Show wheel & SDist contents hierarchically.
