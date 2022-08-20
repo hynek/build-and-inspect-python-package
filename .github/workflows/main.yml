@@ -29,3 +29,5 @@ jobs:
       - uses: ./action
         with:
           path: structlog
+
+      - run: pip freeze
