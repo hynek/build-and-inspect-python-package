@@ -25,8 +25,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: hynek/build-and-inspect-python-package@v0.1
+      - uses: hynek/build-and-inspect-python-package@v1
 ```
+
 
 ### Optional Inputs
 

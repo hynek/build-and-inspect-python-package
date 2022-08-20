@@ -1,6 +1,6 @@
 ---
 name: Build and Inspect a Python Package
-description: Builds the current package using standard PyPA tooling, keeps it as artifacts, then performs basic checks on it.
+description: Builds the current package using standard PyPA tooling, keeps it as artifacts, then performs checks on it.
 author: Hynek Schlawack
 branding:
   icon: package
