@@ -28,6 +28,8 @@ jobs:
       - uses: hynek/build-and-inspect-python-package@v1
 ```
 
+The action will run [*setup-python*](https://github.com/actions/setup-python) with Python **3.10** on its own.
+
 
 ### Optional Inputs
 
