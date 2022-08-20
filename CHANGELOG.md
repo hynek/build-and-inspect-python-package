@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- dist output files are written to `/tmp` instead of into the source `dist/` directory
 - *twine* now runs in `--strict` mode.
 - All tools are now pinned reliability (and hopefully caching in the future).
 - The action now uses `setup-python` itself to enable pinning (and hopefully caching in the future). Currently, Python 3.10 is used.
