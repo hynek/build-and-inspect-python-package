@@ -30,4 +30,6 @@ jobs:
         with:
           path: structlog
 
+        # Freeze output for copy/paste.
+        # Censors out wheel tho!
       - run: pip freeze
