@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Built packages are written to `/tmp` instead of into the source `dist/` directory. That means that this actions leaves your directory clean.
+- Built packages are written to `/tmp` instead of into the source `dist/` directory. That means that this action leaves your directory clean.
 
 
 ## [1.0](https://github.com/hynek/build-and-inspect-python-package/compare/v0.1...v1.0)
