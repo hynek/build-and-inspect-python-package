@@ -21,11 +21,15 @@ runs:
         cache: pip
         cache-dependency-path: "**/tools.txt"
 
-    - run: python -m pip install -r ${{ github.action_path }}/requirements/tools.txt
+    - name: Create venv for tools
+      run: python3.10 -m venv /tmp/baipp
+      shell: bash
+
+    - run: /tmp/baipp/bin/python -m pip install -r ${{ github.action_path }}/requirements/tools.txt
       shell: bash
 
     # Build SDist, then build wheel out of it.
-    - run: python -m build
+    - run: /tmp/baipp/bin/python -m build
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -40,14 +44,14 @@ runs:
         name: Packages
         path: ${{ inputs.path }}/dist/*
 
-    - run: check-wheel-contents dist/*.whl
+    - run: /tmp/baipp/bin/check-wheel-contents dist/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
 
     - name: Check PyPI README
       shell: bash
-      run: python -m twine check --strict dist/*
       working-directory: ${{ inputs.path }}
+      run: /tmp/baipp/bin/python -m twine check --strict dist/*
 
     - name: Show wheel & SDist contents hierarchically.
       shell: bash
@@ -55,7 +59,7 @@ runs:
       run: |
         cd dist
         mkdir -p out/wheels
-        python -m wheel unpack --dest out/wheels *.whl
+        /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
         tree -a out
