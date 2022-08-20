@@ -32,5 +32,6 @@ twine==4.0.1
 typing_extensions==4.3.0
 urllib3==1.26.11
 webencodings==0.5.1
+wheel==0.37.1
 wheel-filename==1.4.1
 zipp==3.8.1
