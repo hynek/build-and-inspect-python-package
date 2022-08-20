@@ -27,12 +27,12 @@ runs:
       shell: bash
 
     # Build SDist, then build wheel out of it.
-    - run: /tmp/baipp/bin/python -m build
+    - run: /tmp/baipp/bin/python -m build --outdir /tmp/baipp-out
       shell: bash
       working-directory: ${{ inputs.path }}
 
     # Give user overview over what we've built.
-    - run: ls -l dist
+    - run: ls -l /tmp/baipp-out
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -40,22 +40,22 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: Packages
-        path: ${{ inputs.path }}/dist/*
+        path: /tmp/baipp-out/*
 
-    - run: /tmp/baipp/bin/check-wheel-contents dist/*.whl
+    - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp-out/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
 
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
-      run: /tmp/baipp/bin/python -m twine check --strict dist/*
+      run: /tmp/baipp/bin/python -m twine check --strict /tmp/baipp-out/*
 
     - name: Show wheel & SDist contents hierarchically.
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
-        cd dist
+        cd /tmp/baipp-out
         mkdir -p out/wheels
         /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         mkdir -p out/sdist
