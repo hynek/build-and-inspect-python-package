@@ -20,6 +20,9 @@ runs:
       run: |
          python -c "import os; print(os.path.abspath('BAIPP_HOME=${{ github.action_path }}'))" >> $GITHUB_ENV
 
+    - run: ls -al ${{ env.BAIPP_HOME }}
+      shell: bash
+
     - uses: actions/setup-python@v4
       with:
         python-version: "3.10"
