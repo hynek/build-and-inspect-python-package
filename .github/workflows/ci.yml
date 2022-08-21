@@ -27,5 +27,8 @@ jobs:
           path: action
 
       - uses: ./action
+        id: baipp
         with:
           path: structlog
+
+      - run: echo ${{ steps.baipp.outputs.dist }}

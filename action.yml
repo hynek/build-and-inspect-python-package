@@ -31,6 +31,10 @@ runs:
       shell: bash
       working-directory: ${{ inputs.path }}
 
+    - name: Set output
+      shell: bash
+      run: echo "::set-output name=dist::/tmp/baipp-out/"
+
     # Give user overview over what we've built.
     - run: ls -l /tmp/baipp-out
       shell: bash

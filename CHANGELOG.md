@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.1...main)
 
+### Added 
+
+- The location of the built packages is now returned using the `dist` output.
 
 ## [1.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.0...v1.1)
 
