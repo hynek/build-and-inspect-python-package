@@ -11,6 +11,8 @@ This action provides the following functionality for GitHub Actions users that a
 This way you can make package verification part of your CI.
 If you package an **application** as a Python package, this action is useful to double-check you're shipping everything you need, including all templates, translation files, et cetera.
 
+If you want to perform more checks againt the built packages in the CI, you can find them in `/tmp/baipp-out/`.
+
 > **Note**
 > This action does **not** upload your package to PyPI.
 
