@@ -38,7 +38,7 @@ runs:
     - name: Set output
       id: setter
       shell: bash
-      run: echo "::set-output name=dist::/tmp/baipp-out/"
+      run: echo "::set-output name=dist::/tmp/baipp-out"
 
     # Give user overview over what we've built.
     - run: ls -l /tmp/baipp-out
