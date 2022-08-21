@@ -11,6 +11,10 @@ inputs:
     description: Where to look for the Python package to inspect.
     required: false
     default: .
+outputs:
+  dist:
+    description: The location of the built packages.
+    value: ${{ steps.setter.outputs.dist }}
 
 runs:
   using: composite
@@ -32,6 +36,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: Set output
+      id: setter
       shell: bash
       run: echo "::set-output name=dist::/tmp/baipp-out/"
 

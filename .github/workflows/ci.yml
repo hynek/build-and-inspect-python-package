@@ -31,4 +31,4 @@ jobs:
         with:
           path: structlog
 
-      - run: echo ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
