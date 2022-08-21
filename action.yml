@@ -18,11 +18,9 @@ runs:
     - name: Resolve tools path
       shell: bash
       run: |
+        # See https://github.com/hynek/build-and-inspect-python-package/pull/6
+        # why this is necessary.
         python -c "import os; print('BAIPP_HOME=%s' % (os.path.abspath('${{ github.action_path }}',)))" >> $GITHUB_ENV
-        cat $GITHUB_ENV
-
-    - run: ls -al ${{ env.BAIPP_HOME }}
-      shell: bash
 
     - uses: actions/setup-python@v4
       with:
@@ -34,7 +32,7 @@ runs:
       run: python3.10 -m venv /tmp/baipp
       shell: bash
 
-    - run: /tmp/baipp/bin/python -m pip install -r ${{ github.action_path }}/requirements/tools.txt
+    - run: /tmp/baipp/bin/python -m pip install -r ${{ env.BAIPP_HOME }}/requirements/tools.txt
       shell: bash
 
     # Build SDist, then build wheel out of it.
