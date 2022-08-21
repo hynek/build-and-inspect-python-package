@@ -7,13 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.1...main)
 
+### Added
+
+- The the tools are now cached between runs. [#6](https://github.com/hynek/build-and-inspect-python-package/pull/6)
+
 
 ## [1.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.0...v1.1)
 
 ### Changed
 
-- Built packages are written to `/tmp` instead of into the source `dist/` directory. That means that this action leaves your directory clean.
-  [#7](https://github.com/hynek/build-and-inspect-python-package/pull/7)
+- Built packages are written to `/tmp` instead of into the source `dist/` directory. That means that this action leaves your directory clean. [#7](https://github.com/hynek/build-and-inspect-python-package/pull/7)
 
 
 ## [1.0](https://github.com/hynek/build-and-inspect-python-package/compare/v0.1...v1.0)
