@@ -19,6 +19,7 @@ runs:
       shell: bash
       run: |
          python -c "import os; print(os.path.abspath('BAIPP_HOME=${{ github.action_path }}'))" >> $GITHUB_ENV
+         cat $GITHUB_ENV
 
     - run: ls -al ${{ env.BAIPP_HOME }}
       shell: bash
