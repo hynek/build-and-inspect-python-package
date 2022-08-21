@@ -11,6 +11,10 @@ inputs:
     description: Where to look for the Python package to inspect.
     required: false
     default: .
+outputs:
+  dist:
+    description: The location of the built packages.
+    value: ${{ steps.setter.outputs.dist }}
 
 runs:
   using: composite
@@ -30,6 +34,11 @@ runs:
     - run: /tmp/baipp/bin/python -m build --outdir /tmp/baipp-out
       shell: bash
       working-directory: ${{ inputs.path }}
+
+    - name: Set output
+      id: setter
+      shell: bash
+      run: echo "::set-output name=dist::/tmp/baipp-out/"
 
     # Give user overview over what we've built.
     - run: ls -l /tmp/baipp-out
