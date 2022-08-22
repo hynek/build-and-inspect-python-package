@@ -54,7 +54,7 @@ pygments==2.13.0
     #   rich
 pyparsing==3.0.9
     # via packaging
-readme-renderer==36.0
+readme-renderer==37.0
     # via twine
 requests==2.28.1
     # via
