@@ -40,6 +40,16 @@ The action will run [*setup-python*](https://github.com/actions/setup-python) wi
 
   See for example how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/a9d295e577b271b1c7f6ca3929fe8b39ba8b689e/.github/workflows/ci.yml#L75-L85) uses this feature to check the built wheels don't break a dependency.
 
+
+### Artifacts
+
+After a successful run, you'll find multiple artifacts in the run's Summary view:
+
+- **Packages**: the built packages.
+- **Package Metadata**: the extracted packaging metadata (*hint*: it's formatted as an email).
+- **PyPI README**: the extracted PyPI README, exactly how it would be used by PyPI as your project's landing page.
+  [PEP 621](https://peps.python.org/pep-0621/) calls it `readme`, in classic *setuptools* it's `long_description`.
+
 ---
 
 [Our CI](.github/workflows/ci.yml) uses all inputs and outputs, if you want to see them in action.
