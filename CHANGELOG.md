@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.2...main)
 
+### Added
+
+- `PKG-INFO` / `METADATA` are now printed and uploaded as artifacts.
+
+
 ## [1.2](https://github.com/hynek/build-and-inspect-python-package/compare/v1.1...v1.2)
 
 ### Added

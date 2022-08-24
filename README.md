@@ -3,10 +3,11 @@
 This action provides the following functionality for GitHub Actions users that are maintaining Python packages and want to ensure in CI that the packages they will build are in good shape and remain so:
 
 1. Builds your package using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including *Hatch*, *Flit*, *Setuptools*, *PDM*, or *Poetry*),
-1. uploads the *wheel* and the source distribution (*SDist*) as GitHub Actins artifacts (**not** PyPI) so you can download and inspect them from the Summary view of a Actions run,
+1. uploads the *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts (**not** PyPI) so you can download and inspect them from the Summary view of a Actions run,
 1. lints the wheel using [*check-wheel-contents*](https://pypi.org/project/check-wheel-contents/),
 1. lints the PyPI README of both *wheel* and *SDist* using [*twine*](https://pypi.org/project/twine/),
-1. prints the tree of both *SDist* and *wheel* in the CI output, so you don't have to download the packages to just check the contents.
+1. prints the tree of both *SDist* and *wheel* in the CI output, so you don't have to download the packages to just check the contents,
+1. prints and uploads the *SDist*'s `PKG-INFO` file (that is also the `METADATA` file in each wheel) as GitHub Actions artifacts.
 
 If you package an **application** as a Python package, this action is useful to double-check you're shipping everything you need, including all templates, translation files, et cetera.
 

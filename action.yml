@@ -60,7 +60,7 @@ runs:
       working-directory: ${{ inputs.path }}
       run: /tmp/baipp/bin/python -m twine check --strict /tmp/baipp-out/*
 
-    - name: Show wheel & SDist contents hierarchically.
+    - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
@@ -70,3 +70,10 @@ runs:
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
         tree -a out
+        cat out/sdist/*/PKG-INFO
+
+    - name: Upload metadata
+      uses: actions/upload-artifact@v3
+      with:
+        name: PKG-INFO
+        path: /tmp/baipp-out/out/sdist/*/PKG-INFO
