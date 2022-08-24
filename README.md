@@ -7,7 +7,8 @@ This action provides the following functionality for GitHub Actions users that a
 1. lints the wheel using [*check-wheel-contents*](https://pypi.org/project/check-wheel-contents/),
 1. lints the PyPI README of both *wheel* and *SDist* using [*twine*](https://pypi.org/project/twine/),
 1. prints the tree of both *SDist* and *wheel* in the CI output, so you don't have to download the packages to just check the contents,
-1. prints and uploads the *SDist*'s `PKG-INFO` file (that is also the `METADATA` file in each wheel) as GitHub Actions artifacts.
+1. prints and uploads the *SDist*'s `PKG-INFO` file (that is also the `METADATA` file in each wheel) as a GitHub Actions artifact,
+1. upload the packages PyPI README, just as it would appear on the project's PyPI landing page as a GitHub Actions artifact (to level up your PyPI README game, check out [*hatch-fancy-pypi-readme*](https://github.com/hynek/hatch-fancy-pypi-readme)).
 
 If you package an **application** as a Python package, this action is useful to double-check you're shipping everything you need, including all templates, translation files, et cetera.
 
