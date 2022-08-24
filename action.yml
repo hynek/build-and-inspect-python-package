@@ -31,17 +31,17 @@ runs:
       shell: bash
 
     # Build SDist, then build wheel out of it.
-    - run: /tmp/baipp/bin/python -m build --outdir /tmp/baipp-out
+    - run: /tmp/baipp/bin/python -m build --outdir /tmp/baipp/dist
       shell: bash
       working-directory: ${{ inputs.path }}
 
     - name: Set output
       id: setter
       shell: bash
-      run: echo "::set-output name=dist::/tmp/baipp-out"
+      run: echo "::set-output name=dist::/tmp/baipp/dist"
 
     # Give user overview over what we've built.
-    - run: ls -l /tmp/baipp-out
+    - run: ls -l /tmp/baipp/dist
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -49,22 +49,22 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: Packages
-        path: /tmp/baipp-out/*
+        path: /tmp/baipp/dist/*
 
-    - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp-out/*.whl
+    - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
 
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
-      run: /tmp/baipp/bin/python -m twine check --strict /tmp/baipp-out/*
+      run: /tmp/baipp/bin/python -m twine check --strict /tmp/baipp/dist/*
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
-        cd /tmp/baipp-out
+        cd /tmp/baipp/dist
         mkdir -p out/wheels
         /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         mkdir -p out/sdist
@@ -80,11 +80,11 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: PKG-INFO
-        path: /tmp/baipp-out/out/sdist/*/PKG-INFO
+        path: /tmp/baipp/dist/out/sdist/*/PKG-INFO
 
     - name: Extract PyPI README
       shell: bash
-      working-directory: /tmp/baipp-out/out/sdist/
+      working-directory: /tmp/baipp/dist/out/sdist/
       run: |
         cat */PKG-INFO | python -c '
         import email.parser
@@ -103,4 +103,4 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: PyPI README
-        path: /tmp/baipp-out/out/sdist/PyPI-README.*
+        path: /tmp/baipp/dist/out/sdist/PyPI-README.*
