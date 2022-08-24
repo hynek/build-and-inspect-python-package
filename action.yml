@@ -70,10 +70,37 @@ runs:
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
         tree -a out
+        echo -----
+        echo Metadata follows
+        echo -----
         cat out/sdist/*/PKG-INFO
+        echo -----
 
     - name: Upload metadata
       uses: actions/upload-artifact@v3
       with:
         name: PKG-INFO
         path: /tmp/baipp-out/out/sdist/*/PKG-INFO
+
+    - name: Extract PyPI README
+      shell: bash
+      working-directory: /tmp/baipp-out/out/sdist/
+      run: |
+        cat */PKG-INFO | python -c '
+        import email.parser
+        import sys
+
+        em = email.parser.Parser().parsestr(sys.stdin.read())
+        suffix = {
+            "text/markdown": "md",
+            "text/x-rst": "rst",
+        }[em["Description-Content-Type"]]
+        with open(f"PyPI-README.{suffix}", "w") as f:
+            f.write(em.get_payload())
+        '
+
+    - name: Upload PyPI README
+      uses: actions/upload-artifact@v3
+      with:
+        name: PyPI README
+        path: /tmp/baipp-out/out/sdist/PyPI-README.*
