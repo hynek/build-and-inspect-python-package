@@ -70,16 +70,14 @@ runs:
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
         tree -a out
-        echo -----
-        echo Metadata follows
-        echo -----
+        echo ----- Metadata Follows -----
         cat out/sdist/*/PKG-INFO
-        echo -----
+        echo ----- End of Metadata  -----
 
     - name: Upload metadata
       uses: actions/upload-artifact@v3
       with:
-        name: PKG-INFO
+        name: Package Metadata
         path: /tmp/baipp/dist/out/sdist/*/PKG-INFO
 
     - name: Extract PyPI README
