@@ -4,7 +4,7 @@ This action provides the following functionality for GitHub Actions users that a
 
 **Builds your package** using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including *Hatch*, *Flit*, *Setuptools*, *PDM*, or *Poetry*).
 
-Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts** (*not* PyPI), so you can download and inspect them from the Summary view of a Actions run,
+Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts** (*not* PyPI), so you can download and inspect them from the Summary view of a run.
 
 Lints the **wheel contents** using [*check-wheel-contents*](https://pypi.org/project/check-wheel-contents/).
 
