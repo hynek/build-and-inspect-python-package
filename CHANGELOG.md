@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.2...main)
 
+### Added
+
+- Package metadata is now printed and uploaded as an artifact.
+  [#11](https://github.com/hynek/build-and-inspect-python-package/pull/11)
+- The PyPI README, that is a project's PyPI landing page, is now uploaded as an artifact.
+  [#11](https://github.com/hynek/build-and-inspect-python-package/pull/11)
+
+
 ## [1.2](https://github.com/hynek/build-and-inspect-python-package/compare/v1.1...v1.2)
 
 ### Added
