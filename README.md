@@ -1,6 +1,6 @@
 # build-and-inspect-python-package
 
-This action provides the following functionality for GitHub Actions users that are maintaining Python packages and want to ensure in CI that the packages they will build are in good shape and remain so:
+This action provides the following functionality for GitHub Actions users that are maintaining Python packages and want to ensure in CI that the packages they build are in good shape and remain so:
 
 **Builds your package** using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including *Hatch*, *Flit*, *Setuptools*, *PDM*, or *Poetry*).
 
@@ -8,7 +8,7 @@ Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Acti
 
 Lints the **wheel contents** using [*check-wheel-contents*](https://pypi.org/project/check-wheel-contents/).
 
-Lints the **PyPI README** of both *wheel* and *SDist* using [*twine*](https://pypi.org/project/twine/) and uploads it as an GitHub Actions artifact for further inspection.
+Lints the **PyPI README** using [*twine*](https://pypi.org/project/twine/) and uploads it as an GitHub Actions artifact for further inspection.
 To level up your PyPI README game, check out [*hatch-fancy-pypi-readme*](https://github.com/hynek/hatch-fancy-pypi-readme)!
 
 Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don't have to download the packages, if you just want to check the content list.
