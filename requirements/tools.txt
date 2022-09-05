@@ -30,12 +30,16 @@ idna==3.3
     # via requests
 importlib-metadata==4.12.0
     # via twine
+jaraco-classes==3.2.2
+    # via keyring
 jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
-keyring==23.8.2
+keyring==23.9.1
     # via twine
+more-itertools==8.14.0
+    # via jaraco-classes
 packaging==21.3
     # via
     #   build
@@ -46,7 +50,7 @@ pkginfo==1.8.3
     # via twine
 pycparser==2.21
     # via cffi
-pydantic==1.9.2
+pydantic==1.10.1
     # via check-wheel-contents
 pygments==2.13.0
     # via
@@ -54,7 +58,7 @@ pygments==2.13.0
     #   rich
 pyparsing==3.0.9
     # via packaging
-readme-renderer==37.0
+readme-renderer==37.1
     # via twine
 requests==2.28.1
     # via
