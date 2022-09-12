@@ -5,8 +5,8 @@ name: Upgrade dependencies
 on:
   workflow_dispatch: # Allow running on-demand
   schedule:
-    # Runs every Monday at 8:00 UTC (4:00 Eastern)
-    - cron: "0 8 * * 1"
+    # Runs every 1st of Month at 3:25 UTC
+    - cron: "25 3 1 * *"
 
 jobs:
   upgrade:
@@ -45,17 +45,17 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Automated dependency upgrades"
-          git push -f origin ${{ github.ref_name }}:$BRANCH_NAME
+          git push -f origin ${{ github.ref_name }}:${{ env.BRANCH_NAME }}
       - name: Open pull request if needed
         if: steps.changes.outputs.count > 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # Only open a PR if the branch is not attached to an existing one
         run: |
-          PR=$(gh pr list --head $BRANCH_NAME --json number -q '.[0].number')
+          PR=$(gh pr list --head ${{ env.BRANCH_NAME }} --json number -q '.[0].number')
           if [ -z $PR ]; then
             gh pr create \
-            --head $BRANCH_NAME \
+            --head ${{ env.BRANCH_NAME }} \
             --title "Automated dependency upgrades" \
             --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           else
