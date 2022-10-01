@@ -10,7 +10,7 @@ bleach==5.0.1
     # via readme-renderer
 build==0.8.0
     # via -r requirements/tools.in
-certifi==2022.6.15.1
+certifi==2022.9.24
     # via requests
 cffi==1.15.1
     # via cryptography
@@ -26,17 +26,17 @@ cryptography==38.0.1
     # via secretstorage
 docutils==0.19
     # via readme-renderer
-idna==3.3
+idna==3.4
     # via requests
 importlib-metadata==4.12.0
     # via twine
-jaraco-classes==3.2.2
+jaraco-classes==3.2.3
     # via keyring
 jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
-keyring==23.9.1
+keyring==23.9.3
     # via twine
 more-itertools==8.14.0
     # via jaraco-classes
@@ -58,7 +58,7 @@ pygments==2.13.0
     #   rich
 pyparsing==3.0.9
     # via packaging
-readme-renderer==37.1
+readme-renderer==37.2
     # via twine
 requests==2.28.1
     # via
