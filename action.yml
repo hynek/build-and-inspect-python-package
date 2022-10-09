@@ -65,13 +65,23 @@ runs:
       working-directory: ${{ inputs.path }}
       run: |
         cd /tmp/baipp/dist
+        mkdir -p out/sdist
         mkdir -p out/wheels
         /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
-        mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
-        tree -a out
+
+        echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
+        (cd /tmp/baipp/dist/out/sdist && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+        echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
+
+        echo -e '\n<details><summary>Wheel contents</summary>\n' >> $GITHUB_STEP_SUMMARY
+        (cd /tmp/baipp/dist/out/wheels && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+        echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
+
         echo ----- Metadata Follows -----
-        cat out/sdist/*/PKG-INFO
+        echo -e '\n<details><summary>Metadata</summary>\n' >> $GITHUB_STEP_SUMMARY
+        cat out/sdist/*/PKG-INFO | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY
+        echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
         echo ----- End of Metadata  -----
 
     - name: Upload metadata
