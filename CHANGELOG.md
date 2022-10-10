@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.3...main)
 
+### Added
+
+- The contents listing of the SDist, the contents listing of the wheel, *and* the package metadata are now conveniently added to the CI run summary.
+  So, you don't have to click through the build logs or download anything to give it a quick glimpse.
+  [#17](https://github.com/hynek/build-and-inspect-python-package/pull/17)
+
+
 ## [1.3](https://github.com/hynek/build-and-inspect-python-package/compare/v1.2...v1.3)
 
 ### Added
