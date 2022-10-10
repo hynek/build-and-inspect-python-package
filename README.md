@@ -33,8 +33,6 @@ jobs:
       - uses: hynek/build-and-inspect-python-package@v1
 ```
 
-The action will run [*setup-python*](https://github.com/actions/setup-python) with Python **3.10** on its own.
-
 
 ### Inputs
 
@@ -60,6 +58,7 @@ After a successful run, you'll find multiple artifacts in the run's Summary view
 ---
 
 [Our CI](.github/workflows/ci.yml) uses all inputs and outputs, if you want to see them in action.
+
 
 ## License
 
