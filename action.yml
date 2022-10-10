@@ -20,13 +20,13 @@ runs:
   using: composite
   steps:
     - uses: actions/setup-python@v4
-      id: python
+      id: python-baipp
       with:
         python-version: "3.10"
         update-environment: false
 
     - name: Create venv for tools
-      run: ${{ steps.python.outputs.python-path }} -m venv /tmp/baipp
+      run: ${{ steps.python-baipp.outputs.python-path }} -m venv /tmp/baipp
       shell: bash
 
     - run: /tmp/baipp/bin/python -m pip install -r ${{ github.action_path }}/requirements/tools.txt
