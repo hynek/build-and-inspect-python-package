@@ -40,7 +40,7 @@ runs:
     - name: Set output
       id: setter
       shell: bash
-      run: echo "::set-output name=dist::/tmp/baipp/dist"
+      run: echo "dist=/tmp/baipp/dist" >>$GITHUB_OUTPUT
 
     # Give user overview over what we've built.
     - run: ls -l /tmp/baipp/dist
