@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
-- Doesn't raise a deprecation warning re: `set-output` anymnore.
+- Doesn't raise a [deprecation warning](https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/) re: `set-output` anymore.
 
 
 ## [1.4](https://github.com/hynek/build-and-inspect-python-package/compare/v1.3...v1.4)
