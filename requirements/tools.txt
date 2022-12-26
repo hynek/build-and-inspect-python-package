@@ -84,7 +84,7 @@ urllib3==1.26.12
     #   twine
 webencodings==0.5.1
     # via bleach
-wheel==0.37.1
+wheel==0.38.1
     # via -r tools.in
 wheel-filename==1.4.1
     # via check-wheel-contents
