@@ -22,7 +22,7 @@ runs:
     - uses: actions/setup-python@v4
       id: python-baipp
       with:
-        python-version: "3.10"
+        python-version: "3.x"
         update-environment: false
 
     - name: Create venv for tools
