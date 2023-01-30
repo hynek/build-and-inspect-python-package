@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...main)
 
+- Use `3.x` version specifier in `setup-python` for the venv used by our tools.
+  As of writing, that's 3.11.
+
+
 ## [1.4.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4...v1.4.1)
 
 ### Fixed
