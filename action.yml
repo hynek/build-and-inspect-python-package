@@ -26,10 +26,10 @@ runs:
         update-environment: false
 
     - name: Create venv for tools
-      run: ${{ steps.python-baipp.outputs.python-path }} -m venv /tmp/baipp
+      run: ${{ steps.python-baipp.outputs.python-path }} -Im venv /tmp/baipp
       shell: bash
 
-    - run: /tmp/baipp/bin/python -m pip install -r ${{ github.action_path }}/requirements/tools.txt
+    - run: /tmp/baipp/bin/python -Im pip install -r ${{ github.action_path }}/requirements/tools.txt
       shell: bash
 
     # Build SDist, then build wheel out of it.
