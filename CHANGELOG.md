@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Set [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) based on the timestamp of the last commit for build reproducibility.
-  [#30](https://github.com/hynek/build-and-inspect-python-package/pull/18)
+  [#30](https://github.com/hynek/build-and-inspect-python-package/pull/30)
 - The *tree* output now has ISO timestamps.
 
 
