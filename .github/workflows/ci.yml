@@ -33,7 +33,8 @@ jobs:
           path: structlog
 
       - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
-      - run: ls -Rl ${{ steps.baipp.outputs.dist }}/out/*
+      - name: List recursively to double-check file timestamps.
+        run: ls -Rl ${{ steps.baipp.outputs.dist }}/out/*
 
   check-argon2-cffi-bindings:
     name: Build & verify the argon2-cffi-bindings package.
