@@ -4,13 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [1.5](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...v1.5)
 
-- Use `3.x` version specifier in `setup-python` for the venv used by our tools.
-  As of writing, that's 3.11.
+### Added
+
 - Set [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) based on the timestamp of the last commit for build reproducibility.
   [#30](https://github.com/hynek/build-and-inspect-python-package/pull/18)
 - The *tree* output now has ISO timestamps.
+
+
+### Changed
+
+- Use `3.x` version specifier in `setup-python` for the venv used by our tools.
+  As of writing, that's 3.11.
 
 
 ## [1.4.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4...v1.4.1)
