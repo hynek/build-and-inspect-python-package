@@ -3,8 +3,9 @@
 This action provides the following functionality for GitHub Actions users that are maintaining Python packages and want to ensure in CI that the packages they build are in good shape and remain so:
 
 **Builds your package** using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including Hatch, Flit, Setuptools, PDM, or Poetry).
+[`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) is set to the timestamp of the last commit, giving you reproducible builds with sensible file timestamps.
 
-Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts** (*not* PyPI), so you can download and inspect them from the Summary view of a run.
+Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts**, so you can download and inspect them from the Summary view of a run or [upload to PyPI automatically][automated].
 
 Lints the **wheel contents** using [*check-wheel-contents*](https://pypi.org/project/check-wheel-contents/).
 
@@ -50,7 +51,8 @@ jobs:
 
 After a successful run, you'll find multiple artifacts in the run's Summary view:
 
-- **Packages**: the built packages.
+- **Packages**: The built packages.
+  Perfect for [automated PyPI upload workflows][automated]!
 - **Package Metadata**: the extracted packaging metadata (*hint*: it's formatted as an email).
 - **PyPI README**: the extracted PyPI README, exactly how it would be used by PyPI as your project's landing page.
   [PEP 621](https://peps.python.org/pep-0621/) calls it `readme`, in classic *setuptools* it's `long_description`.
@@ -63,3 +65,5 @@ After a successful run, you'll find multiple artifacts in the run's Summary view
 ## License
 
 The scripts and documentation in this project are released under the [MIT License](LICENSE).
+
+[automated]: https://github.com/python-attrs/attrs/blob/main/.github/workflows/pypi-package.yml
