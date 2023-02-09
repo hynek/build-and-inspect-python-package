@@ -77,11 +77,11 @@ runs:
         tar xf *.tar.gz -C out/sdist
 
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-        (cd /tmp/baipp/dist/out/sdist && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+        (cd /tmp/baipp/dist/out/sdist && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
         echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
 
         echo -e '\n<details><summary>Wheel contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-        (cd /tmp/baipp/dist/out/wheels && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+        (cd /tmp/baipp/dist/out/wheels && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
         echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
 
         echo ----- Metadata Follows -----

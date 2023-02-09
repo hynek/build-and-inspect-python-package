@@ -1,11 +1,11 @@
 # build-and-inspect-python-package
 
-This action provides the following functionality for GitHub Actions users that are maintaining Python packages and want to ensure in CI that the packages they build are in good shape and remain so:
+This action provides the following functionality for GitHub Actions users that are maintaining Python packages:
 
 **Builds your package** using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including Hatch, Flit, Setuptools, PDM, or Poetry).
 [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) is set to the timestamp of the last commit, giving you reproducible builds with sensible file timestamps.
 
-Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts**, so you can download and inspect them from the Summary view of a run or [upload to PyPI automatically][automated].
+Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts**, so you can download and inspect them from the Summary view of a run, or [**upload them to PyPI automatically**][automated] once the verification succeeds.
 
 Lints the **wheel contents** using [*check-wheel-contents*](https://pypi.org/project/check-wheel-contents/).
 
