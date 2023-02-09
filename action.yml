@@ -33,7 +33,11 @@ runs:
       shell: bash
 
     # Build SDist, then build wheel out of it.
-    - run: /tmp/baipp/bin/python -m build --outdir /tmp/baipp/dist
+    - run: |
+        # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
+        # reproducibility.
+        SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct) \
+          /tmp/baipp/bin/python -m build --outdir /tmp/baipp/dist
       shell: bash
       working-directory: ${{ inputs.path }}
 
