@@ -7,6 +7,10 @@ on:
     # Runs every 1st of Month at 3:25 UTC
     - cron: "25 3 1 * *"
 
+env:
+  FORCE_COLOR: "1"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
