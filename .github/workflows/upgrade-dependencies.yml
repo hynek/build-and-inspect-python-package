@@ -1,6 +1,5 @@
+---
 name: Upgrade dependencies
-
-# Stolen from https://www.oddbird.net/2022/06/01/dependabot-single-pull-request/
 
 on:
   workflow_dispatch: # Allow running on-demand
@@ -9,55 +8,18 @@ on:
     - cron: "25 3 1 * *"
 
 jobs:
-  upgrade:
-    name: Upgrade & Open Pull Request
+  update-dependencies:
     runs-on: ubuntu-latest
-    env:
-      # This branch will receive updates each time the workflow runs
-      # It doesn't matter if it's deleted when merged, it'll be re-created
-      BRANCH_NAME: auto-dependency-upgrades
     steps:
       - uses: actions/checkout@v3
 
-      # START PYTHON DEPENDENCIES
-      - uses: actions/setup-python@v3
+      - uses: pdm-project/update-deps-action@v1.1
         with:
-          python-version: "3.10"
-          cache: pip
-          cache-dependency-path: "**/pip-tools.txt"
+          update-strategy: all
 
-      - name: Upgrade Python dependencies
-        # ADD YOUR CUSTOM DEPENDENCY UPGRADE COMMANDS BELOW
-        run: |
-          pip install -U pip pip-tools
-          pip-compile --upgrade -o requirements/tools.txt requirements/tools.in
-      # END PYTHON DEPENDENCIES
-      - name: Detect changes
-        id: changes
-        run:
-          # This output boolean tells us if the dependencies have actually changed
-          echo "count=$(git status --porcelain=v1 2>/dev/null | wc -l)" >>$GITHUB_OUTPUT
-      - name: Commit & push changes
-        # Only push if changes exist
-        if: steps.changes.outputs.count > 0
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Automated dependency upgrades"
-          git push -f origin ${{ github.ref_name }}:${{ env.BRANCH_NAME }}
-      - name: Open pull request if needed
-        if: steps.changes.outputs.count > 0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # Only open a PR if the branch is not attached to an existing one
-        run: |
-          PR=$(gh pr list --head ${{ env.BRANCH_NAME }} --json number -q '.[0].number')
-          if [ -z $PR ]; then
-            gh pr create \
-            --head ${{ env.BRANCH_NAME }} \
-            --title "Automated dependency upgrades" \
-            --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          else
-            echo "Pull request already exists, won't create a new one."
-          fi
+      - uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: 3.x
+          cache: true
+
+      - run: pdm export --format requirements >tools.txt
