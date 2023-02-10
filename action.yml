@@ -29,7 +29,12 @@ runs:
       run: ${{ steps.python-baipp.outputs.python-path }} -Im venv /tmp/baipp
       shell: bash
 
-    - run: /tmp/baipp/bin/python -Im pip install -r ${{ github.action_path }}/requirements/tools.txt
+    - name: Install our tools
+      # We use $GITHUB_ACTION_PATH to support elderly GitHub Enterprise Servers.
+      run: >
+        /tmp/baipp/bin/python
+        -Im pip install
+        -r $GITHUB_ACTION_PATH/requirements/tools.txt
       shell: bash
 
     # Build SDist, then build wheel out of it.
