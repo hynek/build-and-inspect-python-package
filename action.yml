@@ -30,13 +30,12 @@ runs:
       shell: bash
 
     - name: Install our tools
-      # We use $GITHUB_ACTION_PATH to support elderly GitHub Enterprise Servers.
       run: >
         /tmp/baipp/bin/python
         -Im pip
         --disable-pip-version-check
         --no-python-version-warning
-        install -r $GITHUB_ACTION_PATH/requirements/tools.txt
+        install -r ${{ github.action_path }}/requirements/tools.txt
       shell: bash
 
     # Build SDist, then build wheel out of it.

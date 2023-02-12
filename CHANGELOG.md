@@ -7,11 +7,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...main)
 
-### Added
-
-- Better compatibility with older GitHub Enterprise Servers that lack `${{ github.action_path }}`.
-  [#38](https://github.com/hynek/build-and-inspect-python-package/pull/38)
-
 
 ## [1.5](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...v1.5)
 
