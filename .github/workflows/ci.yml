@@ -60,7 +60,6 @@ jobs:
     strategy:
       matrix:
         runner-version:
-        - "2.283.4"
         - "2.289.4"
         - "2.296.2"
     runs-on: ubuntu-latest
@@ -83,10 +82,14 @@ jobs:
       
       - name: Test against actions/runner ${{ matrix.runner-version }}
         run: |
-          ../runner.server/Runner.Client workflow_dispatch -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=-self-hosted --runner-version ${{ matrix.runner-version }}
+          ../runner.server/Runner.Client workflow_dispatch -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=-self-hosted -s GITHUB_TOKEN --runner-version ${{ matrix.runner-version }}
         working-directory: action
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       
       - name: Test against job container on actions/runner ${{ matrix.runner-version }}
         run: |
-          ../runner.server/Runner.Client workflow_dispatch -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=catthehacker/ubuntu:act-latest --runner-version ${{ matrix.runner-version }}
+          ../runner.server/Runner.Client workflow_dispatch -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=catthehacker/ubuntu:act-latest -s GITHUB_TOKEN --runner-version ${{ matrix.runner-version }}
         working-directory: action
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
