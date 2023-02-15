@@ -81,7 +81,7 @@ jobs:
           tar xzf "runner.server-linux-x64.tar.gz"
         env:
           RUNNER_SERVER_VERSION: "3.11.2"
-      
+
       - name: Test against job container on actions/runner ${{ matrix.runner-version }}
         run: |
           ../runner.server/Runner.Client workflow_dispatch -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -s ACTIONS_STEP_DEBUG=true -P ubuntu-latest=catthehacker/ubuntu:act-latest -s GITHUB_TOKEN --runner-version ${{ matrix.runner-version }}
