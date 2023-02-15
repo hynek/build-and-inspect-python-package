@@ -53,3 +53,40 @@ jobs:
         id: baipp
         with:
           path: hynek/argon2-cffi-bindings
+
+  check-old-actions-runner:
+    if: vars.SKIP_CHECK_OLD_ACTIONS_RUNNER != 'true' # To avoid a recursive workflow
+    name: Build & verify the action against old actions/runner versions
+    strategy:
+      matrix:
+        runner-version:
+        - "2.283.4"
+        - "2.289.4"
+        - "2.296.2"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: action
+
+      - name: Prepare runner.server
+        run: |
+          # Create a folder
+          mkdir runner.server && cd runner.server
+          # Download the latest runner package
+          curl -O -L https://github.com/ChristopherHX/runner.server/releases/download/v${{env.RUNNER_SERVER_VERSION}}/runner.server-linux-x64.tar.gz
+          # Extract the installer
+          tar xzf "runner.server-linux-x64.tar.gz"
+        env:
+          RUNNER_SERVER_VERSION: "3.11.2"
+      
+      - name: Test against actions/runner ${{ matrix.runner-version }}
+        run: |
+          ../runner.server/Runner.Server -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=-self-hosted --runner-version ${{ matrix.runner-version }}
+        working-directory: action
+      
+      - name: Test against job container on actions/runner ${{ matrix.runner-version }}
+        run: |
+          ../runner.server/Runner.Server -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=catthehacker/ubuntu:act-latest --runner-version ${{ matrix.runner-version }}
+        working-directory: action
