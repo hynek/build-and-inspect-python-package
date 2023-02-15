@@ -83,10 +83,10 @@ jobs:
       
       - name: Test against actions/runner ${{ matrix.runner-version }}
         run: |
-          ../runner.server/Runner.Server -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=-self-hosted --runner-version ${{ matrix.runner-version }}
+          ../runner.server/Runner.Client -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=-self-hosted --runner-version ${{ matrix.runner-version }}
         working-directory: action
       
       - name: Test against job container on actions/runner ${{ matrix.runner-version }}
         run: |
-          ../runner.server/Runner.Server -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=catthehacker/ubuntu:act-latest --runner-version ${{ matrix.runner-version }}
+          ../runner.server/Runner.Client -W .github/workflows/ci.yml --var SKIP_CHECK_OLD_ACTIONS_RUNNER=true -P ubuntu-latest=catthehacker/ubuntu:act-latest --runner-version ${{ matrix.runner-version }}
         working-directory: action
