@@ -60,8 +60,8 @@ jobs:
     strategy:
       matrix:
         runner-version:
-        - "2.289.4"
-        - "2.296.2"
+        - "2.289.5"
+        - "2.296.3"
         - "2.302.1"
       fail-fast: false
     runs-on: ubuntu-latest
