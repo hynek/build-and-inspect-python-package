@@ -24,6 +24,7 @@ runs:
       with:
         python-version: "3.x"
         update-environment: false
+        cache: pip
 
     - name: Create venv for tools
       run: ${{ steps.python-baipp.outputs.python-path }} -Im venv /tmp/baipp
