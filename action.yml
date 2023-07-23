@@ -26,25 +26,27 @@ runs:
         update-environment: false
         cache: pip
 
-    - name: Create venv for tools
-      run: ${{ steps.python-baipp.outputs.python-path }} -Im venv /tmp/baipp
-      shell: bash
+    - uses: pdm-project/setup-pdm@v3
+      with:
+        python-version: 3.x
+        cache: true
 
-    - name: Install our tools
-      run: >
-        /tmp/baipp/bin/python
-        -Im pip
-        --disable-pip-version-check
-        --no-python-version-warning
-        install -r ${{ github.action_path }}/requirements/tools.txt
+    - name: Create venv for tools
       shell: bash
+      run: |
+        pwd
+        ls -a
+        pdm venv create --name baipp ${{ steps.python-baipp.outputs.python-path }}
+        pdm venv list -v
+
+        pdm sync --venv baipp
 
     # Build SDist, then build wheel out of it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
     - run: >
         SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
-        /tmp/baipp/bin/python -m build --outdir /tmp/baipp/dist
+        pdm run build --outdir /tmp/baipp/dist
       shell: bash
       working-directory: ${{ inputs.path }}
 
