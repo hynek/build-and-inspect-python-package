@@ -19,12 +19,8 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: actions/setup-python@v4
-      id: python-baipp
-      with:
-        python-version: "3.x"
-        update-environment: false
-        cache: pip
+    - run: pwd; ls -a
+      shell: bash
 
     - uses: pdm-project/setup-pdm@v3
       with:
