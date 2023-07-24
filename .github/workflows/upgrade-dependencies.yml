@@ -28,3 +28,4 @@ jobs:
           cache: true
 
       - run: pdm export --format requirements >tools.txt
+      - run: pdm export --format requirements
