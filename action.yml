@@ -19,11 +19,14 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Resolve Lock Path
+      run: echo "PDM_CACHE=$(realpath ${{ github.action_path }}/pdm.lock)" >>$GITHUB_ENV
+
     - uses: pdm-project/setup-pdm@v3
       with:
         python-version: 3.x
         cache: true
-        cache-dependency-path: ${{ github.action_path }}/pdm.lock
+        cache-dependency-path: ${{ env.PDM_CACHE }}
 
     - name: Create venv for tools
       shell: bash
