@@ -42,7 +42,7 @@ runs:
     # Build SDist, then build wheel out of it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
-    - run: >
+    - run: |
         export project=$(pwd)
         ls -a
         echo "proj: $project"
