@@ -112,7 +112,7 @@ runs:
       shell: bash
       working-directory: /tmp/baipp/dist/out/sdist/
       run: |
-        cat */PKG-INFO | python -c '
+        cat */PKG-INFO | ${{ steps.setup-pdm.outputs.python-path }} -c '
         import email.parser
         import sys
 
