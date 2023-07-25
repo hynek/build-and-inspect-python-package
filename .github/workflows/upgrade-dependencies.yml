@@ -25,6 +25,6 @@ jobs:
       - uses: pdm-project/setup-pdm@v3
         with:
           python-version: 3.x
-          cache: true
+          cache: false
 
       - run: pdm export --format requirements >tools.txt
