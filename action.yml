@@ -30,6 +30,7 @@ runs:
     - name: Create venv for tools
       shell: bash
       run: |
+        pwd
         cd ${{ github.action_path }}
         pwd
         ls -a
