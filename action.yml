@@ -30,6 +30,7 @@ runs:
     - name: Create venv for tools
       shell: bash
       run: |
+        cd ${{ github.action_path }}
         pwd
         ls -a
         pdm venv create --name baipp ${{ steps.python-baipp.outputs.python-path }}
@@ -42,7 +43,7 @@ runs:
     # reproducibility.
     - run: >
         SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
-        pdm run build --outdir /tmp/baipp/dist
+        pdm run --project ${{ github.action_path }} build --outdir /tmp/baipp/dist
       shell: bash
       working-directory: ${{ inputs.path }}
 
