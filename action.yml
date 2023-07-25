@@ -19,9 +19,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - run: pwd; ls -a
-      shell: bash
-
     - uses: pdm-project/setup-pdm@v3
       with:
         python-version: 3.x
@@ -30,10 +27,8 @@ runs:
     - name: Create venv for tools
       shell: bash
       run: |
-        pwd
         cd ${{ github.action_path }}
-        pwd
-        ls -a
+
         pdm venv create --name baipp ${{ steps.python-baipp.outputs.python-path }}
         pdm venv list -v
 
@@ -43,12 +38,10 @@ runs:
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
     - run: |
-        export project=$(pwd)
-        ls -a
-        echo "proj: $project"
-
+        PROJECT=$(pwd)
         SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
-        pdm run --project ${{ github.action_path }} build --outdir /tmp/baipp/dist $project
+
+        pdm run -p ${{ github.action_path }} build --outdir /tmp/baipp/dist "$PROJECT"
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -68,18 +61,14 @@ runs:
         name: Packages
         path: /tmp/baipp/dist/*
 
-    - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
+    - run: pdm run -p ${{ github.action_path }} check-wheel-contents /tmp/baipp/dist/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
 
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
-      run: >
-        /tmp/baipp/bin/python
-        -m twine check
-        --strict
-        /tmp/baipp/dist/*
+      run: pdm run -p ${{ github.action_path }} check-readme /tmp/baipp/dist/*.whl
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
@@ -88,7 +77,7 @@ runs:
         cd /tmp/baipp/dist
         mkdir -p out/sdist
         mkdir -p out/wheels
-        /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
+        pdm run -p ${{ github.action_path }} wheel unpack --dest out/wheels *.whl
         tar xf *.tar.gz -C out/sdist
 
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
