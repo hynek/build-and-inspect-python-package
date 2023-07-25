@@ -37,6 +37,8 @@ runs:
         pdm venv create --name baipp ${{ steps.python-baipp.outputs.python-path }}
         pdm venv list -v
 
+        pdm use --venv baipp
+        pdm info --env
         pdm sync --venv baipp
 
     # Build SDist, then build wheel out of it.
