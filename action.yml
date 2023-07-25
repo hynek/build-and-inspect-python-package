@@ -33,14 +33,9 @@ runs:
     - name: Create venv for tools
       shell: bash
       run: |
-        cd ${{ github.action_path }}
-
-        pdm venv create --name baipp ${{ steps.python-baipp.outputs.python-path }}
-        pdm venv list -v
-
-        pdm use --venv baipp
+        pdm use
         pdm info --env
-        pdm sync --venv baipp
+        pdm sync
 
     # Build SDist, then build wheel out of it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
