@@ -24,6 +24,7 @@ runs:
       run: echo "PDM_CACHE=$(realpath ${{ github.action_path }}/pdm.lock)" >>$GITHUB_ENV
 
     - uses: pdm-project/setup-pdm@v3
+      id: setup-pdm
       with:
         python-version: 3.x
         update-python: false
@@ -33,6 +34,7 @@ runs:
     - name: Create venv for tools
       shell: bash
       run: |
+        pdm use -p ${{ github.action_path }} ${{ steps.setup-pdm.outputs.python-path }}
         pdm sync -p ${{ github.action_path }}
         pdm info -p ${{ github.action_path }} --json
 
