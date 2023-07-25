@@ -77,7 +77,8 @@ runs:
         cd /tmp/baipp/dist
         mkdir -p out/sdist
         mkdir -p out/wheels
-        pdm run -p ${{ github.action_path }} wheel unpack --dest /tmp/baipp/dist/out/wheels *.whl
+
+        pdm run -p ${{ github.action_path }} wheel unpack --dest /tmp/baipp/dist/out/wheels /tmp/baipp/dist/*.whl
         tar xf *.tar.gz -C out/sdist
 
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
