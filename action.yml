@@ -34,9 +34,11 @@ runs:
     - name: Create venv for tools
       shell: bash
       run: |
-        pdm use -p ${{ github.action_path }} ${{ steps.setup-pdm.outputs.python-path }}
-        pdm sync -p ${{ github.action_path }}
-        pdm info -p ${{ github.action_path }} --json
+        cd ${{ github.action_path }}
+
+        pdm use ${{ steps.setup-pdm.outputs.python-path }}
+        pdm sync
+        pdm info --json
 
     # Build SDist, then build wheel out of it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
