@@ -36,7 +36,8 @@ runs:
       run: |
         cd ${{ github.action_path }}
 
-        pdm use ${{ steps.setup-pdm.outputs.python-path }}
+        pdm venv create --name baipp ${{ steps.setup-pdm.outputs.python-path }}
+        pdm use --venv baipp
         pdm sync
         pdm info --json
 
