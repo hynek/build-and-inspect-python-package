@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...main)
 
+### Changed
+
+- This shouldn't make any difference, but all management and command running is now done by [PDM](https://pdm.fming.dev/).
+  [#57](https://github.com/hynek/build-and-inspect-python-package/pull/57)
+
 
 ## [1.5](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...v1.5)
 

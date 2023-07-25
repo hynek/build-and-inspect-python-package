@@ -19,32 +19,36 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: actions/setup-python@v4
-      id: python-baipp
+    - name: Resolve Lock Path
+      shell: bash
+      run: echo "PDM_CACHE=$(realpath ${{ github.action_path }}/pdm.lock)" >>$GITHUB_ENV
+
+    - uses: pdm-project/setup-pdm@v3
+      id: setup-pdm
       with:
-        python-version: "3.x"
-        update-environment: false
-        cache: pip
+        python-version: 3.x
+        update-python: false
+        cache: true
+        cache-dependency-path: ${{ env.PDM_CACHE }}
 
     - name: Create venv for tools
-      run: ${{ steps.python-baipp.outputs.python-path }} -Im venv /tmp/baipp
       shell: bash
+      run: |
+        cd ${{ github.action_path }}
 
-    - name: Install our tools
-      run: >
-        /tmp/baipp/bin/python
-        -Im pip
-        --disable-pip-version-check
-        --no-python-version-warning
-        install -r ${{ github.action_path }}/requirements/tools.txt
-      shell: bash
+        pdm venv create --name baipp ${{ steps.setup-pdm.outputs.python-path }}
+        pdm use --venv baipp
+        pdm sync
+        pdm info --json
 
     # Build SDist, then build wheel out of it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
-    - run: >
+    - run: |
+        PROJECT=$(pwd)
         SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
-        /tmp/baipp/bin/python -m build --outdir /tmp/baipp/dist
+
+        pdm run -p ${{ github.action_path }} build --outdir /tmp/baipp/dist "$PROJECT"
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -64,18 +68,14 @@ runs:
         name: Packages
         path: /tmp/baipp/dist/*
 
-    - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
+    - run: pdm run -p ${{ github.action_path }} check-wheel-contents /tmp/baipp/dist/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
 
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
-      run: >
-        /tmp/baipp/bin/python
-        -m twine check
-        --strict
-        /tmp/baipp/dist/*
+      run: pdm run -p ${{ github.action_path }} check-readme /tmp/baipp/dist/*
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
@@ -84,7 +84,8 @@ runs:
         cd /tmp/baipp/dist
         mkdir -p out/sdist
         mkdir -p out/wheels
-        /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
+
+        pdm run -p ${{ github.action_path }} wheel unpack --dest /tmp/baipp/dist/out/wheels /tmp/baipp/dist/*.whl
         tar xf *.tar.gz -C out/sdist
 
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
@@ -111,7 +112,7 @@ runs:
       shell: bash
       working-directory: /tmp/baipp/dist/out/sdist/
       run: |
-        cat */PKG-INFO | python -c '
+        cat */PKG-INFO | ${{ steps.setup-pdm.outputs.python-path }} -c '
         import email.parser
         import sys
 
