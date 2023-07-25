@@ -73,7 +73,7 @@ runs:
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
-      run: pdm run -p ${{ github.action_path }} check-readme /tmp/baipp/dist/*.whl
+      run: pdm run -p ${{ github.action_path }} check-readme /tmp/baipp/dist/*
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash

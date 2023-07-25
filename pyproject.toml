@@ -5,7 +5,7 @@ build-backend = "pdm.pep517.api"
 [tool.pdm.scripts]
 build = "python -Im build"
 check-wheel-contents = "python -Im check_wheel_contents"
-check-readme = "python -Im twine check --strict /tmp/baipp/dist/*"
+check-readme = "python -Im twine check --strict"
 wheel = "python -Im wheel"
 
 [project]
