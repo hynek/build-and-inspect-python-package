@@ -22,7 +22,8 @@ runs:
     - uses: pdm-project/setup-pdm@v3
       with:
         python-version: 3.x
-        cache: false
+        cache: true
+        cache-dependency-path: ${{ github.action_path }}/pdm.lock
 
     - name: Create venv for tools
       shell: bash
