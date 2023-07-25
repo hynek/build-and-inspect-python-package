@@ -33,7 +33,6 @@ runs:
     - name: Create venv for tools
       shell: bash
       run: |
-        pdm use
         pdm info --env
         pdm sync
 
