@@ -42,6 +42,9 @@ runs:
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
     - run: >
+        pwd
+        ls -a
+
         SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
         pdm run --project ${{ github.action_path }} build --outdir /tmp/baipp/dist
       shell: bash
