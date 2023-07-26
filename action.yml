@@ -16,11 +16,9 @@ outputs:
     description: The location of the built packages.
     value: ${{ steps.setter.outputs.dist }}
 
-env:
-  PDM_PROJECT: ${{ github.action_path }}
-
 runs:
   using: composite
+
   steps:
     - name: Resolve Lock Path
       shell: bash
@@ -54,6 +52,8 @@ runs:
         pdm run build --outdir /tmp/baipp/dist "$PROJECT"
       shell: bash
       working-directory: ${{ inputs.path }}
+      env:
+        PDM_PROJECT: ${{ github.action_path }}
 
     - name: Set output
       id: setter
@@ -74,15 +74,21 @@ runs:
     - run: pdm run check-wheel-contents /tmp/baipp/dist/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
+      env:
+        PDM_PROJECT: ${{ github.action_path }}
 
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
       run: pdm run check-readme /tmp/baipp/dist/*
+      env:
+        PDM_PROJECT: ${{ github.action_path }}
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
       working-directory: ${{ inputs.path }}
+      env:
+        PDM_PROJECT: ${{ github.action_path }}
       run: |
         cd /tmp/baipp/dist
         mkdir -p out/sdist
