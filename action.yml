@@ -16,6 +16,9 @@ outputs:
     description: The location of the built packages.
     value: ${{ steps.setter.outputs.dist }}
 
+env:
+  PDM_PROJECT: ${{ github.action_path }}
+
 runs:
   using: composite
   steps:
@@ -48,7 +51,7 @@ runs:
         PROJECT=$(pwd)
         SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
-        pdm run -p ${{ github.action_path }} build --outdir /tmp/baipp/dist "$PROJECT"
+        pdm run build --outdir /tmp/baipp/dist "$PROJECT"
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -68,14 +71,14 @@ runs:
         name: Packages
         path: /tmp/baipp/dist/*
 
-    - run: pdm run -p ${{ github.action_path }} check-wheel-contents /tmp/baipp/dist/*.whl
+    - run: pdm run check-wheel-contents /tmp/baipp/dist/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
 
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
-      run: pdm run -p ${{ github.action_path }} check-readme /tmp/baipp/dist/*
+      run: pdm run check-readme /tmp/baipp/dist/*
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
@@ -85,7 +88,7 @@ runs:
         mkdir -p out/sdist
         mkdir -p out/wheels
 
-        pdm run -p ${{ github.action_path }} wheel unpack --dest /tmp/baipp/dist/out/wheels /tmp/baipp/dist/*.whl
+        pdm run wheel unpack --dest /tmp/baipp/dist/out/wheels /tmp/baipp/dist/*.whl
         tar xf *.tar.gz -C out/sdist
 
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
