@@ -26,7 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#57](https://github.com/hynek/build-and-inspect-python-package/pull/57)
 
 
-## [1.5](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...v1.5)
+## [1.5.0](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...v1.5.0)
 
 ### Added
 
