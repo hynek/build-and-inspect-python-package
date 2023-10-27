@@ -1,5 +1,5 @@
 ---
-name: Upgrade dependencies
+name: Update dependencies
 
 on:
   workflow_dispatch: # Allow running on-demand
