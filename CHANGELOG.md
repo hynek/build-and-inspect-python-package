@@ -5,9 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...main)
+## [1.5.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...main)
 
 ### Changed
+
+- Updates of the tools we use.
+  Notably this fixes *check-wheel-contents* on Python 3.12.
 
 - This shouldn't make any difference, but all management and command running is now done by [PDM](https://pdm.fming.dev/).
   [#57](https://github.com/hynek/build-and-inspect-python-package/pull/57)
