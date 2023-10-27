@@ -27,4 +27,4 @@ jobs:
           python-version: 3.x
           cache: true
 
-      - run: pdm export --format requirements >tools.txt
+      - run: pdm export --format requirements >requirements/tools.txt
