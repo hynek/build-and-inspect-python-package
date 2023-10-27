@@ -22,7 +22,7 @@ jobs:
       # START PYTHON DEPENDENCIES
       - uses: actions/setup-python@v3
         with:
-          python-version: "3.10"
+          python-version: "3.x"
           cache: pip
           cache-dependency-path: "**/pip-tools.txt"
 
@@ -30,7 +30,7 @@ jobs:
         # ADD YOUR CUSTOM DEPENDENCY UPGRADE COMMANDS BELOW
         run: |
           pip install -U pip pip-tools
-          pip-compile --upgrade -o requirements/tools.txt requirements/tools.in
+          pip-compile --upgrade --generate-hashes --resolver backtracking -o requirements/tools.txt requirements/tools.in
       # END PYTHON DEPENDENCIES
       - name: Detect changes
         id: changes
