@@ -1,4 +1,4 @@
-# Build and Inspect Python Packages
+# build-and-inspect-python-package
 
 This action provides the following functionality for GitHub Actions users that are maintaining Python packages:
 
