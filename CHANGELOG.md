@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Hopefully nothing, but this release comes from the main branch again.
 
 
-## [1.5.2](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...v1.5.2)
+## [1.5.2](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...v1.5.2) - 2023-10-27
 
 ### Fixed
 
@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   This release is branched directly from v1.5 and only updates the dependencies.
 
 
-## [1.5.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...v1.5.1)
+## [1.5.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5...v1.5.1) - 2023-10-27
 
 ### Changed
 
@@ -31,7 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#57](https://github.com/hynek/build-and-inspect-python-package/pull/57)
 
 
-## [1.5.0](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...v1.5.0)
+## [1.5.0](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4.1...v1.5.0) - 2023-02-09
 
 ### Added
 
@@ -46,14 +46,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   As of writing, that's 3.11.
 
 
-## [1.4.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4...v1.4.1)
+## [1.4.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.4...v1.4.1) - 2022-10-13
 
 ### Fixed
 
 - Doesn't raise a [deprecation warning](https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/) re: `set-output` anymore.
 
 
-## [1.4](https://github.com/hynek/build-and-inspect-python-package/compare/v1.3...v1.4)
+## [1.4](https://github.com/hynek/build-and-inspect-python-package/compare/v1.3...v1.4) - 2022-10-13
 
 ### Added
 
@@ -68,7 +68,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#18](https://github.com/hynek/build-and-inspect-python-package/pull/18)
 
 
-## [1.3](https://github.com/hynek/build-and-inspect-python-package/compare/v1.2...v1.3)
+## [1.3](https://github.com/hynek/build-and-inspect-python-package/compare/v1.2...v1.3) - 2022-08-24
 
 ### Added
 
@@ -78,7 +78,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#11](https://github.com/hynek/build-and-inspect-python-package/pull/11)
 
 
-## [1.2](https://github.com/hynek/build-and-inspect-python-package/compare/v1.1...v1.2)
+## [1.2](https://github.com/hynek/build-and-inspect-python-package/compare/v1.1...v1.2) - 2022-08-21
 
 ### Added
 
@@ -86,7 +86,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#9](https://github.com/hynek/build-and-inspect-python-package/pull/9)
 
 
-## [1.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.0...v1.1)
+## [1.1](https://github.com/hynek/build-and-inspect-python-package/compare/v1.0...v1.1) - 2022-08-20
 
 ### Changed
 
@@ -94,7 +94,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#7](https://github.com/hynek/build-and-inspect-python-package/pull/7)
 
 
-## [1.0](https://github.com/hynek/build-and-inspect-python-package/compare/v0.1...v1.0)
+## [1.0](https://github.com/hynek/build-and-inspect-python-package/compare/v0.1...v1.0) - 2022-08-20
 
 ### Changed
 
