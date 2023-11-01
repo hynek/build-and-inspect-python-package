@@ -166,9 +166,9 @@ charset-normalizer==3.3.1 \
     --hash=sha256:f6a02a3c7950cafaadcd46a226ad9e12fc9744652cc69f9e5534f98b47f3bbcf \
     --hash=sha256:fe81b35c33772e56f4b6cf62cf4aedc1762ef7162a31e6ac7fe5e40d0149eb67
     # via requests
-check-wheel-contents==0.5.0 \
-    --hash=sha256:87c3c4d815da6d680b34359a5b7a9eebcf05d71a05285fe022fbf42e55c43f87 \
-    --hash=sha256:e4a8c1c3ab452ae3d3f4293c3e3a20468461a2ba6fc8f99280b39c146e6f4e3e
+check-wheel-contents==0.6.0 \
+    --hash=sha256:64419c4e150e1de6f2d0bce7d4c7668eebfac127f0274014dd1a56ba07525364 \
+    --hash=sha256:f3430c5ae633026e15902e3153fa14a6bac2a8ae7bbc7044117712be667821da
     # via -r requirements/tools.in
 click==8.1.7 \
     --hash=sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28 \
@@ -433,9 +433,9 @@ urllib3==2.0.7 \
     # via
     #   requests
     #   twine
-wheel==0.41.2 \
-    --hash=sha256:0c5ac5ff2afb79ac23ab82bab027a0be7b5dbcf2e54dc50efe4bf507de1f7985 \
-    --hash=sha256:75909db2664838d015e3d9139004ee16711748a52c8f336b52882266540215d8
+wheel==0.41.3 \
+    --hash=sha256:488609bc63a29322326e05560731bf7bfea8e48ad646e1f5e40d366607de0942 \
+    --hash=sha256:4d4987ce51a49370ea65c0bfd2234e8ce80a12780820d9dc462597a6e60d0841
     # via -r requirements/tools.in
 wheel-filename==1.4.1 \
     --hash=sha256:a53d8ece58822eb27b3a8841c6b4bebf357f19ff0dd83ce9179756f64a4bc0df \
