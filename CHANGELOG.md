@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5.3...main)
 
+### Fixed
+
+- Stop trying to cache.
+  Fixes `Error: No file in /home/runner/work/pytest-cpp/pytest-cpp matched to [**/requirements.txt or **/pyproject.toml], make sure you have checked out the target repository`
+  [#76](https://github.com/hynek/build-and-inspect-python-package/pull/76)
+
 
 ## [1.5.3](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5.1...1.5.3) - 2023-10-27
 
