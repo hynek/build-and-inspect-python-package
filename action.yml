@@ -58,7 +58,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: Upload built artifacts.
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Packages
         path: /tmp/baipp/dist/*
@@ -101,7 +101,7 @@ runs:
         echo ----- End of Metadata  -----
 
     - name: Upload metadata
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Package Metadata
         path: /tmp/baipp/dist/out/sdist/*/PKG-INFO
@@ -124,7 +124,7 @@ runs:
         '
 
     - name: Upload PyPI README
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: PyPI README
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*

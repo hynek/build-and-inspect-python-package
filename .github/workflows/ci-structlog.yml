@@ -1,5 +1,5 @@
 ---
-name: CI
+name: CI w/ structlog
 
 on:
   push:
@@ -33,23 +33,3 @@ jobs:
           path: structlog
 
       - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
-
-  check-argon2-cffi-bindings:
-    name: Build & verify the argon2-cffi-bindings package.
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: hynek/argon2-cffi-bindings
-          submodules: recursive
-          path: hynek/argon2-cffi-bindings
-
-      - uses: actions/checkout@v4
-        with:
-          path: action
-
-      - uses: ./action
-        id: baipp
-        with:
-          path: hynek/argon2-cffi-bindings
