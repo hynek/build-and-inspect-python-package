@@ -59,7 +59,7 @@ After a successful run, you'll find multiple artifacts in the run's Summary view
 
 ---
 
-[Our CI](.github/workflows/ci.yml) uses all inputs and outputs, if you want to see them in action.
+[Our CI](.github/workflows/) uses all inputs and outputs, if you want to see them in action.
 
 
 ## License
