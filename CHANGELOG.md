@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [UNRELEASED](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5.4...main)
 
+### Changed
+
+- Switched to using v4 of `actions/upload-artifact`.
+  This version is incompatible with older versions of `actions/download-artifact` -- hence the major version bump.
+  See also [GitHub's announcement](https://github.blog/changelog/2023-12-14-github-actions-artifacts-v4-is-now-generally-available/).
+
+
 ## [1.5.4](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5.3...v1.5.4) - 2023-11-01
 
 ### Fixed
