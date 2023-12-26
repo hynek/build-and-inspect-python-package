@@ -1,0 +1,57 @@
+---
+
+name: PyPA sampleproject tested over declared interpreters
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  FORCE_COLOR: "1" # Make tools pretty.
+
+jobs:
+  build-package:
+    name: Build & verify package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: pypa/sampleproject
+          path: sampleproject
+      - uses: actions/checkout@v4
+        with:
+          path: action
+      - uses: ./action
+        id: baipp
+        with:
+          path: sampleproject
+
+    outputs:
+      python-versions: ${{ steps.baipp.outputs.supported_pythons_job_matrix_value }}
+
+  test-package:
+    needs: build-package
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.build-package.outputs.python-versions)}}
+
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install pytest
+      - uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: dist
+      - run: pip install dist/*.whl
+      - uses: actions/checkout@v4
+        with:
+          repository: pypa/sampleproject
+      - run: python -m pytest tests/
+
+...

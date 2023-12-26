@@ -22,7 +22,15 @@ inputs:
 outputs:
   dist:
     description: The location of the built packages.
-    value: ${{ steps.setter.outputs.dist }}
+    value: ${{ steps.dist-location-setter.outputs.dist }}
+  supported_pythons_json_array:
+    description: A json array that contains all declared supported Python versions.
+    value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_json_array }}
+  supported_pythons_job_matrix_value:
+    description: >
+      A json mapping containing all declared supported Python versions that can be used
+      as input value to define a Githb workflow's job matrix.
+    value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_job_matrix_value }}
 
 runs:
   using: composite
@@ -30,7 +38,7 @@ runs:
     - uses: actions/setup-python@v5
       id: python-baipp
       with:
-        python-version: "3.x"
+        python-version: ">=3.8"
         update-environment: false
 
     - name: Install uv
@@ -78,7 +86,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: Set output
-      id: setter
+      id: dist-location-setter
       shell: bash
       run: echo "dist=/tmp/baipp/dist" >>$GITHUB_OUTPUT
 
@@ -165,3 +173,22 @@ runs:
       with:
         name: PyPI README${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*
+
+    - name: >
+        Generate JSON objects to specifiy subsequent job matrixes with supported 
+        Python versions
+      id: supported-pythons-setter
+      shell: bash
+      working-directory: /tmp/baipp/dist/out/sdist/
+      run: |
+          cat */PKG-INFO | python -c '
+          import json, re, sys
+          match_classifier = re.compile(
+              r"\s*Classifier: Programming Language :: Python :: (\d+\.\d+)$"
+          ).match
+          version_tokens = [
+              m.group(1).strip() for l in sys.stdin.readlines() if (m := match_classifier(l))
+          ]
+          print(f"supported_pythons_json_array={json.dumps(version_tokens)}")
+          print(f"""supported_pythons_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
+          ' >> $GITHUB_OUTPUT
