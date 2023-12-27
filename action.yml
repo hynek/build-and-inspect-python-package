@@ -175,7 +175,7 @@ runs:
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*
 
     - name: >
-        Generate JSON objects to specifiy subsequent job matrixes with supported 
+        Generate JSON objects to specifiy subsequent job matrixes with supported
         Python versions
       id: supported-pythons-setter
       shell: bash
