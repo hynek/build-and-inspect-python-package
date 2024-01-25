@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [UNRELEASED](https://github.com/hynek/build-and-inspect-python-package/compare/v2.0.1...main)
 
 
-## [2.0.1](https://github.com/hynek/build-and-inspect-python-package/compare/v2.0.0...v2.0.1)
+## [2.0.1](https://github.com/hynek/build-and-inspect-python-package/compare/v2.0.0...v2.0.1) - 2024-01-25
 
 ### Changed
 
