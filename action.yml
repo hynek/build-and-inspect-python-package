@@ -43,6 +43,8 @@ runs:
         uv pip sync
         ${{ github.action_path }}/requirements/tools.txt
       shell: bash
+      env:
+        VIRTUAL_ENV: /tmp/baipp
 
     # Build SDist, then build wheel out of it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
