@@ -30,7 +30,11 @@ runs:
       shell: bash
 
     - name: Create venv for tools
-      run: ${{ steps.python-baipp.outputs.python-path }} -Im uv venv /tmp/baipp
+      run: >
+        ${{ steps.python-baipp.outputs.python-path }} -Im
+        uv venv
+        /tmp/baipp
+        --python ${{ steps.python-baipp.outputs.python-path }}
       shell: bash
 
     - name: Install our tools
