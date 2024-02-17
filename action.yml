@@ -39,7 +39,7 @@ runs:
 
     - name: Install our tools
       run: >
-        /tmp/baipp/bin/python -Im
+        ${{ steps.python-baipp.outputs.python-path }} -Im
         uv pip sync
         ${{ github.action_path }}/requirements/tools.txt
       shell: bash
