@@ -29,13 +29,15 @@ runs:
       run: ${{ steps.python-baipp.outputs.python-path }} -Im venv /tmp/baipp
       shell: bash
 
+    - name: Install uv
+      run: /tmp/baipp/bin/python -Im pip install uv==0.1.3
+      shell: bash
+
     - name: Install our tools
       run: >
-        /tmp/baipp/bin/python
-        -Im pip
-        --disable-pip-version-check
-        --no-python-version-warning
-        install -r ${{ github.action_path }}/requirements/tools.txt
+        /tmp/baipp/bin/python -Im
+        uv pip sync
+        ${{ github.action_path }}/requirements/tools.txt
       shell: bash
 
     # Build SDist, then build wheel out of it.
