@@ -25,13 +25,9 @@ runs:
         python-version: "3.x"
         update-environment: false
 
-    - name: Install uv
-      run: ${{ steps.python-baipp.outputs.python-path }} -Im pip install uv
-      shell: bash
-
     - name: Create venv for tools
       run: >
-        ${{ steps.python-baipp.outputs.python-path }} -Im
+        pipx run
         uv venv
         /tmp/baipp
         --python ${{ steps.python-baipp.outputs.python-path }}
@@ -39,7 +35,7 @@ runs:
 
     - name: Install our tools
       run: >
-        ${{ steps.python-baipp.outputs.python-path }} -Im
+        pipx run
         uv pip sync
         ${{ github.action_path }}/requirements/tools.txt
       shell: bash
