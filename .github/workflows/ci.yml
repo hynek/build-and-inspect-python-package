@@ -3,9 +3,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: ["1.5-fixes"]
   pull_request:
-    branches: [main]
+    branches: ["1.5-fixes"]
   workflow_dispatch:
 
 env:
