@@ -85,9 +85,9 @@ runs:
       working-directory: ${{ inputs.path }}
       run: >
         /tmp/baipp/bin/python
-          -m twine check
-          --strict
-          /tmp/baipp/dist/*
+        -m twine check
+        --strict
+        /tmp/baipp/dist/*
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
