@@ -11,6 +11,10 @@ inputs:
     description: Where to look for the Python package to inspect.
     required: false
     default: .
+  skip-wheel:
+    description: Only build the source distribution.
+    required: false
+    default: 'false'
 outputs:
   dist:
     description: The location of the built packages.
@@ -38,12 +42,18 @@ runs:
         install -r ${{ github.action_path }}/requirements/tools.txt
       shell: bash
 
-    # Build SDist, then build wheel out of it.
+    # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
-    - run: >
-        SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
-        /tmp/baipp/bin/python -m build --outdir /tmp/baipp/dist
+    - name: Build package
+      run: |
+        export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
+
+        if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
+          /tmp/baipp/bin/python -m build --sdist --outdir /tmp/baipp/dist
+        else
+          /tmp/baipp/bin/python -m build --outdir /tmp/baipp/dist
+        fi
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -63,7 +73,11 @@ runs:
         name: Packages
         path: /tmp/baipp/dist/*
 
-    - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
+    - name: Check wheel contents if one was built
+      run: |
+        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
+          /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
+        fi
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -76,23 +90,26 @@ runs:
         --strict
         /tmp/baipp/dist/*
 
-    - name: Show wheel & SDist contents hierarchically, including metadata.
+    - name: Show package contents hierarchically, including metadata.
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
         cd /tmp/baipp/dist
         mkdir -p out/sdist
-        mkdir -p out/wheels
-        /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         tar xf *.tar.gz -C out/sdist
 
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
         (cd /tmp/baipp/dist/out/sdist && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
         echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
 
-        echo -e '\n<details><summary>Wheel contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-        (cd /tmp/baipp/dist/out/wheels && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
-        echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
+        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
+            mkdir -p out/wheels
+            /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
+
+            echo -e '\n<details><summary>Wheel contents</summary>\n' >> $GITHUB_STEP_SUMMARY
+            (cd /tmp/baipp/dist/out/wheels && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+            echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
+        fi
 
         echo ----- Metadata Follows -----
         echo -e '\n<details><summary>Metadata</summary>\n' >> $GITHUB_STEP_SUMMARY
