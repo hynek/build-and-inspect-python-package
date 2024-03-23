@@ -1,12 +1,9 @@
-name: Upgrade dependencies
+name: Update dependencies
 
 # Stolen from https://www.oddbird.net/2022/06/01/dependabot-single-pull-request/
 
 on:
-  workflow_dispatch: # Allow running on-demand
-  schedule:
-    # Runs every 1st of Month at 3:25 UTC
-    - cron: "25 3 1 * *"
+  workflow_dispatch: # Run only on demand.
 
 jobs:
   upgrade:
@@ -17,12 +14,12 @@ jobs:
       # It doesn't matter if it's deleted when merged, it'll be re-created
       BRANCH_NAME: auto-dependency-upgrades
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # START PYTHON DEPENDENCIES
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.x"
           cache: pip
           cache-dependency-path: "**/pip-tools.txt"
 
@@ -30,7 +27,7 @@ jobs:
         # ADD YOUR CUSTOM DEPENDENCY UPGRADE COMMANDS BELOW
         run: |
           pip install -U pip pip-tools
-          pip-compile --upgrade -o requirements/tools.txt requirements/tools.in
+          pip-compile --upgrade --generate-hashes --resolver backtracking -o requirements/tools.txt requirements/tools.in
       # END PYTHON DEPENDENCIES
       - name: Detect changes
         id: changes
