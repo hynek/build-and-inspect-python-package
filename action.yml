@@ -42,7 +42,7 @@ runs:
         install -r ${{ github.action_path }}/requirements/tools.txt
       shell: bash
 
-    # Build SDist, then build wheel out of it if user didn't forbid it.
+    # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
     - name: Build package
@@ -90,7 +90,7 @@ runs:
         --strict
         /tmp/baipp/dist/*
 
-    - name: Show wheel & SDist contents hierarchically, including metadata.
+    - name: Show package contents hierarchically, including metadata.
       shell: bash
       working-directory: ${{ inputs.path }}
       run: |
