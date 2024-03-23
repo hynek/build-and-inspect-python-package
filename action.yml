@@ -72,10 +72,13 @@ runs:
         name: Packages
         path: /tmp/baipp/dist/*
 
-    - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
+    - name: Check wheel contents if one was built
+      run: |
+        if [[ ${{ inputs.skip-wheel }} != 'true' ]]; then
+          /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
+        fi
       shell: bash
       working-directory: ${{ inputs.path }}
-      if: ${{ inputs.skip-wheel != 'true' }}
 
     - name: Check PyPI README
       shell: bash
