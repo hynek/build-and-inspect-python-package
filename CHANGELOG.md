@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.5.5](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5.4...v1.5.5) - 2024-03-23
+
+### Changed
+
+- Dependency updates for Metadata-Version 2.3 support (as used, for example, by [Hatchling 1.22.1](https://github.com/pypa/hatch/releases/tag/hatchling-v1.22.1)).
+
+
 ## [1.5.4](https://github.com/hynek/build-and-inspect-python-package/compare/v1.5.3...v1.5.4) - 2023-11-01
 
 ### Fixed
