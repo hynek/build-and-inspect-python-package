@@ -75,16 +75,16 @@ runs:
     - run: /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
       shell: bash
       working-directory: ${{ inputs.path }}
-      if: ${{ inputs.skip-wheel }} != 'true'
+      if: ${{ inputs.skip-wheel != 'true' }}
 
     - name: Check PyPI README
       shell: bash
       working-directory: ${{ inputs.path }}
       run: >
         /tmp/baipp/bin/python
-        -m twine check
-        --strict
-        /tmp/baipp/dist/*
+          -m twine check
+          --strict
+          /tmp/baipp/dist/*
 
     - name: Show wheel & SDist contents hierarchically, including metadata.
       shell: bash
