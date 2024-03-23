@@ -52,6 +52,7 @@ jobs:
           PR=$(gh pr list --base 1.5-fixes --head ${{ env.BRANCH_NAME }} --json number -q '.[0].number')
           if [ -z $PR ]; then
             gh pr create \
+            --base 1.5-fixes \
             --head ${{ env.BRANCH_NAME }} \
             --title "Automated dependency upgrades" \
             --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
