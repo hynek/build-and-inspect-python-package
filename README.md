@@ -55,6 +55,10 @@ jobs:
 
   This is useful if you build your wheels using advanced tools like [*cibuildwheel*](https://cibuildwheel.pypa.io/) anyway.
   (*optional*, default: `'false'`).
+- `upload-name-suffix`: A suffix to append to the artifact names to make them unique for `upload-artifact@v4`.
+
+  Use this if you want to build multiple packages in one workflow.
+  (*optional*, default: `''`).
 
 
 ### Outputs
