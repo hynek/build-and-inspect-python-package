@@ -48,6 +48,7 @@ jobs:
 - `path`: the location of the Python package to build (*optional*, default: `.`).
 - `skip-wheel`: Whether to skip building the wheel in addition to the source distribution.
   The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
+  This is useful if you need to build your wheels using advanced tools like [*cibuildwheel*](https://cibuildwheel.pypa.io/) anyway.
   (*optional*, default: `'false'`).
 
 
