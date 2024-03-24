@@ -59,7 +59,7 @@ jobs:
 
 - `dist`: the location with the built packages.
 
-  See for example how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/a9d295e577b271b1c7f6ca3929fe8b39ba8b689e/.github/workflows/ci.yml#L75-L85) uses this feature to check the built wheels don't break a dependency.
+  See, for example, how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/daff9ceb693312ab8257c60db4cd1c13cd866a35/.github/workflows/ci.yml#L83-L97) uses this feature to check the built wheels don't break a package that depends on it.
 
 
 ### Artifacts
