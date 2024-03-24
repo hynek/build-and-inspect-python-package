@@ -1,3 +1,5 @@
+<center><img alt="build-and-inspect-python-package logo" width="250" src=".github/logo.png" /></center>
+
 # Build and Inspect Python Packages
 
 This action provides the following functionality for GitHub Actions users that are maintaining Python packages:
