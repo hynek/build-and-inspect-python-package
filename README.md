@@ -41,7 +41,7 @@ jobs:
 ```
 
 > [!CAUTION]
-> Internally, *build-and-inspect-python-package* uses [*actions/upload-artifact*](https://github.com/actions/upload-artifact) for storing the built artifacts that you can download with [*actions/download-artifact*](https://github.com/actions/download-artifact).
+> *build-and-inspect-python-package* uses [*actions/upload-artifact*](https://github.com/actions/upload-artifact) for storing the built artifacts that you can download with [*actions/download-artifact*](https://github.com/actions/download-artifact).
 >
 > Unfortunately, v4 of both [is incompatible](https://github.blog/changelog/2023-12-14-github-actions-artifacts-v4-is-now-generally-available/) with previous versions, so you have to make sure that your *download-artifact* version matches the version that *build-and-inspect-python-package* uses for uploading.
 >
