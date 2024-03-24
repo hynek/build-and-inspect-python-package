@@ -14,6 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#98](https://github.com/hynek/build-and-inspect-python-package/pull/98)
 
 
+### Changed
+
+- The action now uses [*uv*](https://github.com/astral-sh/uv) to install its tools to speed up your CI runs.
+  [#86](https://github.com/hynek/build-and-inspect-python-package/pull/86)
+
+
 ## [2.0.2](https://github.com/hynek/build-and-inspect-python-package/compare/v2.0.1...v2.0.2) – 2024-03-16
 
 ### Changed
