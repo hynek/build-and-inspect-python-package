@@ -1,4 +1,4 @@
-<center><img alt="build-and-inspect-python-package logo" width="250" src=".github/logo.png" /></center>
+<p align="center"><img alt="build-and-inspect-python-package logo" width="250" src=".github/logo.png" /></p>
 
 # Build and Inspect Python Packages
 
