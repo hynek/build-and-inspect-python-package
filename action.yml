@@ -33,15 +33,10 @@ runs:
         python-version: "3.x"
         update-environment: false
 
-    - name: Install uv (non-Windows)
+    - name: Install uv
       run: curl -LsSf https://astral.sh/uv/install.sh | sh
       shell: bash
       if: runner.os != 'Windows'
-
-    - name: Install uv (Windows)
-      run: irm https://astral.sh/uv/install.ps1 | iex
-      shell: pwsh
-      if: runner.os == 'Windows'
 
     - name: Find uv cache
       run: echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
