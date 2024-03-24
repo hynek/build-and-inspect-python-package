@@ -1,8 +1,10 @@
-<p align="center"><img alt="build-and-inspect-python-package logo" width="250" src=".github/logo.png" /></p>
+<p align="center">
+  <img alt="build-and-inspect-python-package logo" width="250" src=".github/logo.png" />
+  <br/>
+  <em>Never upload a faulty Python package to PyPI again.</em>
+</p>
 
-# Build and Inspect Python Packages
-
-This action provides the following functionality for GitHub Actions users that are maintaining Python packages:
+`hynek/build-and-inspect-python-package` provides the following functionality to GitHub Actions users who maintain Python packages:
 
 **Builds your package** using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including Hatch, Flit, Setuptools, PDM, or Poetry).
 [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) is set to the timestamp of the last commit, giving you reproducible builds with meaningful file timestamps.
