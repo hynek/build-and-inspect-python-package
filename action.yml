@@ -29,6 +29,12 @@ runs:
         python-version: "3.x"
         update-environment: false
 
+    - run: time pipx run uv --version
+      shell: bash
+
+    - run: time (curl -LsSf https://astral.sh/uv/install.sh | sh)
+      shell: bash
+
     - name: Find uv cache
       run: echo "UV_CACHE=$(pipx run uv cache dir)" >>$GITHUB_ENV
       shell: bash
