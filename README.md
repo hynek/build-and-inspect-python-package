@@ -27,7 +27,7 @@ If you package an **application** as a Python package, this action is useful to 
 
 ## Usage
 
-This action only works on Linux and macOS runners (and Linux is **much** faster):
+This action only works on Linux runners:
 
 ```yaml
 jobs:
