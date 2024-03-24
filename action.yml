@@ -29,6 +29,16 @@ runs:
         python-version: "3.x"
         update-environment: false
 
+    - name: Find uv cache
+      run: echo "UV_CACHE=$(pipx run uv cache dir)" >>$GITHUB_ENV
+      shell: bash
+
+    - name: Cache uv
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.UV_CACHE }}
+        key: ${{ runner.os }}-uv
+
     - name: Create venv for tools
       run: >
         pipx run
