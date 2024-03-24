@@ -29,14 +29,12 @@ runs:
         python-version: "3.x"
         update-environment: false
 
-    - run: time pipx run uv --version
-      shell: bash
-
-    - run: time (curl -LsSf https://astral.sh/uv/install.sh | sh)
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
       shell: bash
 
     - name: Find uv cache
-      run: echo "UV_CACHE=$(pipx run uv cache dir)" >>$GITHUB_ENV
+      run: echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
       shell: bash
 
     - name: Cache uv
@@ -47,7 +45,6 @@ runs:
 
     - name: Create venv for tools
       run: >
-        pipx run
         uv venv
         /tmp/baipp
         --python ${{ steps.python-baipp.outputs.python-path }}
@@ -55,7 +52,6 @@ runs:
 
     - name: Install our tools
       run: >
-        pipx run
         uv pip sync
         ${{ github.action_path }}/requirements/tools.txt
       shell: bash
