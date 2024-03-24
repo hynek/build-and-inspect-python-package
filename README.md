@@ -1,6 +1,10 @@
-# Build and Inspect Python Packages
+<p align="center">
+  <img alt="build-and-inspect-python-package logo" width="250" src=".github/logo.png" />
+  <br/>
+  <em>Never upload a faulty Python package to PyPI again.</em>
+</p>
 
-This action provides the following functionality for GitHub Actions users that are maintaining Python packages:
+*build-and-inspect-python-package* provides the following functionality to GitHub Actions users who maintain Python packages:
 
 **Builds your package** using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including Hatch, Flit, Setuptools, PDM, or Poetry).
 [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) is set to the timestamp of the last commit, giving you reproducible builds with meaningful file timestamps.
@@ -39,8 +43,8 @@ jobs:
 >
 > Unfortunately, v4 of both [is incompatible](https://github.blog/changelog/2023-12-14-github-actions-artifacts-v4-is-now-generally-available/) with previous versions, so you have to make sure that your *download-artifact* version matches the version that *build-and-inspect-python-package* uses for uploading.
 >
-> If you're using `download-artifact@v3`, you have to use `build-and-inspect-python-package@v1`.
-> If you're using `download-artifact@v4`, you have to use `build-and-inspect-python-package@v2`.
+> - If you're using `download-artifact@v3`, you have to use `build-and-inspect-python-package@v1`.
+> - If you're using `download-artifact@v4`, you have to use `build-and-inspect-python-package@v2`.
 
 
 ### Inputs
@@ -57,7 +61,7 @@ jobs:
 
 - `dist`: the location with the built packages.
 
-  See for example how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/a9d295e577b271b1c7f6ca3929fe8b39ba8b689e/.github/workflows/ci.yml#L75-L85) uses this feature to check the built wheels don't break a dependency.
+  See, for example, how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/daff9ceb693312ab8257c60db4cd1c13cd866a35/.github/workflows/ci.yml#L83-L97) uses this feature to check the built wheels don't break a package that depends on it.
 
 
 ### Artifacts
