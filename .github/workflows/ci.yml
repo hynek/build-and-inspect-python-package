@@ -1,5 +1,5 @@
 ---
-    name: CI w/ argon2-cffi-bindings
+    name: CI
 
     on:
       push:
