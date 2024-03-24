@@ -16,7 +16,7 @@ inputs:
     required: false
     default: 'false'
   upload-name-suffix:
-    description: Suffix to append to the artifact name.
+    description: Suffix to append to the artifact names.
     required: false
     default: ""
 outputs:
