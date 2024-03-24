@@ -43,8 +43,8 @@ jobs:
 >
 > Unfortunately, v4 of both [is incompatible](https://github.blog/changelog/2023-12-14-github-actions-artifacts-v4-is-now-generally-available/) with previous versions, so you have to make sure that your *download-artifact* version matches the version that *build-and-inspect-python-package* uses for uploading.
 >
-> If you're using `download-artifact@v3`, you have to use `build-and-inspect-python-package@v1`.
-> If you're using `download-artifact@v4`, you have to use `build-and-inspect-python-package@v2`.
+> - If you're using `download-artifact@v3`, you have to use `build-and-inspect-python-package@v1`.
+> - If you're using `download-artifact@v4`, you have to use `build-and-inspect-python-package@v2`.
 
 
 ### Inputs
