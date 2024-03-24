@@ -29,18 +29,34 @@ runs:
         python-version: "3.x"
         update-environment: false
 
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      shell: bash
+
+    - name: Find uv cache
+      run: echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
+      shell: bash
+
+    - name: Cache uv
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.UV_CACHE }}
+        key: ${{ runner.os }}-uv
+
     - name: Create venv for tools
-      run: ${{ steps.python-baipp.outputs.python-path }} -Im venv /tmp/baipp
+      run: >
+        uv venv
+        /tmp/baipp
+        --python ${{ steps.python-baipp.outputs.python-path }}
       shell: bash
 
     - name: Install our tools
       run: >
-        /tmp/baipp/bin/python
-        -Im pip
-        --disable-pip-version-check
-        --no-python-version-warning
-        install -r ${{ github.action_path }}/requirements/tools.txt
+        uv pip sync
+        ${{ github.action_path }}/requirements/tools.txt
       shell: bash
+      env:
+        VIRTUAL_ENV: /tmp/baipp
 
     # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
