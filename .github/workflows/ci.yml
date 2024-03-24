@@ -1,5 +1,5 @@
 ---
-    name: CI w/ argon2-cffi-bindings
+    name: CI
 
     on:
       push:
@@ -33,3 +33,25 @@
             with:
               path: hynek/argon2-cffi-bindings
               skip-wheel: 'true'
+
+      check-structlog:
+        name: Build & verify the structlog package.
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v4
+            with:
+              repository: hynek/structlog
+              path: structlog
+
+          - uses: actions/checkout@v4
+            with:
+              path: action
+
+          - uses: ./action
+            id: baipp
+            with:
+              path: structlog
+              upload-name-suffix: "-structlog"
+
+          - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}

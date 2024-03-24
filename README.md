@@ -27,6 +27,8 @@ If you package an **application** as a Python package, this action is useful to 
 
 ## Usage
 
+This action only works on Linux runners:
+
 ```yaml
 jobs:
   check-package:
@@ -46,6 +48,8 @@ jobs:
 > - If you're using `download-artifact@v3`, you have to use `build-and-inspect-python-package@v1`.
 > - If you're using `download-artifact@v4`, you have to use `build-and-inspect-python-package@v2`.
 
+While *build-and-inspect-python-package* will build a wheel for you by default, we recommend using [*cibuildwheel*] if your package contains compiled extensions.
+
 
 ### Inputs
 
@@ -53,8 +57,12 @@ jobs:
 - `skip-wheel`: Whether to skip building the wheel in addition to the source distribution.
   The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
 
-  This is useful if you build your wheels using advanced tools like [*cibuildwheel*](https://cibuildwheel.pypa.io/) anyway.
+  This is useful if you build your wheels using advanced tools like [*cibuildwheel*] anyway.
   (*optional*, default: `'false'`).
+- `upload-name-suffix`: A suffix to append to the artifact names to make them unique for `upload-artifact@v4`.
+
+  Use this if you want to build multiple packages in one workflow.
+  (*optional*, default: `''`).
 
 
 ### Outputs
@@ -84,3 +92,5 @@ After a successful run, you'll find multiple artifacts in the run's Summary view
 The scripts and documentation in this project are released under the [MIT License](LICENSE).
 
 [automated]: https://github.com/python-attrs/attrs/blob/main/.github/workflows/pypi-package.yml
+
+[*cibuildwheel*]: https://cibuildwheel.pypa.io/

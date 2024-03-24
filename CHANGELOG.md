@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   This is useful if you need to build your wheels using advanced tools like [*cibuildwheel*](https://cibuildwheel.pypa.io/) anyway.
   [#98](https://github.com/hynek/build-and-inspect-python-package/pull/98)
 
+- New input: `upload-name-suffix` allows to build more than one package in a single workflow by distinguishing the artifact names.
+  [#97](https://github.com/hynek/build-and-inspect-python-package/pull/97)
+
 
 ### Changed
 

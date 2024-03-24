@@ -15,6 +15,10 @@ inputs:
     description: Only build the source distribution.
     required: false
     default: 'false'
+  upload-name-suffix:
+    description: Suffix to append to the artifact names.
+    required: false
+    default: ""
 outputs:
   dist:
     description: The location of the built packages.
@@ -32,6 +36,7 @@ runs:
     - name: Install uv
       run: curl -LsSf https://astral.sh/uv/install.sh | sh
       shell: bash
+      if: runner.os != 'Windows'
 
     - name: Find uv cache
       run: echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
@@ -86,7 +91,7 @@ runs:
     - name: Upload built artifacts.
       uses: actions/upload-artifact@v4
       with:
-        name: Packages
+        name: Packages${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/*
 
     - name: Check wheel contents if one was built
@@ -136,7 +141,7 @@ runs:
     - name: Upload metadata
       uses: actions/upload-artifact@v4
       with:
-        name: Package Metadata
+        name: Package Metadata${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/*/PKG-INFO
 
     - name: Extract PyPI README
@@ -159,5 +164,5 @@ runs:
     - name: Upload PyPI README
       uses: actions/upload-artifact@v4
       with:
-        name: PyPI README
+        name: PyPI README${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*
