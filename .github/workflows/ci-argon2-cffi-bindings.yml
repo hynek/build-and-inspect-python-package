@@ -32,3 +32,4 @@
             id: baipp
             with:
               path: hynek/argon2-cffi-bindings
+              skip-wheel: 'true'

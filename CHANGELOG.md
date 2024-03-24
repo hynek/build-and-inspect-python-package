@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [UNRELEASED](https://github.com/hynek/build-and-inspect-python-package/compare/v2.0.2...main)
 
+### Added
+
+- New input: `skip-wheel` to skip building the wheel in addition to the source distribution.
+  This is useful if you need to build your wheels using advanced tools like [*cibuildwheel*](https://cibuildwheel.pypa.io/) anyway.
+  [#98](https://github.com/hynek/build-and-inspect-python-package/pull/98)
+
 
 ## [2.0.2](https://github.com/hynek/build-and-inspect-python-package/compare/v2.0.1...v2.0.2) – 2024-03-16
 
