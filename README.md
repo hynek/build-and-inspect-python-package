@@ -82,7 +82,8 @@ After a successful run, you'll find multiple artifacts in the run's Summary view
 - **PyPI README**: the extracted PyPI README, exactly how it would be used by PyPI as your project's landing page.
   [PEP 621](https://peps.python.org/pep-0621/) calls it `readme`, in classic *setuptools* it's `long_description`.
 
----
+
+### Examples
 
 [Our CI](.github/workflows/) uses all inputs and outputs, if you want to see them in action.
 
