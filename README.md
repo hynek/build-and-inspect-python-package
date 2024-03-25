@@ -21,7 +21,7 @@ Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don't h
 Prints and uploads the **packaging metadata** as a GitHub Actions artifact.
 
 
-## Common Use-Cases
+## Popular Use-Cases
 
 ### Build Once – Use Across Jobs
 
@@ -63,15 +63,15 @@ jobs:
       - uses: hynek/build-and-inspect-python-package@v2
 ```
 
-If you’re using a VCS tag-based version extractor like [*setuptools-scm*] and need the built package to have the correct version, you must use the *actions/checkout* action with `fetch-depth: 0`, unless the latest commit _is_ the version tag.
+If you’re using a VCS tag-based version extractor like [*setuptools-scm*] and need the built package to have the correct version, you must use *actions/checkout* with `fetch-depth: 0` – unless the latest commit _is_ the version tag.
 
 > [!CAUTION]
 > *build-and-inspect-python-package* uses [*actions/upload-artifact*](https://github.com/actions/upload-artifact) for storing the built artifacts that you can download with [*actions/download-artifact*](https://github.com/actions/download-artifact).
 >
 > Unfortunately, v4 of both [is incompatible](https://github.blog/changelog/2023-12-14-github-actions-artifacts-v4-is-now-generally-available/) with previous versions, so you have to make sure that your *download-artifact* version matches the version that *build-and-inspect-python-package* uses for uploading.
 >
-> - If you're using `download-artifact@v3`, you have to use `build-and-inspect-python-package@v1`.
-> - If you're using `download-artifact@v4`, you have to use `build-and-inspect-python-package@v2`.
+> - If you’re using `download-artifact@v3`, you have to use `build-and-inspect-python-package@v1`.
+> - If you’re using `download-artifact@v4`, you have to use `build-and-inspect-python-package@v2`.
 
 While *build-and-inspect-python-package* will build a wheel for you by default, we recommend using [*cibuildwheel*] if your package contains compiled extensions.
 
