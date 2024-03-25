@@ -20,17 +20,17 @@ jobs:
       - uses: actions/checkout@v4
 
       # START PYTHON DEPENDENCIES
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-          cache: pip
-          cache-dependency-path: "**/pip-tools.txt"
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
       - name: Upgrade Python dependencies
         # ADD YOUR CUSTOM DEPENDENCY UPGRADE COMMANDS BELOW
-        run: |
-          pip install -U pip pip-tools
-          pip-compile --upgrade --generate-hashes --resolver backtracking -o requirements/tools.txt requirements/tools.in
+        run: >
+          uv pip compile
+          --upgrade
+          --generate-hashes
+          --output-file=requirements/tools.txt
+          requirements/tools.in
       # END PYTHON DEPENDENCIES
       - name: Detect changes
         id: changes
