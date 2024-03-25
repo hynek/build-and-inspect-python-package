@@ -36,7 +36,6 @@ runs:
     - name: Install uv
       run: curl -LsSf https://astral.sh/uv/install.sh | sh
       shell: bash
-      if: runner.os != 'Windows'
 
     - name: Find uv cache
       run: echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
