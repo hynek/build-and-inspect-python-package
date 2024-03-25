@@ -20,14 +20,37 @@ Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don't h
 
 Prints and uploads the **packaging metadata** as a GitHub Actions artifact.
 
----
+
+## Common Use-Cases
+
+### Build Once – Use Across Jobs
+
+To increase the fidelity of your tests to what your users will experience, you can build and store your package as a first step, depend on the step in the remaining steps, and – instead of checking out the source tree – retrieve the built packages and run your tests against *that*.
+For example, by unpacking the tests and config from the SDist and using `tox run --installpkg dist/*.whl ...` to run the tests against the built wheel without access to the package source code.
+
+You can see this technique in action in [*structlog*’s CI](https://github.com/hynek/structlog/blob/main/.github/workflows/ci.yml).
+
+
+### Automatic Uploading
+
+You can use a workflow that builds your package and – depending on the CI event (push to main, new tag, new release, ...) – uses [PyPI’s trusted publisher feature](https://blog.pypi.org/posts/2023-04-20-introducing-trusted-publishers/) to upload it to [Test PyPI](https://test.pypi.org)[^unique], PyPI, or both.
+This way you can continuously check how the package will look on PyPI.
+
+*structlog* [uses](https://github.com/hynek/structlog/blob/main/.github/workflows/pypi-package.yml) this technique too:
+It uploads every commit on `main` to [Test PyPI](https://test.pypi.org/project/structlog/#history) and whenever a [GitHub Release](https://github.com/hynek/structlog/releases) is created, also to the real PyPI.
+
+[^unique]: Note, though, that a prerequisite for the Test PyPI workflow is that each of your commits builds with a unique version number.
+  This is easily achievable using tools like [*setuptools-scm*](https://setuptools-scm.readthedocs.io/) or [*hatch-vcs*](https://github.com/ofek/hatch-vcs), but beyond the scope of this humble README.
+
+
+### Applications
 
 If you package an **application** as a Python package, this action is useful to double-check you're shipping everything you need, including all templates, translation files, et cetera.
 
 
 ## Usage
 
-This action only works on Linux runners:
+*build-and-inspect-python-package* only works on Linux runners:
 
 ```yaml
 jobs:
@@ -39,6 +62,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: hynek/build-and-inspect-python-package@v2
 ```
+
+If you’re using a VCS tag-based version extractor like [*setuptools-scm*] and need the built package to have the correct version, you must use the *actions/checkout* action with `fetch-depth: 0`, unless the latest commit _is_ the version tag.
 
 > [!CAUTION]
 > *build-and-inspect-python-package* uses [*actions/upload-artifact*](https://github.com/actions/upload-artifact) for storing the built artifacts that you can download with [*actions/download-artifact*](https://github.com/actions/download-artifact).
@@ -93,5 +118,5 @@ After a successful run, you'll find multiple artifacts in the run's Summary view
 The scripts and documentation in this project are released under the [MIT License](LICENSE).
 
 [automated]: https://github.com/python-attrs/attrs/blob/main/.github/workflows/pypi-package.yml
-
 [*cibuildwheel*]: https://cibuildwheel.pypa.io/
+[*setuptools-scm*]: https://setuptools-scm.readthedocs.io/
