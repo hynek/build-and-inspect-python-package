@@ -38,7 +38,7 @@ jobs:
       matrix: ${{ fromJson(needs.build-package.outputs.python-versions) }}
 
     steps:
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install pytest
