@@ -24,12 +24,12 @@ outputs:
     description: The location of the built packages.
     value: ${{ steps.dist-location-setter.outputs.dist }}
   supported_pythons_json_array:
-    description: A json array that contains all declared supported Python versions.
+    description: A JSON array that contains all declared supported Python versions.
     value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_json_array }}
   supported_pythons_job_matrix_value:
     description: >
-      A json mapping containing all declared supported Python versions that can be used
-      as input value to define a Githb workflow's job matrix.
+      A JSON mapping containing all declared supported Python versions that can be used
+      as input value to define a GitHub Action workflow's job matrix.
     value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_job_matrix_value }}
 
 runs:
@@ -38,7 +38,7 @@ runs:
     - uses: actions/setup-python@v5
       id: python-baipp
       with:
-        python-version: ">=3.8"
+        python-version: "3.x"
         update-environment: false
 
     - name: Install uv
@@ -174,9 +174,7 @@ runs:
         name: PyPI README${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*
 
-    - name: >
-        Generate JSON objects to specifiy subsequent job matrixes with supported
-        Python versions
+    - name:  Generate JSON objects of supported Python versions
       id: supported-pythons-setter
       shell: bash
       working-directory: /tmp/baipp/dist/out/sdist/
