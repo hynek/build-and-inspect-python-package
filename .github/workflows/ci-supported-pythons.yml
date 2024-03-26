@@ -29,7 +29,7 @@ jobs:
           path: sampleproject
 
     outputs:
-      python-versions: ${{ steps.baipp.outputs.supported_pythons_job_matrix_value }}
+      python-versions: ${{ steps.baipp.outputs.supported_pythons_json_job_matrix_value }}
 
   test-package:
     needs: build-package

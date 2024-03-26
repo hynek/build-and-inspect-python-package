@@ -26,11 +26,13 @@ outputs:
   supported_pythons_json_array:
     description: A JSON array that contains all declared supported Python versions.
     value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_json_array }}
-  supported_pythons_job_matrix_value:
+  supported_pythons_json_job_matrix_value:
     description: >
-      A JSON mapping containing all declared supported Python versions that can be used
-      as input value to define a GitHub Action workflow's job matrix.
-    value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_job_matrix_value }}
+      A JSON mapping from "python-version" to a list of all declared supported
+      Python versions. When loaded using the 'fromJson' function, this can be
+      used to define a job matrix that tests against all supported Python
+      versions.
+    value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_json_job_matrix_value }}
 
 runs:
   using: composite
@@ -188,5 +190,5 @@ runs:
               m.group(1).strip() for l in sys.stdin.readlines() if (m := match_classifier(l))
           ]
           print(f"supported_pythons_json_array={json.dumps(version_tokens)}")
-          print(f"""supported_pythons_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
+          print(f"""supported_pythons_json_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
           ' >> $GITHUB_OUTPUT
