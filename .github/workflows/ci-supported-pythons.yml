@@ -1,5 +1,5 @@
 ---
-name: PyPA sample project tested over declared interpreters
+name: Use JSON output to build job matrix
 
 on:
   push:
