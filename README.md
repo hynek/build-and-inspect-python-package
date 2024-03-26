@@ -13,7 +13,7 @@ Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Acti
 
 Lints the **wheel contents** using [*check-wheel-contents*](https://pypi.org/project/check-wheel-contents/).
 
-Lints the **PyPI README** using [Twine](https://pypi.org/project/twine/) and uploads it as an GitHub Actions artifact for further inspection.
+Lints the **PyPI README** using [Twine](https://pypi.org/project/twine/) and uploads it as an GitHub Actions artifact for further manual inspection.
 To level up your PyPI README game, check out [*hatch-fancy-pypi-readme*](https://github.com/hynek/hatch-fancy-pypi-readme)!
 
 Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don't have to download the packages, if you just want to check the content list.
