@@ -21,7 +21,7 @@ Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don't h
 Prints and uploads the **packaging metadata** as a GitHub Actions artifact.
 
 
-## Popular Use-Cases
+## Popular Use Cases
 
 ### Build Once – Use Across Jobs
 
