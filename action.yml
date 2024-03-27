@@ -23,16 +23,20 @@ outputs:
   dist:
     description: The location of the built packages.
     value: ${{ steps.dist-location-setter.outputs.dist }}
-  supported_pythons_json_array:
-    description: A JSON array that contains all declared supported Python versions.
-    value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_json_array }}
-  supported_pythons_json_job_matrix_value:
+  supported_python_classifiers_json_array:
     description: >
-      A JSON mapping from "python-version" to a list of all declared supported
-      Python versions. When loaded using the 'fromJson' function, this can be
-      used to define a job matrix that tests against all supported Python
-      versions.
-    value: ${{ steps.supported-pythons-setter.outputs.supported_pythons_json_job_matrix_value }}
+      A JSON array that contains all classifier-declared supported Python
+      versions. When loaded using the 'fromJson' function, this can be assigned
+      to a matrix strategy key (for example, `python-version`).
+
+    value: ${{ steps.supported-pythons-setter.outputs.supported_python_classifiers_json_array }}
+  supported_python_classifiers_json_job_matrix_value:
+    description: >
+      Same as 'supported_python_classifiers_json_array', except it's already a
+      JSON mapping from "python-version" to a list of all classifier-declared
+      supported Python versions. In other words, you can assign it directly to
+      the 'strategy.matrix' key.
+    value: ${{ steps.supported-pythons-setter.outputs.supported_python_classifiers_json_job_matrix_value }}
 
 runs:
   using: composite
@@ -189,6 +193,6 @@ runs:
           version_tokens = [
               m.group(1).strip() for l in sys.stdin.readlines() if (m := match_classifier(l))
           ]
-          print(f"supported_pythons_json_array={json.dumps(version_tokens)}")
-          print(f"""supported_pythons_json_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
+          print(f"supported_python_classifiers_json_array={json.dumps(version_tokens)}")
+          print(f"""supported_python_classifiers_json_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
           ' >> $GITHUB_OUTPUT
