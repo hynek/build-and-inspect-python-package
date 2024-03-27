@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- New outputs: `steps.supported-pythons-setter.outputs.supported_python_classifiers_json_array` and `steps.supported-pythons-setter.outputs.supported_python_classifiers_json_job_matrix_value`.
+- New outputs: `supported_python_classifiers_json_array` and `supported_python_classifiers_json_job_matrix_value`.
 
   They are extracted from the trove classifiers defined in the package metadata (for example, `Programming Language :: Python :: 3.12`) and allow you to define the Python versions matrix for your CI jobs without duplicating this information.
   [#80](https://github.com/hynek/build-and-inspect-python-package/pull/80)

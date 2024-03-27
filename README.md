@@ -6,7 +6,7 @@
 
 *build-and-inspect-python-package* is a GitHub Action that provides the following functionality to Python package maintainers:
 
-**Builds your package** using PyPA's [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including Hatch, Flit, Setuptools, PDM, or Poetry).
+**Builds your package** using PyPA’s [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including Hatch, Flit, Setuptools, PDM, or Poetry).
 [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) is set to the timestamp of the last commit, giving you reproducible builds with meaningful file timestamps.
 
 Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts**, so you can download and inspect them from the Summary view of a run, or [**upload them to PyPI automatically**][automated] once the verification succeeds.
@@ -16,7 +16,7 @@ Lints the **wheel contents** using [*check-wheel-contents*](https://pypi.org/pro
 Lints the **PyPI README** using [Twine](https://pypi.org/project/twine/) and uploads it as an GitHub Actions artifact for further manual inspection.
 To level up your PyPI README game, check out [*hatch-fancy-pypi-readme*](https://github.com/hynek/hatch-fancy-pypi-readme)!
 
-Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don't have to download the packages, if you just want to check the content list.
+Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don’t have to download the packages, if you just want to check the content list.
 
 Prints and uploads the **packaging metadata** as a GitHub Actions artifact.
 
@@ -43,9 +43,16 @@ It uploads every commit on `main` to [Test PyPI](https://test.pypi.org/project/s
   This is easily achievable using tools like [*setuptools-scm*](https://setuptools-scm.readthedocs.io/) or [*hatch-vcs*](https://github.com/ofek/hatch-vcs), but beyond the scope of this humble README.
 
 
+### Define Python Version Matrix Based On Package Metadata
+
+*build-and-inspect-python-package* extracts the Python versions your package supports from the trove classifiers in your package’s metadata and offers them as an action output.
+
+That means that you can define your CI matrix based on the Python versions your package supports without duplicating the information between your package configuration and your CI configuration.
+
+
 ### Applications
 
-If you package an **application** as a Python package, this action is useful to double-check you're shipping everything you need, including all templates, translation files, et cetera.
+If you package an **application** as a Python package, this action is useful to double-check you’re shipping everything you need, including all templates, translation files, et cetera.
 
 
 ## Usage
@@ -92,25 +99,38 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
 
 ### Outputs
 
-- `dist`: the location with the built packages.
+- `dist`: The location with the built packages.
 
-  See, for example, how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/daff9ceb693312ab8257c60db4cd1c13cd866a35/.github/workflows/ci.yml#L83-L97) uses this feature to check the built wheels don't break a package that depends on it.
+  See, for example, how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/daff9ceb693312ab8257c60db4cd1c13cd866a35/.github/workflows/ci.yml#L83-L97) uses this feature to check the built wheels don’t break a package that depends on it.
+
+- `supported_python_classifiers_json_array`: A JSON array of Python versions that are supported by the package as defined by the trove classifiers in the package metadata (for example, `Programming Language :: Python :: 3.12`).
+
+  You can assign this to a matrix strategy key in your CI job (for example, `strategy.matrix.python-version`) to test against multiple Python versions without duplicating the information.
+  Since GitHub Actions only allows for strings as variables, you have to parse it with `fromJSON` in your workflow.
+
+  If all this sounds confusing: Check out our [supported Pythons CI workflow] for a realistic example.
+
+- `supported_python_classifiers_json_job_matrix_value`: Same as `supported_python_classifiers_json_array`, but it’s a mapping with the JSON array bound to the `python-version` key.
+
+  This is useful if you only want to define a matrix based on Python versions, because then you can just assign this to `strategy.matrix`.
 
 
 ### Artifacts
 
-After a successful run, you'll find multiple artifacts in the run's Summary view:
+After a successful run, you’ll find the following artifacts in the run’s Summary view:
 
 - **Packages**: The built packages.
   Perfect for [automated PyPI upload workflows][automated]!
-- **Package Metadata**: the extracted packaging metadata (*hint*: it's formatted as an email).
-- **PyPI README**: the extracted PyPI README, exactly how it would be used by PyPI as your project's landing page.
-  [PEP 621](https://peps.python.org/pep-0621/) calls it `readme`, in classic *setuptools* it's `long_description`.
+- **Package Metadata**: the extracted packaging metadata (*hint*: it’s formatted as an email).
+- **PyPI README**: the extracted PyPI README, exactly how it would be used by PyPI as your project’s landing page.
+  [PEP 621](https://peps.python.org/pep-0621/) calls it `readme`, in classic *setuptools* it’s `long_description`.
 
 
 ### Examples
 
 [Our CI](.github/workflows/ci.yml) uses all inputs and outputs, if you want to see them in action.
+
+Our [supported Pythons CI workflow] demonstrates how to use `supported_python_classifiers_json_array` to set up a matrix of Python versions for your CI jobs without duplicating the information with your packaging metadata.
 
 
 ## License
@@ -120,3 +140,4 @@ The scripts and documentation in this project are released under the [MIT Licens
 [automated]: https://github.com/python-attrs/attrs/blob/main/.github/workflows/pypi-package.yml
 [*cibuildwheel*]: https://cibuildwheel.pypa.io/
 [*setuptools-scm*]: https://setuptools-scm.readthedocs.io/
+[supported Pythons CI workflow]: .github/workflows/ci-supported-pythons.yml
