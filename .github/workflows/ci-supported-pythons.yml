@@ -18,15 +18,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: pypa/sampleproject
-          path: sampleproject
+          repository: hynek/structlog
+          path: structlog
       - uses: actions/checkout@v4
         with:
           path: action
       - uses: ./action
         id: baipp
         with:
-          path: sampleproject
+          path: structlog
 
     outputs:
       python-versions: ${{ steps.baipp.outputs.supported_pythons_json_array }}
