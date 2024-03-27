@@ -9,6 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
+- New outputs: `supported_python_classifiers_json_array` and `supported_python_classifiers_json_job_matrix_value`.
+
+  They are extracted from the trove classifiers defined in the package metadata (for example, `Programming Language :: Python :: 3.12`) and allow you to define the Python versions matrix for your CI jobs without duplicating this information.
+  [#80](https://github.com/hynek/build-and-inspect-python-package/pull/80)
+  [#102](https://github.com/hynek/build-and-inspect-python-package/pull/102)
+
 - New input: `skip-wheel` to skip building the wheel in addition to the source distribution.
   This is useful if you need to build your wheels using advanced tools like [*cibuildwheel*](https://cibuildwheel.pypa.io/) anyway.
   [#98](https://github.com/hynek/build-and-inspect-python-package/pull/98)
