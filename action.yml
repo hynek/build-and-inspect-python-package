@@ -176,7 +176,7 @@ runs:
         name: PyPI README${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*
 
-    - name:  Generate JSON objects of supported Python versions
+    - name: Generate JSON objects of supported Python versions
       id: supported-pythons-setter
       shell: bash
       working-directory: /tmp/baipp/dist/out/sdist/
