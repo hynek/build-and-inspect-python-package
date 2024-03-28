@@ -126,6 +126,15 @@ After a successful run, you’ll find the following artifacts in the run’s Sum
   [PEP 621](https://peps.python.org/pep-0621/) calls it `readme`, in classic *setuptools* it’s `long_description`.
 
 
+### Job Summaries
+
+To save you from downloading the artifacts just to check their contents, *build-and-inspect-python-package* creates the following job summaries:
+
+- **SDist contents**: A tree of the source distribution.
+- **Wheel contents**: A tree of the built wheel – if one was built.
+- **Metadata**: A dump of package metadata (includes the PyPI README).
+
+
 ### Examples
 
 [Our CI](.github/workflows/ci.yml) uses all inputs and outputs, if you want to see them in action.
