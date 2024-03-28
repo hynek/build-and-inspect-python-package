@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.1.0...main)
 
+### Changed
+
+- Use *uv* as installer command for *build* for further speedups.
+  [#107](https://github.com/hynek/build-and-inspect-python-package/pull/107)
+
 
 ## [2.1.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.0.2...2.1.0) - 2024-03-27
 
