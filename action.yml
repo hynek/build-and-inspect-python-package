@@ -47,7 +47,7 @@ runs:
         python-version: "3.x"
         update-environment: false
 
-    - uses: hynek/setup-cached-uv@976188647b9b72117802028580eea6c3f3ae7a26
+    - uses: hynek/setup-cached-uv@v1
 
     - name: Create venv for tools
       run: >
