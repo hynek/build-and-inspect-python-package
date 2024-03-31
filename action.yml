@@ -47,7 +47,7 @@ runs:
         python-version: "3.x"
         update-environment: false
 
-    - uses: hynek/setup-cached-uv@8f76bff4e5cc
+    - uses: hynek/setup-cached-uv@976188647b9b72117802028580eea6c3f3ae7a26
 
     - name: Find uv cache
       run: echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
