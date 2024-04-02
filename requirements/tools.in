@@ -1,3 +1,4 @@
 build
 check-wheel-contents
 twine
+wheel
