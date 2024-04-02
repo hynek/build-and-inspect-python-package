@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.2.0...main)
 
+### Fixed
+
+- The action uses *wheel* to unpack wheels again (this is a revert of [#103](https://github.com/hynek/build-and-inspect-python-package/pull/103)) due to [incompatibilities](https://github.com/hynek/build-and-inspect-python-package/issues/113) with, for example, *pytest*.
+  To avoid the confusion due to wrong timestamps, the wheel's tree output in the Summary has no timestamps anymore.
+  [#114](https://github.com/hynek/build-and-inspect-python-package/pull/114)
+
 
 ## [2.2.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.1.0...v2.2.0) - 2024-03-31
 

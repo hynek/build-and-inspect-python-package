@@ -54,3 +54,25 @@ jobs:
           upload-name-suffix: "-structlog"
 
       - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+
+  check-pytest:
+    name: Build & verify the pytest package.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: pytest-dev/pytest
+          path: pytest
+
+      - uses: actions/checkout@v4
+        with:
+          path: action
+
+      - uses: ./action
+        id: baipp
+        with:
+          path: pytest
+          upload-name-suffix: "-pytest"
+
+      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}

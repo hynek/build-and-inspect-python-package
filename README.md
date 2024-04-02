@@ -132,7 +132,8 @@ To save you from downloading the artifacts just to check their contents, *build-
 
 - **SDist contents**: A tree of the source distribution.
 - **Wheel contents**: A tree of the built wheel – if one was built.
-- **Metadata**: A dump of package metadata (includes the PyPI README).
+  This output has no timestamps because `wheel unpack` does not preserve them from the built wheel, leading to confusion.
+- **Metadata**: A plain-text dump of package metadata (includes the PyPI README).
 
 
 ### Examples

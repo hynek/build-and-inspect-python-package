@@ -139,10 +139,10 @@ runs:
 
         if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
             mkdir -p out/wheels
-            unzip *.whl -d out/wheels
+            /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
 
             echo -e '\n<details><summary>Wheel contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-            (cd /tmp/baipp/dist/out/wheels && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+            (cd /tmp/baipp/dist/out/wheels && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
             echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
         fi
 
