@@ -66,7 +66,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
       - uses: hynek/build-and-inspect-python-package@v2
 ```
 
@@ -132,6 +131,7 @@ To save you from downloading the artifacts just to check their contents, *build-
 
 - **SDist contents**: A tree of the source distribution.
 - **Wheel contents**: A tree of the built wheel – if one was built.
+  This output has no timestamps because `wheel unpack` does not preserve them leading to confusion.
 - **Metadata**: A dump of package metadata (includes the PyPI README).
 
 
