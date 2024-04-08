@@ -48,12 +48,12 @@ runs:
         update-environment: false
 
     - name: Move deps to a public path so we can hash them in another action.
-      run: cp ${{ github.action_path }}/requirements/tools.txt /tmp/tools.txt
+      run: cp ${{ github.action_path }}/requirements/tools.txt .
       shell: bash
 
     - uses: hynek/setup-cached-uv@v1
       with:
-        cache-dependency-path: /tmp/tools.txt
+        cache-dependency-path: tools.txt
 
     - name: Create venv for tools
       run: >
