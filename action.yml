@@ -48,6 +48,8 @@ runs:
         update-environment: false
 
     - uses: hynek/setup-cached-uv@v1
+      with:
+        cache-dependency-path: requirements/tools.txt
 
     - name: Create venv for tools
       run: >
