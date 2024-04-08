@@ -47,16 +47,20 @@ runs:
         python-version: "3.x"
         update-environment: false
 
-    - uses: hynek/setup-cached-uv@v1
-      with:
-        cache-dependency-path: ${{ github.action_path }}/requirements/tools.txt
-
     - name: Create venv for tools
       run: >
         uv venv
         /tmp/baipp
         --python ${{ steps.python-baipp.outputs.python-path }}
       shell: bash
+
+    - name: Move deps to a public path so we can hash them in another action.
+      run: cp ${{ github.action_path }}/requirements/tools.txt /tmp/baipp/tools.txt
+      shell: bash
+
+    - uses: hynek/setup-cached-uv@v1
+      with:
+        cache-dependency-path: /tmp/baipp/tools.txt
 
     - name: Install our tools
       run: >
