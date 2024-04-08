@@ -49,7 +49,7 @@ runs:
 
     - uses: hynek/setup-cached-uv@v1
       with:
-        cache-dependency-path: requirements/tools.txt
+        cache-dependency-path: ${{ github.action_path }}/requirements/tools.txt
 
     - name: Create venv for tools
       run: >
