@@ -38,8 +38,10 @@ outputs:
       the 'strategy.matrix' key.
     value: ${{ steps.supported-pythons-setter.outputs.supported_python_classifiers_json_job_matrix_value }}
 
+
 runs:
   using: composite
+
   steps:
     - uses: actions/setup-python@v5
       id: python-baipp
@@ -70,6 +72,9 @@ runs:
         /tmp/baipp
         --python ${{ steps.python-baipp.outputs.python-path }}
       shell: bash
+      env:
+        UV_SYSTEM_PYTHON: "false"
+
 
     - name: Install our tools
       run: >
@@ -78,6 +83,7 @@ runs:
       shell: bash
       env:
         VIRTUAL_ENV: /tmp/baipp
+        UV_SYSTEM_PYTHON: "false"
 
     # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
@@ -94,6 +100,8 @@ runs:
         fi
       shell: bash
       working-directory: ${{ inputs.path }}
+      env:
+        UV_SYSTEM_PYTHON: "false"
 
     - name: Set output
       id: dist-location-setter
