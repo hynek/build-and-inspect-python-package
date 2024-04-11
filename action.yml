@@ -40,6 +40,7 @@ outputs:
 
 runs:
   using: composite
+
   steps:
     - uses: actions/setup-python@v5
       id: python-baipp
@@ -65,16 +66,20 @@ runs:
         key: baipp-${{ env.REQS_HASH }}
 
     - name: Create venv for tools
-      run: >
-        uv venv
-        /tmp/baipp
-        --python ${{ steps.python-baipp.outputs.python-path }}
+      run: |
+        unset UV_SYSTEM_PYTHON
+
+        uv venv \
+          /tmp/baipp \
+          --python ${{ steps.python-baipp.outputs.python-path }}
       shell: bash
 
     - name: Install our tools
-      run: >
-        uv pip sync
-        ${{ github.action_path }}/requirements/tools.txt
+      run: |
+        unset UV_SYSTEM_PYTHON
+
+        uv pip sync \
+          ${{ github.action_path }}/requirements/tools.txt
       shell: bash
       env:
         VIRTUAL_ENV: /tmp/baipp
@@ -84,6 +89,8 @@ runs:
     # reproducibility.
     - name: Build package
       run: |
+        unset UV_SYSTEM_PYTHON
+
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ci).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
