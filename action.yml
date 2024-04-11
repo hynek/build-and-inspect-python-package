@@ -38,7 +38,6 @@ outputs:
       the 'strategy.matrix' key.
     value: ${{ steps.supported-pythons-setter.outputs.supported_python_classifiers_json_job_matrix_value }}
 
-
 runs:
   using: composite
 
