@@ -7,6 +7,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.2.1...main)
 
+### Added
+
+- Cache busting for the *uv* cache.
+  GitHub Actions's caching behavior is a bit idiosyncratic:
+  Once a cache is created, it's immutable.
+  But as long as it's accessed within 7 days, it never goes away.
+
+  Therefore, *baipp* now uses the hash of the requirements file as part of the cache key.
+  Behaviorally, nothing changes, except that the cache doesn't grow useless over time.
+  [#115](https://github.com/hynek/build-and-inspect-python-package/pull/115)
+
 
 ## [2.2.1](https://github.com/hynek/build-and-inspect-python-package/compare/v2.2.0...v2.2.1) - 2024-04-02
 
