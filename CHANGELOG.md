@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.3.0...main)
 
+### Changed
+
+- The action doesn't crash anymore if the user sets globally the `UV_SYSTEM_PYTHON` environment variable.
+[#116](https://github.com/hynek/build-and-inspect-python-package/pull/116)
+
+
 ## [2.3.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.2.1...v2.3.0) - 2024-04-11
 
 ### Added
