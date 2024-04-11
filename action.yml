@@ -67,27 +67,31 @@ runs:
         key: baipp-${{ env.REQS_HASH }}
 
     - name: Create venv for tools
-      run: >
-        uv venv
-        --system=false
-        /tmp/baipp
-        --python ${{ steps.python-baipp.outputs.python-path }}
+      run: |
+        unset UV_SYSTEM_PYTHON
+
+        uv venv \
+          /tmp/baipp \
+          --python ${{ steps.python-baipp.outputs.python-path }}
       shell: bash
 
     - name: Install our tools
-      run: >
-        uv pip sync
-        ${{ github.action_path }}/requirements/tools.txt
+      run: |
+        unset UV_SYSTEM_PYTHON
+
+        uv pip sync \
+          ${{ github.action_path }}/requirements/tools.txt
       shell: bash
       env:
         VIRTUAL_ENV: /tmp/baipp
-        UV_SYSTEM_PYTHON: "false"
 
     # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
     - name: Build package
       run: |
+        unset UV_SYSTEM_PYTHON
+
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ci).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
@@ -98,8 +102,6 @@ runs:
         fi
       shell: bash
       working-directory: ${{ inputs.path }}
-      env:
-        UV_SYSTEM_PYTHON: "false"
 
     - name: Set output
       id: dist-location-setter
