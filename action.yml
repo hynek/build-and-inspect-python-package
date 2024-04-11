@@ -52,14 +52,17 @@ runs:
       shell: bash
 
     - name: Find uv cache
-      run: echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
+      run: |
+        echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
+        DEPS="${{ github.action_path }}/requirements/tools.txt"
+        echo "REQS_HASH=$(sha256sum $DEPS | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
 
     - name: Cache uv
       uses: actions/cache@v4
       with:
         path: ${{ env.UV_CACHE }}
-        key: ${{ runner.os }}-uv
+        key: baipp-${{ runner.os }}-${{ env.REQS_HASH }}
 
     - name: Create venv for tools
       run: >
