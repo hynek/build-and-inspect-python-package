@@ -51,11 +51,11 @@ runs:
       run: curl -LsSf https://astral.sh/uv/install.sh | sh
       shell: bash
 
-    - name: Find uv cache
+    - name: Find uv cache and hash lock file
       run: |
         echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
-        DEPS="${{ github.action_path }}/requirements/tools.txt"
-        echo "REQS_HASH=$(sha256sum $DEPS | cut -d' ' -f1)" >>$GITHUB_ENV
+
+        echo "REQS_HASH=$(sha256sum ${{ github.action_path }}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
 
     - name: Cache uv
