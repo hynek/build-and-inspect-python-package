@@ -62,7 +62,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ env.UV_CACHE }}
-        key: baipp-${{ runner.os }}-${{ env.REQS_HASH }}
+        key: baipp-${{ env.REQS_HASH }}
 
     - name: Create venv for tools
       run: >
