@@ -68,13 +68,11 @@ runs:
 
     - name: Create venv for tools
       run: >
+        env UV_SYSTEM_PYTHON="false"
         uv venv
         /tmp/baipp
         --python ${{ steps.python-baipp.outputs.python-path }}
       shell: bash
-      env:
-        UV_SYSTEM_PYTHON: "false"
-
 
     - name: Install our tools
       run: >
