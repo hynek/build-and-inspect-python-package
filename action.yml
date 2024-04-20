@@ -91,7 +91,7 @@ runs:
       run: |
         unset UV_SYSTEM_PYTHON
 
-        echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ci).
+        echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ct).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
         if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
