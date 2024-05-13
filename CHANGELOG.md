@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- New input: `attest-build-provenance` generates signed build provenance attestations for workflow artifacts.
+- New input: `attest-build-provenance-github` generates signed build provenance attestations for workflow artifacts.
   [#122](https://github.com/hynek/build-and-inspect-python-package/pull/122)
 
 

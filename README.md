@@ -95,8 +95,7 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
 
   Use this if you want to build multiple packages in one workflow.
   (*optional*, default: `''`).
-- `attest-build-provenance`: Whether to generate signed build provenance attestations for workflow artifacts using
-  [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance).
+- `attest-build-provenance-github`: Whether to generate signed build provenance attestations for workflow artifacts using [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance).
   Requires `attestations: write` and `id-token: write` permissions.
   The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
   (*optional*, default: `'false'`).

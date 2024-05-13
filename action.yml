@@ -19,8 +19,8 @@ inputs:
     description: Suffix to append to the artifact names.
     required: false
     default: ""
-  attest-build-provenance:
-    description: "Suffix to append to the artifact names. Requires 'attestations: write' and 'id-token: write' permissions."
+  attest-build-provenance-github:
+    description: "Attest provenance using GitHub's own action. Requires 'attestations: write' and 'id-token: write' permissions."
     required: false
     default: 'false'
 outputs:
@@ -106,8 +106,8 @@ runs:
       shell: bash
       working-directory: ${{ inputs.path }}
 
-    - name: Attest build provenance
-      if: ${{ inputs.attest-build-provenance == 'true' }}
+    - name: Attest GitHub build provenance
+      if: ${{ inputs.attest-build-provenance-github == 'true' }}
       uses: actions/attest-build-provenance@v1
       with:
         subject-path: "/tmp/baipp/dist/*"
