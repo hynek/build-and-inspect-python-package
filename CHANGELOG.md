@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.4.0...main)
 
+### Added
+
+- New input: `attest-build-provenance-github` generates signed build provenance attestations for workflow artifacts.
+  [#122](https://github.com/hynek/build-and-inspect-python-package/pull/122)
+
+
 ## [2.4.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.3.0...v2.4.0) - 2024-04-11
 
 ### Changed
