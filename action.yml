@@ -24,6 +24,9 @@ inputs:
     required: false
     default: 'false'
 outputs:
+  artifact-name:
+    description: The name of the uploaded artifact.
+    value: ${{ steps.artifact.outputs.name }}
   dist:
     description: The location of the built packages.
     value: ${{ steps.dist-location-setter.outputs.dist }}
@@ -88,6 +91,11 @@ runs:
       env:
         VIRTUAL_ENV: /tmp/baipp
 
+    - name: Artifact Name
+      id: artifact
+      run: echo "name=Packages${{ inputs.upload-name-suffix }}" >>${GITHUB_OUTPUT}
+      shell: bash
+
     # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
@@ -125,7 +133,7 @@ runs:
     - name: Upload built artifacts.
       uses: actions/upload-artifact@v4
       with:
-        name: Packages${{ inputs.upload-name-suffix }}
+        name: ${{ steps.artifact.outputs.name }}
         path: /tmp/baipp/dist/*
 
     - name: Check wheel contents if one was built
