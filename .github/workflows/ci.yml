@@ -61,7 +61,7 @@ jobs:
           path: structlog
           upload-name-suffix: "-structlog-${{ matrix.os }}"
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }} and in artifact ${{ steps.baipp.outputs.artifact-name }}
 
   check-pytest:
     name: Build & verify the pytest package.
@@ -83,7 +83,7 @@ jobs:
           path: pytest
           upload-name-suffix: "-pytest"
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }} and in artifact ${{ steps.baipp.outputs.artifact-name }}
 
   required-checks-pass:
     name: Ensure everything required is passing for branch protection

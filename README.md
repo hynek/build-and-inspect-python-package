@@ -103,6 +103,8 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
 
 ### Outputs
 
+- `artifact-name`: The name of the uploaded artifact.
+
 - `dist`: The location with the built packages.
 
   See, for example, how [*argon2-cffi-bindings*](https://github.com/hynek/argon2-cffi-bindings/blob/daff9ceb693312ab8257c60db4cd1c13cd866a35/.github/workflows/ci.yml#L83-L97) uses this feature to check the built wheels don’t break a package that depends on it.
