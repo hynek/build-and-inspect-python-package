@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.5.0...main)
 
+### Added
+
+- Support for `ubuntu-24.04` builders.
+  [#126](https://github.com/hynek/build-and-inspect-python-package/pull/126)
+
 
 ## [2.5.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.4.0...v2.5.0) - 2024-05-13
 

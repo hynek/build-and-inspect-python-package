@@ -36,7 +36,14 @@ jobs:
 
   check-structlog:
     name: Build & verify the structlog package.
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+          - ubuntu-22.04
+          - ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v4
@@ -52,7 +59,7 @@ jobs:
         id: baipp
         with:
           path: structlog
-          upload-name-suffix: "-structlog"
+          upload-name-suffix: "-structlog-${{ matrix.os }}"
 
       - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
 
@@ -77,3 +84,20 @@ jobs:
           upload-name-suffix: "-pytest"
 
       - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+
+  required-checks-pass:
+    name: Ensure everything required is passing for branch protection
+    if: always()
+
+    needs:
+      - check-argon2-cffi-bindings
+      - check-structlog
+      - check-pytest
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}
