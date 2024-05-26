@@ -153,6 +153,10 @@ runs:
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
 
+        if ! command -v tree &> /dev/null; then
+            sudo apt-get install tree
+        fi
+
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
         (cd /tmp/baipp/dist/out/sdist && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
         echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
