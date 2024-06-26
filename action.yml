@@ -121,7 +121,7 @@ runs:
         subject-path: "/tmp/baipp/dist/*"
 
     - name: Add contents header if provenance is present
-      if: ${{ inputs.attest-build-provenance-github == 'true' }}
+      # if: ${{ inputs.attest-build-provenance-github == 'true' }}
       shell: bash
       run: echo -e '\n### Package Contents' >> $GITHUB_STEP_SUMMARY
 
