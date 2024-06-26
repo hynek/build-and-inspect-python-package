@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.6.0...main)
 
+### Added
+
+- A header before package contents in the summary.
+  Especially useful together with a preceding build provenance attestation.
+  [#131](https://github.com/hynek/build-and-inspect-python-package/pull/131)
+
 
 ## [2.6.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.5.0...v2.6.0) - 2024-05-26
 
