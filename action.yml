@@ -124,7 +124,6 @@ runs:
       shell: bash
       run: echo -e '\n### Package Contents' >> $GITHUB_STEP_SUMMARY
 
-
     - name: Set output
       id: dist-location-setter
       shell: bash
