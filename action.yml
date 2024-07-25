@@ -114,6 +114,10 @@ runs:
       shell: bash
       working-directory: ${{ inputs.path }}
 
+    - name: Optimize uv cache for CI
+      run: uv cache prune --ci
+      shell: bash
+
     - name: Attest GitHub build provenance
       if: ${{ inputs.attest-build-provenance-github == 'true' }}
       uses: actions/attest-build-provenance@v1
