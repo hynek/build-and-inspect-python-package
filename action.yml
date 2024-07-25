@@ -114,8 +114,17 @@ runs:
       shell: bash
       working-directory: ${{ inputs.path }}
 
+
+    - name: debug pre
+      run: ls -al /home/runner/.cache/uv
+      shell: bash
+
     - name: Optimize uv cache for CI
       run: uv cache prune --ci
+      shell: bash
+
+    - name: debug post
+      run: ls -al /home/runner/.cache/uv
       shell: bash
 
     - name: Save uv cache
