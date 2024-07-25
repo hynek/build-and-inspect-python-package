@@ -66,8 +66,8 @@ runs:
         echo "REQS_HASH=$(sha256sum ${{ github.action_path }}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
 
-    - name: Cache uv
-      uses: actions/cache@v4
+    - name: Restore uv cache
+      uses: actions/cache/restore@v4
       with:
         path: ${{ env.UV_CACHE }}
         key: baipp-${{ env.REQS_HASH }}
@@ -117,6 +117,12 @@ runs:
     - name: Optimize uv cache for CI
       run: uv cache prune --ci
       shell: bash
+
+    - name: Save uv cache
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ env.UV_CACHE }}
+        key: baipp-${{ env.REQS_HASH }}
 
     - name: Attest GitHub build provenance
       if: ${{ inputs.attest-build-provenance-github == 'true' }}
