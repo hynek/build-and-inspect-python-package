@@ -59,17 +59,17 @@ runs:
       run: curl -LsSf https://astral.sh/uv/install.sh | sh
       shell: bash
 
-    - name: Find uv cache and hash lock file
+    - name: Set uv cache and hash lock file
       run: |
-        echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
+        echo "UV_CACHE_DIR=/tmp/baipp-uv_cache_dir" >>$GITHUB_ENV
 
         echo "REQS_HASH=$(sha256sum ${{ github.action_path }}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
 
-    - name: Cache uv
+    - name: Setup uv cache
       uses: actions/cache@v4
       with:
-        path: ${{ env.UV_CACHE }}
+        path: ${{ env.UV_CACHE_DIR }}
         key: baipp-${{ env.REQS_HASH }}
 
     - name: Create venv for tools
@@ -107,12 +107,16 @@ runs:
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
         if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
-          /tmp/baipp/bin/python -m build --installer=uv --sdist --outdir /tmp/baipp/dist
+          /tmp/baipp/bin/python -Im build --installer=uv --sdist --outdir /tmp/baipp/dist
         else
-          /tmp/baipp/bin/python -m build --installer=uv --outdir /tmp/baipp/dist
+          /tmp/baipp/bin/python -Im build --installer=uv --outdir /tmp/baipp/dist
         fi
       shell: bash
       working-directory: ${{ inputs.path }}
+
+    - name: Optimize uv cache for CI
+      run: uv cache prune --ci
+      shell: bash
 
     - name: Attest GitHub build provenance
       if: ${{ inputs.attest-build-provenance-github == 'true' }}

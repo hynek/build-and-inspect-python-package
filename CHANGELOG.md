@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.7.0...main)
 
+### Changed
+
+- Use *uv*'s new `uv cache prune --ci` to only cache downloaded files.
+  This makes the cache smaller and faster to pack/unpack.
+  [#135](https://github.com/hynek/build-and-inspect-python-package/pull/135)
+
+
+### Fixed
+
+- Turns out, the default location of *uv*'s cache cannot be cached and [*actions/cache*](https://github.com/actions/cache) fails silently with an opaque "Path(s) specified in the action for caching do(es) not exist, hence no cache is being saved." log message.
+  We have moved the cache to `/tmp`.
+  [#135](https://github.com/hynek/build-and-inspect-python-package/pull/135)
+
 
 ## [2.7.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.6.0...v2.7.0) - 2024-07-17
 
