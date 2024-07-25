@@ -61,7 +61,7 @@ runs:
 
     - name: Set uv cache and hash lock file
       run: |
-        echo "UV_CACHE_DIR=/tmp/baipp/uv_cache_dir" >>$GITHUB_ENV
+        echo "UV_CACHE_DIR=/tmp/baipp-uv_cache_dir" >>$GITHUB_ENV
 
         echo "REQS_HASH=$(sha256sum ${{ github.action_path }}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
