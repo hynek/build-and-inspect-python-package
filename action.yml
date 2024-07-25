@@ -59,9 +59,9 @@ runs:
       run: curl -LsSf https://astral.sh/uv/install.sh | sh
       shell: bash
 
-    - name: Find uv cache and hash lock file
+    - name: Set uv cache and hash lock file
       run: |
-        echo "UV_CACHE=$(uv cache dir)" >>$GITHUB_ENV
+        echo "UV_CACHE_DIR=/tmp/baipp/uv_cache_dir" >>$GITHUB_ENV
 
         echo "REQS_HASH=$(sha256sum ${{ github.action_path }}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
@@ -69,7 +69,7 @@ runs:
     - name: Restore uv cache
       uses: actions/cache/restore@v4
       with:
-        path: ${{ env.UV_CACHE }}
+        path: ${{ env.UV_CACHE_DIR }}
         key: baipp-${{ env.REQS_HASH }}
 
     - name: Create venv for tools
@@ -116,7 +116,7 @@ runs:
 
 
     - name: debug pre
-      run: ls -al /home/runner/.cache/uv
+      run: ls -al ${{ env.UV_CACHE_DIR }}
       shell: bash
 
     - name: Optimize uv cache for CI
@@ -124,13 +124,13 @@ runs:
       shell: bash
 
     - name: debug post
-      run: ls -al /home/runner/.cache/uv
+      run: ls -al ${{ env.UV_CACHE_DIR }}
       shell: bash
 
     - name: Save uv cache
       uses: actions/cache/save@v4
       with:
-        path: ${{ env.UV_CACHE }}
+        path: ${{ env.UV_CACHE_DIR }}
         key: baipp-${{ env.REQS_HASH }}
 
     - name: Attest GitHub build provenance
