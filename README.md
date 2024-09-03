@@ -100,8 +100,8 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
   The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
   (*optional*, default: `'false'`).
 
-  > [!IMPORTANT]
-  > This is different from PyPI's [Sigstore](https://www.sigstore.dev) attestations that you can generate while uploading using [*pypa/gh-action-pypi-publish*](https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#generating-and-uploading-attestations).
+> [!IMPORTANT]
+> This is different from PyPI's [Sigstore](https://www.sigstore.dev) attestations that you can generate while uploading using [*pypa/gh-action-pypi-publish*](https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#generating-and-uploading-attestations).
 
 
 ### Outputs
