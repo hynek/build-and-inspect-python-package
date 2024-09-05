@@ -103,7 +103,7 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
   (*optional*, default: `'false'`).
 
 > [!IMPORTANT]
-> GitHub's attestations are different from PyPI's [Sigstore](https://www.sigstore.dev) attestations that you can generate while uploading using [*pypa/gh-action-pypi-publish*](https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#generating-and-uploading-attestations).
+> [GitHub's artifact attestations](https://docs.github.com/en/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds) are different from PyPI's [Sigstore](https://www.sigstore.dev) attestations that you can generate while uploading using [*pypa/gh-action-pypi-publish*](https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#generating-and-uploading-attestations).
 
 
 ### Outputs
