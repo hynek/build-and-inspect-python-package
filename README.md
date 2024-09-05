@@ -6,8 +6,10 @@
 
 *build-and-inspect-python-package* is a GitHub Action that provides the following functionality to Python package maintainers:
 
-**Builds your package** using PyPA’s [*build*](https://pypi.org/project/build/) (this works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend, including Hatch, Flit, Setuptools, PDM, or Poetry).
+**Builds your package**[^backend].
 [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) is set to the timestamp of the last commit, giving you reproducible builds with meaningful file timestamps.
+
+[^backend]: Works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend. This includies Hatchling, Flit, Setuptools, PDM, and Poetry.
 
 Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts**, so you can download and inspect them from the Summary view of a run, or [**upload them to PyPI automatically**][automated] once the verification succeeds.
 

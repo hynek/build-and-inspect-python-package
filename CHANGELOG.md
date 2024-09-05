@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [UNRELEASED](https://github.com/hynek/build-and-inspect-python-package/compare/v2.8.0...main)
 
+### Changed
+
+- `uv build` is now used instead of the [*build*](https://pypi.org/project/build/) package.
+  Since the actual build of the packages is done by the packaging backend (the one you define in your `pyproject.toml` under `build-system.build-backend` -- for example, Setuptools or Hatchling), this should make no difference except for faster runs.
+  [#140](https://github.com/hynek/build-and-inspect-python-package/pull/140)
+
 
 ## [2.8.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.7.0...v2.8.0) - 2024-07-25
 
