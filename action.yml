@@ -56,7 +56,15 @@ runs:
         update-environment: false
 
     - name: Install uv
-      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      run: >
+        curl
+        --location
+        --silent
+        --show-error
+        --fail
+        --proto '=https'
+        --tlsv1.2
+        https://astral.sh/uv/install.sh | bash
       shell: bash
 
     - name: Set uv cache and hash lock file
