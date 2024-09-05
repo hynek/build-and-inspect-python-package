@@ -107,9 +107,9 @@ runs:
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
         if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
-          /tmp/baipp/bin/python -Im build --installer=uv --sdist --outdir /tmp/baipp/dist
+          uv build --sdist --out-dir /tmp/baipp/dist
         else
-          /tmp/baipp/bin/python -Im build --installer=uv --outdir /tmp/baipp/dist
+          uv build --out-dir /tmp/baipp/dist
         fi
       shell: bash
       working-directory: ${{ inputs.path }}
