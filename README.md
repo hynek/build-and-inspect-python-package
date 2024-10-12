@@ -72,6 +72,26 @@ jobs:
       - uses: hynek/build-and-inspect-python-package@v2
 ```
 
+To also upload to PyPI:
+
+```yaml
+jobs:
+  check-publish-package:
+    name: Build, inspect, and upload our package to PyPI.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hynek/build-and-inspect-python-package@v2
+        id: build
+      - name: Download built artifact to dist/
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.build.outputs.artifact-name }}
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+```
+
 If you’re using a VCS tag-based version extractor like [*setuptools-scm*] and need the built package to have the correct version, you must use *actions/checkout* with `fetch-depth: 0` – unless the latest commit _is_ the version tag.
 
 > [!CAUTION]
