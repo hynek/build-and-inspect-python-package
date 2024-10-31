@@ -119,6 +119,9 @@ runs:
         else
           uv build --out-dir /tmp/baipp/dist
         fi
+
+        # We don't need .gitignores and it litters the provenance output.
+        rm -f /tmp/baipp/dist/.gitignore
       shell: bash
       working-directory: ${{ inputs.path }}
 
