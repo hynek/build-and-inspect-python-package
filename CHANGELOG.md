@@ -5,12 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.9.0...main)
+## [2.10.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.9.0...2.10.0)
 
 ### Changed
 
 - Remove `.gitignore` from the build target directory to avoid [silly attestations](https://github.com/hynek/svcs/attestations/2821122).
-  [#140](https://github.com/hynek/build-and-inspect-python-package/pull/140)
+  [#149](https://github.com/hynek/build-and-inspect-python-package/pull/149)
 
 
 ## [2.9.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.8.0...v2.9.0)
