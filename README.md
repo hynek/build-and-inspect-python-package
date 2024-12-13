@@ -92,7 +92,7 @@ jobs:
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing, but
       # should NOT be granted anywhere else!
-       id-token: write
+      id-token: write
 
     steps:
       - name: Download built artifact to dist/
