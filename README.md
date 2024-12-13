@@ -76,18 +76,29 @@ To also upload to PyPI:
 
 ```yaml
 jobs:
-  check-publish-package:
-    name: Build, inspect, and upload our package to PyPI.
+  build-package:
+    name: Build and inspect package.
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
       - uses: hynek/build-and-inspect-python-package@v2
-        id: build
+
+
+  upload-to-pypi:
+    name: Upload prebuilt package to PyPI
+    needs: build-package
+    runs-on: ubuntu-latest
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing, but
+      # should NOT be granted anywhere else!
+      id-token: write
+
+    steps:
       - name: Download built artifact to dist/
         uses: actions/download-artifact@v4
         with:
-          name: ${{ steps.build.outputs.artifact-name }}
+          name: Packages
           path: dist
       - uses: pypa/gh-action-pypi-publish@release/v1
 ```
