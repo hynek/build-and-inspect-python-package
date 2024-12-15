@@ -63,8 +63,8 @@ If you package an **application** as a Python package, this action is useful to 
 
 ```yaml
 jobs:
-  check-package:
-    name: Build & inspect our package.
+  build-and-inspect-package:
+    name: Build & inspect package.
     runs-on: ubuntu-latest
 
     steps:
@@ -76,8 +76,8 @@ To also upload to PyPI:
 
 ```yaml
 jobs:
-  build-package:
-    name: Build and inspect package.
+  build-and-inspect-package:
+    name: Build & inspect package.
     runs-on: ubuntu-latest
 
     steps:
@@ -86,8 +86,8 @@ jobs:
 
 
   upload-to-pypi:
-    name: Upload prebuilt package to PyPI
-    needs: build-package
+    name: Upload package to PyPI
+    needs: build-and-inspect-package
     runs-on: ubuntu-latest
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing, but
@@ -102,6 +102,11 @@ jobs:
           path: dist
       - uses: pypa/gh-action-pypi-publish@release/v1
 ```
+
+> [!IMPORTANT]
+> For security reasons, keep the job that has the `id-token: write` permission as short as possible.
+
+---
 
 If you’re using a VCS tag-based version extractor like [*setuptools-scm*] and need the built package to have the correct version, you must use *actions/checkout* with `fetch-depth: 0` – unless the latest commit _is_ the version tag.
 
