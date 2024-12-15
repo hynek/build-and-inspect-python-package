@@ -173,7 +173,7 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
       needs: baipp
       environment:
         name: pypi
-        url: https://pypi.org/p/structlog/${{ needs.baipp.outputs.package-version }}
+        url: https://pypi.org/project/structlog/${{ needs.baipp.outputs.package-version }}
   ```
 
 ### Artifacts
