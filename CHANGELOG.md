@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.10.0...main)
 
+### Added
+
+- New output: `package_version` is the version of the package that was built.
+  [#152](https://github.com/hynek/build-and-inspect-python-package/pull/152)
 
 ## [2.10.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.9.0...2.10.0)
 

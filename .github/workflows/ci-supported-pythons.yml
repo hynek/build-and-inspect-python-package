@@ -20,6 +20,7 @@ jobs:
         with:
           repository: hynek/structlog
           path: structlog
+          fetch-depth: 0
       - uses: actions/checkout@v4
         with:
           path: action
@@ -29,12 +30,13 @@ jobs:
           path: structlog
 
     outputs:
+      package-version: ${{ steps.baipp.outputs.package_version }}
       python-versions: ${{ steps.baipp.outputs.supported_python_classifiers_json_array }}
       # If your matrix consists only of Python versions, you can use the
       # following, too:
       # python-versions: ${{ steps.baipp.outputs.supported_python_classifiers_json_job_matrix_value }}
 
-  test-package:
+  test-supported-pythons:
     needs: build-package
     runs-on: ubuntu-latest
     strategy:
@@ -75,5 +77,17 @@ jobs:
       # actually run the tests. Just remove the 'echo' to run them.
       - name: Run tox environments for ${{ matrix.python-version }}
         run: echo python -Im tox run --installpkg dist/*.whl -f py$(echo ${{ matrix.python-version }} | tr -d .)
+
+  test-package-version:
+    needs: build-package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: |
+          echo "Package version: ${{ needs.build-package.outputs.package-version }}"
 
 ...
