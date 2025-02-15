@@ -161,6 +161,8 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
 
   This is useful if you only want to define a matrix based on Python versions, because then you can just assign this to `strategy.matrix`.
 
+- `package_name`: The name of the package as extracted from the package metadata.
+
 - `package_version`: The version of the package as extracted from the package metadata.
 
   This is useful, for example, for displaying the PyPI URL on the GitHub UI for the publishing job:
@@ -173,7 +175,7 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
       needs: baipp
       environment:
         name: pypi
-        url: https://pypi.org/project/structlog/${{ needs.baipp.outputs.package-version }}
+        url: https://pypi.org/project/${{ needs.baipp.outputs.package-name }}/${{ needs.baipp.outputs.package-version }}
   ```
 
 ### Artifacts
