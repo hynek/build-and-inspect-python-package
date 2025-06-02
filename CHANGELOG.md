@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.12.0...main)
 
+### Changed
+
+- All GitHub actions are now pinned to exact hashes for better reproducibility and mild security improvements[^st].
+
+[^st]: Chosen prefix SHA-1 hash collision attacks [exist](https://eprint.iacr.org/2020/014.pdf). Against serious attackers, this is but security theater.
+
 
 ## [2.12.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.11.0...v2.12.0)
 
