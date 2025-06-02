@@ -255,6 +255,9 @@ runs:
                   version_tokens.append(match.group(1))
 
           package_name = pkg_info.get("Name")
+          if package_name is None:
+              raise RuntimeError("Package name is not set")
+
           package_version = pkg_info.get("Version", "0.0.0")
 
           print(f"package_name={package_name}")
