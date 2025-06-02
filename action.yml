@@ -44,6 +44,9 @@ outputs:
       supported Python versions. In other words, you can assign it directly to
       the 'strategy.matrix' key.
     value: ${{ steps.metadata-setter.outputs.supported_python_classifiers_json_job_matrix_value }}
+  package_name:
+    description: The name of the package.
+    value: ${{ steps.metadata-setter.outputs.package_name }}
   package_version:
     description: The version of the package as declared in the metadata.
     value: ${{ steps.metadata-setter.outputs.package_version }}
@@ -251,8 +254,13 @@ runs:
               if match := re.match(r"Programming Language :: Python :: (\d+\.\d+)$", classifier):
                   version_tokens.append(match.group(1))
 
+          package_name = pkg_info.get("Name")
+          if package_name is None:
+              raise RuntimeError("Package name is not set")
+
           package_version = pkg_info.get("Version", "0.0.0")
 
+          print(f"package_name={package_name}")
           print(f"package_version={package_version}")
           print(f"supported_python_classifiers_json_array={json.dumps(version_tokens)}")
           print(f"""supported_python_classifiers_json_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
