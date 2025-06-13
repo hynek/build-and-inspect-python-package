@@ -60,7 +60,10 @@ jobs:
           path: structlog
           upload-name-suffix: "-structlog-${{ matrix.os }}"
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }} and in artifact ${{ steps.baipp.outputs.artifact-name }}
+      - run: >
+          echo "Packages for ${{ steps.baipp.outputs.package_name }} (${{ steps.baipp.outputs.package_version }})
+          can be found at ${{ steps.baipp.outputs.dist }}
+          and in artifact ${{ steps.baipp.outputs.artifact-name }}"
 
   check-pytest:
     name: Build & verify the pytest package.
