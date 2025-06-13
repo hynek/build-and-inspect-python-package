@@ -9,7 +9,7 @@
 **Builds your package**[^backend].
 [`SOURCE_DATE_EPOCH`](https://reproducible-builds.org/specs/source-date-epoch/) is set to the timestamp of the last commit, giving you reproducible builds with meaningful file timestamps.
 
-[^backend]: Works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend. This includies Hatchling, Flit, Setuptools, PDM, and Poetry.
+[^backend]: Works with any [PEP 517](https://peps.python.org/pep-0517/)-compatible build backend. This includes Hatchling, Flit, Setuptools, PDM, and Poetry.
 
 Uploads the **built *wheel* and the source distribution (*SDist*) as GitHub Actions artifacts**, so you can download and inspect them from the Summary view of a run, or [**upload them to PyPI automatically**][automated] once the verification succeeds.
 
