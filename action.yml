@@ -141,10 +141,6 @@ runs:
       with:
         subject-path: "/tmp/baipp/dist/*"
 
-    - name: Add contents header
-      shell: bash
-      run: echo -e '\n### Package Contents' >> $GITHUB_STEP_SUMMARY
-
     - name: Set output
       id: dist-location-setter
       shell: bash
@@ -178,34 +174,74 @@ runs:
         --strict
         /tmp/baipp/dist/*
 
-    - name: Show package contents hierarchically, including metadata.
-      shell: bash
+    - name: Extract built package
       working-directory: ${{ inputs.path }}
+      shell: bash
       run: |
         cd /tmp/baipp/dist
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
 
+        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
+            mkdir -p out/wheels
+            /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
+        fi
+
+    - name: Extract packaging metadata
+      id: metadata-setter
+      shell: bash
+      working-directory: /tmp/baipp/dist/out/sdist/
+      run: |
+          cat */PKG-INFO | python -c '
+          import email.parser
+          import json, pathlib, re, sys
+
+          pkg_info = email.parser.Parser().parsestr(sys.stdin.read())
+
+          version_tokens = []
+          for classifier in pkg_info.get_all("Classifier", []):
+              if match := re.match(r"Programming Language :: Python :: (\d+\.\d+)$", classifier):
+                  version_tokens.append(match.group(1))
+
+          package_name = pkg_info.get("Name")
+          if package_name is None:
+              raise RuntimeError("Package name is not set")
+
+          pathlib.Path("package_name.txt").write_text(package_name)
+
+          package_version = pkg_info.get("Version", "0.0.0")
+
+          print(f"package_name={package_name}")
+          print(f"package_version={package_version}")
+          print(f"supported_python_classifiers_json_array={json.dumps(version_tokens)}")
+          print(f"""supported_python_classifiers_json_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
+          ' >> $GITHUB_OUTPUT
+
+          echo -e "\n### Contents of the <code>$(cat package_name.txt)</code> package" >> $GITHUB_STEP_SUMMARY
+          rm -f package_name.txt
+
+
+    - name: Show package contents hierarchically, including metadata.
+      working-directory: /tmp/baipp/dist/out/sdist/
+      shell: bash
+      run: |
         if ! command -v tree &> /dev/null; then
             sudo apt-get install tree
         fi
 
         echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-        (cd /tmp/baipp/dist/out/sdist && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+        tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY
         echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
 
-        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
-            mkdir -p out/wheels
-            /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
-
+        if [ -d "../wheels" ]; then
             echo -e '\n<details><summary>Wheel contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-            (cd /tmp/baipp/dist/out/wheels && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+            (cd ../wheels && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
             echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
         fi
 
         echo ----- Metadata Follows -----
         echo -e '\n<details><summary>Metadata</summary>\n' >> $GITHUB_STEP_SUMMARY
-        cat out/sdist/*/PKG-INFO | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY
+        cat */PKG-INFO | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY
         echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
         echo ----- End of Metadata  -----
 
@@ -237,31 +273,3 @@ runs:
       with:
         name: PyPI README${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*
-
-    - name: Generate JSON objects of supported Python versions
-      id: metadata-setter
-      shell: bash
-      working-directory: /tmp/baipp/dist/out/sdist/
-      run: |
-          cat */PKG-INFO | python -c '
-          import email.parser
-          import json, re, sys
-
-          pkg_info = email.parser.Parser().parsestr(sys.stdin.read())
-
-          version_tokens = []
-          for classifier in pkg_info.get_all("Classifier", []):
-              if match := re.match(r"Programming Language :: Python :: (\d+\.\d+)$", classifier):
-                  version_tokens.append(match.group(1))
-
-          package_name = pkg_info.get("Name")
-          if package_name is None:
-              raise RuntimeError("Package name is not set")
-
-          package_version = pkg_info.get("Version", "0.0.0")
-
-          print(f"package_name={package_name}")
-          print(f"package_version={package_version}")
-          print(f"supported_python_classifiers_json_array={json.dumps(version_tokens)}")
-          print(f"""supported_python_classifiers_json_job_matrix_value={json.dumps({"python-version": version_tokens})}""")
-          ' >> $GITHUB_OUTPUT
