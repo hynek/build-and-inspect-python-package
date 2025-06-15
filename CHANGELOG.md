@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.12.0...main)
 
+### Added
+
+- New output: `package_name` is the name of the built package as stored in metadata.
+  [#162](https://github.com/hynek/build-and-inspect-python-package/pull/162)
+
+
 ### Changed
 
 - All GitHub actions are now pinned to exact hashes for better reproducibility and mild security improvements[^st].
