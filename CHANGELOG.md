@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - New output: `package_name` is the name of the built package as stored in metadata.
   [#162](https://github.com/hynek/build-and-inspect-python-package/pull/162)
 
+- The package name is now part of the action summary which is helpful when you build more than one package from a repository.
+  [#169](https://github.com/hynek/build-and-inspect-python-package/pull/169)
+
 
 ### Changed
 
