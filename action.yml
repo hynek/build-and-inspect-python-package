@@ -23,6 +23,10 @@ inputs:
     description: "Attest provenance using GitHub's own action. Requires 'attestations: write' and 'id-token: write' permissions."
     required: false
     default: 'false'
+  package:
+    description: "The package to build. If not specified, the package in the current directory is built. If 'all', all packages in the workspace are built."
+    required: false
+    default: ''
 outputs:
   artifact-name:
     description: The name of the uploaded artifact.
@@ -120,10 +124,20 @@ runs:
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ct).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
-        if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
-          uv build --sdist --out-dir /tmp/baipp/dist
+        if [[ -n "${{ inputs.package }}" ]]; then
+          if [[ "${{ inputs.package }}" == "all" ]]; then
+            PACKAGE_ARGS="--all-packages"
+          else
+            PACKAGE_ARGS="--package ${{ inputs.package }}"
+          fi
         else
-          uv build --out-dir /tmp/baipp/dist
+          PACKAGE_ARGS=""
+        fi
+
+        if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
+          uv build --sdist --out-dir /tmp/baipp/dist $PACKAGE_ARGS
+        else
+          uv build --out-dir /tmp/baipp/dist $PACKAGE_ARGS
         fi
 
         # We don't need .gitignores and it litters the provenance output.

@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.13.0...main)
 
+### Added
+
+- New `package` input to support building a single package from a `uv` workspace, or all packages in it.
+  [#170](https://github.com/hynek/build-and-inspect-python-package/pull/170)
+
 
 ## [2.13.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.12.0...2.13.0)
 
