@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.13.0...main)
 
+### Changed
+
+- This release only updates the tools we use.
+  It's necessary to support Python 3.14 which is now the default for `3.x`.
+  [#182](https://github.com/hynek/build-and-inspect-python-package/pull/182)
+
 
 ## [2.13.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.12.0...2.13.0)
 
