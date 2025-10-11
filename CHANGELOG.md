@@ -9,9 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
-- This release only updates the tools we use.
-  It's necessary to support Python 3.14 which is now the default for `3.x`.
+- Update tools such that they work on Python 3.14 (which is now `3.x` on GitHub Actions).
   [#182](https://github.com/hynek/build-and-inspect-python-package/pull/182)
+
+- The action now ignores `UV_PYTHON` coming from the outside.
+  [#184](https://github.com/hynek/build-and-inspect-python-package/pull/184)
 
 
 ## [2.13.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.12.0...2.13.0)
@@ -115,7 +117,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - The action doesn't crash anymore if the user sets globally the `UV_SYSTEM_PYTHON` environment variable.
-[#116](https://github.com/hynek/build-and-inspect-python-package/pull/116)
+  [#116](https://github.com/hynek/build-and-inspect-python-package/pull/116)
 
 
 ## [2.3.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.2.1...v2.3.0) - 2024-04-11
