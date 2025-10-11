@@ -89,6 +89,7 @@ runs:
     - name: Create venv for tools
       run: |
         unset UV_SYSTEM_PYTHON
+        unset UV_PYTHON
 
         uv venv \
           /tmp/baipp \
@@ -98,6 +99,7 @@ runs:
     - name: Install our tools
       run: |
         unset UV_SYSTEM_PYTHON
+        unset UV_PYTHON
 
         uv pip sync \
           ${{ github.action_path }}/requirements/tools.txt
@@ -116,6 +118,7 @@ runs:
     - name: Build package
       run: |
         unset UV_SYSTEM_PYTHON
+        unset UV_PYTHON
 
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ct).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
