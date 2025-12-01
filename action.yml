@@ -23,6 +23,10 @@ inputs:
     description: "Attest provenance using GitHub's own action. Requires 'attestations: write' and 'id-token: write' permissions."
     required: false
     default: 'false'
+  python-version:
+    description: 'Python version to use for building the package'
+    required: false
+    default: '3.14'
 outputs:
   artifact-name:
     description: The name of the uploaded artifact.
@@ -50,10 +54,6 @@ outputs:
   package_version:
     description: The version of the package as declared in the metadata.
     value: ${{ steps.metadata-setter.outputs.package_version }}
-  python-version:
-    description: 'Python version to use for building the package'
-    required: false
-    default: '3.14'
     
 runs:
   using: composite
