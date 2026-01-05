@@ -17,7 +17,7 @@ jobs:
       # It doesn't matter if it's deleted when merged, it'll be re-created
       BRANCH_NAME: auto-dependency-upgrades
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       # START PYTHON DEPENDENCIES
       - name: Install uv
@@ -30,6 +30,7 @@ jobs:
           --upgrade
           --generate-hashes
           --output-file=requirements/tools.txt
+          --exclude-newer $(date --utc -d "7 days ago" "+%Y-%m-%dT%H:%M:%SZ")
           requirements/tools.in
       # END PYTHON DEPENDENCIES
       - name: Detect changes
