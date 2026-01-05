@@ -30,6 +30,7 @@ jobs:
           --upgrade
           --generate-hashes
           --output-file=requirements/tools.txt
+          --exclude-newer $(date --utc -d "7 days ago" "+%Y-%m-%dT%H:%M:%SZ")
           requirements/tools.in
       # END PYTHON DEPENDENCIES
       - name: Detect changes
