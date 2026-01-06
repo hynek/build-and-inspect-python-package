@@ -30,7 +30,7 @@ jobs:
           --upgrade
           --generate-hashes
           --output-file=requirements/tools.txt
-          --exclude-newer "1 week"
+          --exclude-newer P1W
           requirements/tools.in
       # END PYTHON DEPENDENCIES
       - name: Detect changes
