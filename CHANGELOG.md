@@ -11,6 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Pick Python version explictly instead of `"3.x"` to prevent incompatibily problems like [#182](https://github.com/hynek/build-and-inspect-python-package/pull/182) in the future.
 
+### Added
+
+- New `package` input to support building a single package from a `uv` workspace, or all packages in it.
+  [#170](https://github.com/hynek/build-and-inspect-python-package/pull/170)
+
 
 ## [2.14.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.13.0...v2.14.0)
 

@@ -137,6 +137,10 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
   Requires `attestations: write` and `id-token: write` permissions.
   The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
   (*optional*, default: `'false'`).
+- `package`: The package to build.
+  If not specified, the package in the current directory is built.
+  If set to `all`, all packages in the `uv` [workspace](https://docs.astral.sh/uv/concepts/workspaces/) are built.
+  (*optional*, default: `''`).
 
 > [!IMPORTANT]
 > [GitHub's artifact attestations](https://docs.github.com/en/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds) are different from PyPI's [Sigstore](https://www.sigstore.dev) attestations that you can generate while uploading using [*pypa/gh-action-pypi-publish*](https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#generating-and-uploading-attestations).
