@@ -86,6 +86,7 @@ jobs:
         with:
           path: attrs
           python-version: "3.13"
+          upload-name-suffix: "-attrs"
 
   check-pytest:
     name: Build & verify the pytest package.
