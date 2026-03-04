@@ -65,6 +65,29 @@ jobs:
           can be found at ${{ steps.baipp.outputs.dist }}
           and in artifact ${{ steps.baipp.outputs.artifact-name }}"
 
+  check-configure-python:
+    name: Build attrs with an older Python version.
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: python-attrs/attrs
+          path: attrs
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: action
+
+      - uses: ./action
+        id: baipp
+        with:
+          path: attrs
+          python-version: "3.13"
+          upload-name-suffix: "-attrs"
+
   check-pytest:
     name: Build & verify the pytest package.
     runs-on: ubuntu-latest
@@ -95,6 +118,7 @@ jobs:
       - check-argon2-cffi-bindings
       - check-structlog
       - check-pytest
+      - check-configure-python
 
     runs-on: ubuntu-latest
 

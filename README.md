@@ -123,20 +123,28 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
 
 ### Inputs
 
-- `path`: the location of the Python package to build (*optional*, default: `.`).
+- `path`: the location of the Python package to build.
+  (*optional*, default: `.`)
+
 - `skip-wheel`: Whether to skip building the wheel in addition to the source distribution.
   The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
 
   This is useful if you build your wheels using advanced tools like [*cibuildwheel*] anyway.
-  (*optional*, default: `'false'`).
+  (*optional*, default: `'false'`)
+
 - `upload-name-suffix`: A suffix to append to the artifact names to make them unique for `upload-artifact@v4`.
 
   Use this if you want to build multiple packages in one workflow.
-  (*optional*, default: `''`).
+  (*optional*, default: `''`)
+
+- `python-version`: The Python version used to build the package.
+  Setting this is usually not necessary.
+  (*optional*, default: `'3.14'`)
+
 - `attest-build-provenance-github`: Whether to generate signed build provenance attestations for workflow artifacts using [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance).
   Requires `attestations: write` and `id-token: write` permissions.
   The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
-  (*optional*, default: `'false'`).
+  (*optional*, default: `'false'`)
 
 > [!IMPORTANT]
 > [GitHub's artifact attestations](https://docs.github.com/en/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds) are different from PyPI's [Sigstore](https://www.sigstore.dev) attestations that you can generate while uploading using [*pypa/gh-action-pypi-publish*](https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#generating-and-uploading-attestations).
