@@ -85,7 +85,7 @@ runs:
       shell: bash
 
     - name: Setup uv cache
-      uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
       with:
         path: ${{ env.UV_CACHE_DIR }}
         key: baipp-${{ env.REQS_HASH }}
@@ -144,7 +144,7 @@ runs:
 
     - name: Attest GitHub build provenance
       if: ${{ inputs.attest-build-provenance-github == 'true' }}
-      uses: actions/attest-build-provenance@96278af6caaf10aea03fd8d33a09a777ca52d62f # v3.2.0
+      uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
       with:
         subject-path: "/tmp/baipp/dist/*"
 
@@ -159,7 +159,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: Upload built artifacts.
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: ${{ steps.artifact.outputs.name }}
         path: /tmp/baipp/dist/*
@@ -253,7 +253,7 @@ runs:
         echo ----- End of Metadata  -----
 
     - name: Upload metadata
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: Package Metadata${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/*/PKG-INFO
@@ -276,7 +276,7 @@ runs:
         '
 
     - name: Upload PyPI README
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: PyPI README${{ inputs.upload-name-suffix }}
         path: /tmp/baipp/dist/out/sdist/PyPI-README.*
