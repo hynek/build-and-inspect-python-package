@@ -27,6 +27,13 @@ inputs:
     description: 'Python version to use for building the package.'
     required: false
     default: '3.14'
+  include-free-threaded:
+    description: >
+      When set to "true", free-threaded Python siblings (e.g., 3.14t) are
+      included in the version outputs for Python 3.14 and later, inserted
+      inline after each matching version.
+    required: false
+    default: 'false'
 outputs:
   artifact-name:
     description: The name of the uploaded artifact.
@@ -198,17 +205,26 @@ runs:
       id: metadata-setter
       shell: bash
       working-directory: /tmp/baipp/dist/out/sdist/
+      env:
+        INCLUDE_FREE_THREADED: ${{ inputs.include-free-threaded }}
       run: |
           cat */PKG-INFO | python -c '
           import email.parser
-          import json, pathlib, re, sys
+          import json, os, pathlib, re, sys
 
           pkg_info = email.parser.Parser().parsestr(sys.stdin.read())
+
+          add_free_threaded = os.environ.get("INCLUDE_FREE_THREADED") == "true"
 
           version_tokens = []
           for classifier in pkg_info.get_all("Classifier", []):
               if match := re.match(r"Programming Language :: Python :: (\d+\.\d+)$", classifier):
-                  version_tokens.append(match.group(1))
+                  version = match.group(1)
+                  version_tokens.append(version)
+                  if add_free_threaded:
+                      major, minor = int(version.split(".")[0]), int(version.split(".")[1])
+                      if (major, minor) >= (3, 14):
+                          version_tokens.append(f"{version}t")
 
           package_name = pkg_info.get("Name")
           if package_name is None:
