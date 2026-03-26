@@ -78,6 +78,54 @@ jobs:
       - name: Run tox environments for ${{ matrix.python-version }}
         run: echo python -Im tox run --installpkg dist/*.whl -f py$(echo ${{ matrix.python-version }} | tr -d .)
 
+  build-package-free-threaded:
+    name: Build & verify package (free-threaded)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: hynek/argon2-cffi-bindings
+          submodules: recursive
+          path: argon2-cffi-bindings
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: action
+      - uses: ./action
+        id: baipp
+        with:
+          path: argon2-cffi-bindings
+          skip-wheel: 'true'
+          include-free-threaded: 'true'
+          upload-name-suffix: -free-threaded
+
+      - name: Assert 3.14t is in the version matrix
+        run: |
+          echo '${{ steps.baipp.outputs.supported_python_classifiers_json_array }}' | python -c '
+          import json, sys
+          versions = json.load(sys.stdin)
+          assert "3.14t" in versions, f"3.14t not found in {versions}"
+          '
+
+    outputs:
+      python-versions: ${{ steps.baipp.outputs.supported_python_classifiers_json_array }}
+
+  test-free-threaded-pythons:
+    needs: build-package-free-threaded
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ${{ fromJson(needs.build-package-free-threaded.outputs.python-versions) }}
+
+    steps:
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+
+      - name: Report Python version
+        run: python -VV
+
   test-package-version:
     needs: build-package
     runs-on: ubuntu-latest
