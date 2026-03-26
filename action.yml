@@ -120,13 +120,17 @@ runs:
 
     - name: Artifact Name
       id: artifact
-      run: echo "name=Packages${{ inputs.upload-name-suffix }}" >>${GITHUB_OUTPUT}
+      env:
+        BAIPP_UPLOAD_NAME_SUFFIX: ${{ inputs.upload-name-suffix }}
+      run: echo "name=Packages${BAIPP_UPLOAD_NAME_SUFFIX}" >>${GITHUB_OUTPUT}
       shell: bash
 
     # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
     # reproducibility.
     - name: Build package
+      env:
+        BAIPP_SKIP_WHEEL: ${{ inputs.skip-wheel }}
       run: |
         unset UV_SYSTEM_PYTHON
         unset UV_PYTHON
@@ -134,7 +138,7 @@ runs:
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ct).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
-        if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
+        if [[ "$BAIPP_SKIP_WHEEL" == "true" ]]; then
           uv build --sdist --out-dir /tmp/baipp/dist
         else
           uv build --out-dir /tmp/baipp/dist
@@ -172,8 +176,10 @@ runs:
         path: /tmp/baipp/dist/*
 
     - name: Check wheel contents if one was built
+      env:
+        BAIPP_SKIP_WHEEL: ${{ inputs.skip-wheel }}
       run: |
-        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
+        if [[ "$BAIPP_SKIP_WHEEL" != 'true' ]]; then
           /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
         fi
       shell: bash
@@ -191,12 +197,14 @@ runs:
     - name: Extract built package
       working-directory: ${{ inputs.path }}
       shell: bash
+      env:
+        BAIPP_SKIP_WHEEL: ${{ inputs.skip-wheel }}
       run: |
         cd /tmp/baipp/dist
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
 
-        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
+        if [[ "$BAIPP_SKIP_WHEEL" != 'true' ]]; then
             mkdir -p out/wheels
             /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         fi
