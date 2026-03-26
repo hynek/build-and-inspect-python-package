@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#175](https://github.com/hynek/build-and-inspect-python-package/issues/175)
 
 
-## [2.15.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.14.0...v2.15.0)
+## [2.15.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.14.0...v2.15.0) - 2026-03-19
 
 ### Added
 
@@ -27,7 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Pick Python version explictly instead of `"3.x"` to prevent incompatibily problems like [#182](https://github.com/hynek/build-and-inspect-python-package/pull/182) in the future.
 
 
-## [2.14.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.13.0...v2.14.0)
+## [2.14.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.13.0...v2.14.0) - 2025-10-11
 
 ### Changed
 
@@ -38,7 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#184](https://github.com/hynek/build-and-inspect-python-package/pull/184)
 
 
-## [2.13.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.12.0...v2.13.0)
+## [2.13.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.12.0...v2.13.0) - 2025-06-16
 
 ### Added
 
@@ -56,7 +56,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [^st]: Chosen prefix SHA-1 hash collision attacks [exist](https://eprint.iacr.org/2020/014.pdf). Against serious attackers, this is but security theater.
 
 
-## [2.12.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.11.0...v2.12.0)
+## [2.12.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.11.0...v2.12.0) - 2025-01-22
 
 ### Changed
 
@@ -65,7 +65,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#161](https://github.com/hynek/build-and-inspect-python-package/pull/161)
 
 
-## [2.11.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.10.0...v2.11.0)
+## [2.11.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.10.0...v2.11.0) - 2024-12-15
 
 ### Added
 
@@ -73,7 +73,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#152](https://github.com/hynek/build-and-inspect-python-package/pull/152)
 
 
-## [2.10.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.9.0...2.10.0)
+## [2.10.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.9.0...2.10.0) - 2024-10-31
 
 ### Changed
 
@@ -81,7 +81,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   [#149](https://github.com/hynek/build-and-inspect-python-package/pull/149)
 
 
-## [2.9.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.8.0...v2.9.0)
+## [2.9.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.8.0...v2.9.0) - 2024-09-09
 
 ### Changed
 
