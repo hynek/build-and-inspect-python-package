@@ -141,7 +141,7 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
   Setting this is usually not necessary.
   (*optional*, default: `'3.14'`)
 
-- `include-free-threaded`: When set to `'true'`, free-threaded Python siblings (e.g., `3.14t`) are included in the [version outputs](#outputs) for Python 3.14 and later, inserted inline after each matching version.
+- `include-free-threaded`: When set to `'true'`, free-threaded Python siblings (for example, `3.14t`) are included in the [version outputs](#outputs) for Python 3.14 and later, inserted inline after each matching version.
   (*optional*, default: `'false'`)
 
 - `attest-build-provenance-github`: Whether to generate signed build provenance attestations for workflow artifacts using [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance).

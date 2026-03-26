@@ -29,8 +29,8 @@ inputs:
     default: '3.14'
   include-free-threaded:
     description: >
-      When set to "true", free-threaded Python siblings (e.g., 3.14t) are
-      included in the version outputs for Python 3.14 and later, inserted
+      When set to "true", free-threaded Python siblings (for example, 3.14t)
+      are included in the version outputs for Python 3.14 and later, inserted
       inline after each matching version.
     required: false
     default: 'false'
