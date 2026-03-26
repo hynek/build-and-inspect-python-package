@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - New `include-free-threaded` input.
   When set to `'true'`, free-threaded Python siblings (for example, `3.14t`) are included in the version outputs for Python 3.14 and later, inserted inline after each matching version.
-  [#175](https://github.com/hynek/build-and-inspect-python-package/issues/175)
+  [#208](https://github.com/hynek/build-and-inspect-python-package/issues/208)
 
 
 ## [2.15.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.14.0...v2.15.0) - 2026-03-19
