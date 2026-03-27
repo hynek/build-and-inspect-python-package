@@ -88,10 +88,8 @@ runs:
       run: | # zizmor: ignore[github-env] -- sha256sum output of a file WE control is unlikely to allow code execution
         echo "UV_CACHE_DIR=/tmp/baipp-uv_cache_dir" >>$GITHUB_ENV
 
-        echo "REQS_HASH=$(sha256sum ${BAIPP_ACTION_PATH}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
+        echo "REQS_HASH=$(sha256sum ${GITHUB_ACTION_PATH}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
-      env:
-        BAIPP_ACTION_PATH: ${{ github.action_path }}
 
     - name: Setup uv cache
       uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
@@ -117,11 +115,10 @@ runs:
         unset UV_PYTHON
 
         uv pip sync \
-          ${BAIPP_ACTION_PATH}/requirements/tools.txt
+          ${GITHUB_ACTION_PATH}/requirements/tools.txt
       shell: bash
       env:
         VIRTUAL_ENV: /tmp/baipp
-        BAIPP_ACTION_PATH: ${{ github.action_path }}
 
     - name: Artifact Name
       id: artifact
