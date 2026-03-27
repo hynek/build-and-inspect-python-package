@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.16.0...main)
 
+### Fixed
+
+- The action now passes Zizmor in pedantic mode.
+  [#212](https://github.com/hynek/build-and-inspect-python-package/issues/212)
+
 
 ## [2.16.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.15.0...v2.16.0) - 2026-03-26
 
