@@ -114,9 +114,9 @@ jobs:
 
       - name: Assert 3.14t is in the version matrix
         run: |
-          echo '${STEPS_BAIPP_OUTPUTS_SUPPORTED_PYTHON_CLASSIFIERS_JSON_ARRAY}' | python -c '
-          import json, sys
-          versions = json.load(sys.stdin)
+          python -c '
+          import json, os
+          versions = json.load(os.environ["STEPS_BAIPP_OUTPUTS_SUPPORTED_PYTHON_CLASSIFIERS_JSON_ARRAY"])
           assert "3.14t" in versions, f"3.14t not found in {versions}"
           '
         env:
