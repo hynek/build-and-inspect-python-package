@@ -8,6 +8,12 @@ on:
     # Runs every 1st of Month at 3:25 UTC
     - cron: "25 3 1 * *"
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   upgrade:
     name: Upgrade & Open Pull Request
@@ -16,8 +22,11 @@ jobs:
       # This branch will receive updates each time the workflow runs
       # It doesn't matter if it's deleted when merged, it'll be re-created
       BRANCH_NAME: auto-dependency-upgrades
+
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       # START PYTHON DEPENDENCIES
       - name: Install uv
@@ -33,11 +42,13 @@ jobs:
           --exclude-newer P1W
           requirements/tools.in
       # END PYTHON DEPENDENCIES
+      #
       - name: Detect changes
         id: changes
         run:
           # This output boolean tells us if the dependencies have actually changed
           echo "count=$(git status --porcelain=v1 2>/dev/null | wc -l)" >>$GITHUB_OUTPUT
+
       - name: Commit & push changes
         # Only push if changes exist
         if: steps.changes.outputs.count > 0
@@ -46,19 +57,25 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Automated dependency upgrades"
-          git push -f origin ${{ github.ref_name }}:${{ env.BRANCH_NAME }}
+          git push -f origin ${GITHUB_REF_NAME}:${BRANCH_NAME}
+
       - name: Open pull request if needed
         if: steps.changes.outputs.count > 0
+        permissions:
+            contents: write
+            pull-requests: write
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
         # Only open a PR if the branch is not attached to an existing one
         run: |
-          PR=$(gh pr list --head ${{ env.BRANCH_NAME }} --json number -q '.[0].number')
+          PR=$(gh pr list --head ${BRANCH_NAME} --json number -q '.[0].number')
           if [ -z $PR ]; then
             gh pr create \
-            --head ${{ env.BRANCH_NAME }} \
+            --head ${BRANCH_NAME} \
             --title "Automated dependency upgrades" \
-            --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            --body "Full log: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           else
             echo "Pull request already exists, won't create a new one."
           fi
