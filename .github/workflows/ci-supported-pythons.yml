@@ -7,6 +7,12 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
 env:
   FORCE_COLOR: "1" # Make tools pretty.
 
@@ -21,9 +27,11 @@ jobs:
           repository: hynek/structlog
           path: structlog
           fetch-depth: 0
+          persist-credentials: false
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: action
+          persist-credentials: false
       - uses: ./action
         id: baipp
         with:
@@ -37,6 +45,7 @@ jobs:
       # python-versions: ${{ steps.baipp.outputs.supported_python_classifiers_json_job_matrix_value }}
 
   test-supported-pythons:
+    name: Deduct supported Python versions from pyproject.toml
     needs: build-package
     runs-on: ubuntu-latest
     strategy:
@@ -76,7 +85,9 @@ jobs:
       # To conserve CI resources, we've commented the next step out to not
       # actually run the tests. Just remove the 'echo' to run them.
       - name: Run tox environments for ${{ matrix.python-version }}
-        run: echo python -Im tox run --installpkg dist/*.whl -f py$(echo ${{ matrix.python-version }} | tr -d .)
+        run: echo python -Im tox run --installpkg dist/*.whl -f py$(echo ${MATRIX_PYTHON_VERSION} | tr -d .)
+        env:
+          MATRIX_PYTHON_VERSION: ${{ matrix.python-version }}
 
   build-package-free-threaded:
     name: Build & verify package (free-threaded)
@@ -88,9 +99,11 @@ jobs:
           repository: hynek/argon2-cffi-bindings
           submodules: recursive
           path: argon2-cffi-bindings
+          persist-credentials: false
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: action
+          persist-credentials: false
       - uses: ./action
         id: baipp
         with:
@@ -101,16 +114,19 @@ jobs:
 
       - name: Assert 3.14t is in the version matrix
         run: |
-          echo '${{ steps.baipp.outputs.supported_python_classifiers_json_array }}' | python -c '
+          echo '${STEPS_BAIPP_OUTPUTS_SUPPORTED_PYTHON_CLASSIFIERS_JSON_ARRAY}' | python -c '
           import json, sys
           versions = json.load(sys.stdin)
           assert "3.14t" in versions, f"3.14t not found in {versions}"
           '
+        env:
+          STEPS_BAIPP_OUTPUTS_SUPPORTED_PYTHON_CLASSIFIERS_JSON_ARRAY: ${{ steps.baipp.outputs.supported_python_classifiers_json_array }}
 
     outputs:
       python-versions: ${{ steps.baipp.outputs.supported_python_classifiers_json_array }}
 
   test-free-threaded-pythons:
+    name: Free-threaded siblings can be added
     needs: build-package-free-threaded
     runs-on: ubuntu-latest
     strategy:
@@ -127,6 +143,7 @@ jobs:
         run: python -VV
 
   test-package-version:
+    name: Package version output
     needs: build-package
     runs-on: ubuntu-latest
 
@@ -136,6 +153,8 @@ jobs:
           python-version: "3.x"
 
       - run: |
-          echo "Package version: ${{ needs.build-package.outputs.package-version }}"
+          echo "Package version: ${NEEDS_BUILD_PACKAGE_OUTPUTS_PACKAGE_VERSION}"
+        env:
+          NEEDS_BUILD_PACKAGE_OUTPUTS_PACKAGE_VERSION: ${{ needs.build-package.outputs.package-version }}
 
 ...
