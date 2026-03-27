@@ -24,6 +24,7 @@ jobs:
       BRANCH_NAME: auto-dependency-upgrades
     permissions:
       contents: write  # we need to write to pin files
+      pull-requests: write  # open pull request with changes
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -69,11 +70,6 @@ jobs:
         run: |
           PR=$(gh pr list --head ${BRANCH_NAME} --json number -q '.[0].number')
           if [ -z $PR ]; then
-            echo gh pr create \
-            --head ${BRANCH_NAME} \
-            --title "Automated dependency upgrades" \
-            --body "Full log: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-
             gh pr create \
             --head ${BRANCH_NAME} \
             --title "Automated dependency upgrades" \
