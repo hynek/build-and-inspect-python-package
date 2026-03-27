@@ -33,6 +33,7 @@ jobs:
           inputs: |
             action.yml
             .github/dependabot.yml
+            .github/workflows/ci.yml
             .github/workflows/zizmor.yml
             .github/workflows/update-dependencies.yml
 ...

@@ -7,6 +7,12 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
 env:
   FORCE_COLOR: "1" # Make tools pretty.
   SETUPTOOLS_SCM_PRETEND_VERSION: "1.0" # avoid warnings about shallow checkout
@@ -23,10 +29,12 @@ jobs:
           repository: hynek/argon2-cffi-bindings
           submodules: recursive
           path: hynek/argon2-cffi-bindings
+          persist-credentials: false
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: action
+          persist-credentials: false
 
       - uses: ./action
         id: baipp
@@ -49,10 +57,12 @@ jobs:
         with:
           repository: hynek/structlog
           path: structlog
+          persist-credentials: false
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: action
+          persist-credentials: false
 
       - uses: ./action
         id: baipp
@@ -60,7 +70,7 @@ jobs:
           path: structlog
           upload-name-suffix: "-structlog-${{ matrix.os }}"
 
-      - run: >
+      - run: >  # zizmor: ignore[template-injection] -- structlog is not gonna hack us
           echo "Packages for ${{ steps.baipp.outputs.package_name }} (${{ steps.baipp.outputs.package_version }})
           can be found at ${{ steps.baipp.outputs.dist }}
           and in artifact ${{ steps.baipp.outputs.artifact-name }}"
@@ -76,10 +86,12 @@ jobs:
         with:
           repository: python-attrs/attrs
           path: attrs
+          persist-credentials: false
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: action
+          persist-credentials: false
 
       - uses: ./action
         id: baipp
@@ -97,10 +109,12 @@ jobs:
         with:
           repository: pytest-dev/pytest
           path: pytest
+          persist-credentials: false
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: action
+          persist-credentials: false
 
       - uses: ./action
         id: baipp
@@ -108,7 +122,10 @@ jobs:
           path: pytest
           upload-name-suffix: "-pytest"
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }} and in artifact ${{ steps.baipp.outputs.artifact-name }}
+      - run: echo Packages can be found at ${STEPS_BAIPP_OUTPUTS_DIST} and in artifact ${STEPS_BAIPP_OUTPUTS_ARTIFACT_NAME}
+        env:
+          STEPS_BAIPP_OUTPUTS_DIST: ${{ steps.baipp.outputs.dist }}
+          STEPS_BAIPP_OUTPUTS_ARTIFACT_NAME: ${{ steps.baipp.outputs.artifact-name }}
 
   required-checks-pass:
     name: Ensure everything required is passing for branch protection
