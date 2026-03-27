@@ -127,10 +127,10 @@ runs:
 
     - name: Artifact Name
       id: artifact
-      run: echo "name=Packages${INPUTS_UPLOAD_NAME_SUFFIX}" >>${GITHUB_OUTPUT}
+      run: echo "name=Packages${BAIPP_INPUTS_UPLOAD_NAME_SUFFIX}" >>${GITHUB_OUTPUT}
       shell: bash
       env:
-        INPUTS_UPLOAD_NAME_SUFFIX: ${{ inputs.upload-name-suffix }}
+        BAIPP_INPUTS_UPLOAD_NAME_SUFFIX: ${{ inputs.upload-name-suffix }}
 
     # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
@@ -143,7 +143,7 @@ runs:
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ct).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
-        if [[ "${INPUTS_SKIP_WHEEL}" == "true" ]]; then
+        if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" == "true" ]]; then
           uv build --sdist --out-dir /tmp/baipp/dist
         else
           uv build --out-dir /tmp/baipp/dist
@@ -154,7 +154,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.path }}
       env:
-        INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
+        BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
 
     - name: Optimize uv cache for CI
       run: uv cache prune --ci
@@ -184,13 +184,13 @@ runs:
 
     - name: Check wheel contents if one was built
       run: |
-        if [[ "${INPUTS_SKIP_WHEEL}" != 'true' ]]; then
+        if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" != 'true' ]]; then
           /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
         fi
       shell: bash
       working-directory: ${{ inputs.path }}
       env:
-        INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
+        BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
 
     - name: Check PyPI README
       shell: bash
@@ -209,12 +209,12 @@ runs:
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
 
-        if [[ "${INPUTS_SKIP_WHEEL}" != 'true' ]]; then
+        if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" != 'true' ]]; then
             mkdir -p out/wheels
             /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         fi
       env:
-        INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
+        BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
 
     - name: Extract packaging metadata
       id: metadata-setter
