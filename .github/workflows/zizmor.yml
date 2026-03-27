@@ -32,4 +32,5 @@ jobs:
           inputs: |
             action.yml
             .github/workflows/zizmor.yml
+            .github/workflows/update-dependencies.yml
 ...
