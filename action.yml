@@ -85,11 +85,13 @@ runs:
       shell: bash
 
     - name: Set uv cache and hash lock file
-      run: |
+      run: | # zizmor: ignore[github-env] -- sha256sum output of a file WE control is unlikely to allow code execution
         echo "UV_CACHE_DIR=/tmp/baipp-uv_cache_dir" >>$GITHUB_ENV
 
-        echo "REQS_HASH=$(sha256sum ${{ github.action_path }}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
+        echo "REQS_HASH=$(sha256sum ${BAIPP_ACTION_PATH}/requirements/tools.txt | cut -d' ' -f1)" >>$GITHUB_ENV
       shell: bash
+      env:
+        BAIPP_ACTION_PATH: ${{ github.action_path }}
 
     - name: Setup uv cache
       uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
@@ -104,8 +106,10 @@ runs:
 
         uv venv \
           /tmp/baipp \
-          --python ${{ steps.python-baipp.outputs.python-path }}
+          --python ${STEPS_PYTHON_BAIPP_OUTPUTS_PYTHON_PATH}
       shell: bash
+      env:
+        STEPS_PYTHON_BAIPP_OUTPUTS_PYTHON_PATH: ${{ steps.python-baipp.outputs.python-path }}
 
     - name: Install our tools
       run: |
@@ -113,15 +117,18 @@ runs:
         unset UV_PYTHON
 
         uv pip sync \
-          ${{ github.action_path }}/requirements/tools.txt
+          ${BAIPP_ACTION_PATH}/requirements/tools.txt
       shell: bash
       env:
         VIRTUAL_ENV: /tmp/baipp
+        BAIPP_ACTION_PATH: ${{ github.action_path }}
 
     - name: Artifact Name
       id: artifact
-      run: echo "name=Packages${{ inputs.upload-name-suffix }}" >>${GITHUB_OUTPUT}
+      run: echo "name=Packages${BAIPP_INPUTS_UPLOAD_NAME_SUFFIX}" >>${GITHUB_OUTPUT}
       shell: bash
+      env:
+        BAIPP_INPUTS_UPLOAD_NAME_SUFFIX: ${{ inputs.upload-name-suffix }}
 
     # Build SDist, then build wheel out of it if the user didn't forbid it.
     # Set 'SOURCE_DATE_EPOCH' based on the last commit for build
@@ -134,7 +141,7 @@ runs:
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ct).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
-        if [[ "${{ inputs.skip-wheel }}" == "true" ]]; then
+        if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" == "true" ]]; then
           uv build --sdist --out-dir /tmp/baipp/dist
         else
           uv build --out-dir /tmp/baipp/dist
@@ -144,6 +151,8 @@ runs:
         rm -f /tmp/baipp/dist/.gitignore
       shell: bash
       working-directory: ${{ inputs.path }}
+      env:
+        BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
 
     - name: Optimize uv cache for CI
       run: uv cache prune --ci
@@ -173,11 +182,13 @@ runs:
 
     - name: Check wheel contents if one was built
       run: |
-        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
+        if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" != 'true' ]]; then
           /tmp/baipp/bin/check-wheel-contents /tmp/baipp/dist/*.whl
         fi
       shell: bash
       working-directory: ${{ inputs.path }}
+      env:
+        BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
 
     - name: Check PyPI README
       shell: bash
@@ -196,10 +207,12 @@ runs:
         mkdir -p out/sdist
         tar xf *.tar.gz -C out/sdist
 
-        if [[ "${{ inputs.skip-wheel }}" != 'true' ]]; then
+        if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" != 'true' ]]; then
             mkdir -p out/wheels
             /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         fi
+      env:
+        BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
 
     - name: Extract packaging metadata
       id: metadata-setter
