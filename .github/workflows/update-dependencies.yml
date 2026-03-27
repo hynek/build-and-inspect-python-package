@@ -8,8 +8,6 @@ on:
     # Runs every 1st of Month at 3:25 UTC
     - cron: "25 3 1 * *"
 
-permissions: {}
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -24,6 +22,9 @@ jobs:
       BRANCH_NAME: auto-dependency-upgrades
 
     steps:
+      - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+        with:
+          config: ${{ vars.PERMISSIONS_CONFIG }}
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
@@ -61,9 +62,6 @@ jobs:
 
       - name: Open pull request if needed
         if: steps.changes.outputs.count > 0
-        permissions:
-            contents: write
-            pull-requests: write
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
