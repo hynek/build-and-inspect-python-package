@@ -42,7 +42,7 @@ jobs:
           --exclude-newer P1W
           requirements/tools.in
       # END PYTHON DEPENDENCIES
-      #
+
       - name: Detect changes
         id: changes
         run:
