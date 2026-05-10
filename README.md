@@ -127,9 +127,17 @@ While *build-and-inspect-python-package* will build a wheel for you by default, 
   (*optional*, default: `.`)
 
 - `skip-wheel`: Whether to skip building the wheel in addition to the source distribution.
-  The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
-
   This is useful if you build your wheels using advanced tools like [*cibuildwheel*] anyway.
+  Cannot be combined with `skip-sdist: 'true'`.
+
+  The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
+  (*optional*, default: `'false'`)
+
+- `skip-sdist`: Whether to skip building the source distribution and only build the wheel.
+  When set, packaging metadata, the PyPI README, and the contents tree are sourced from the wheel's `METADATA` instead of the SDist's `PKG-INFO`.
+  Cannot be combined with `skip-wheel: 'true'`.
+
+  The only meaningful value is `'true'` (note the quotes – GitHub Actions only allow string inputs) and everything else is treated as falsey.
   (*optional*, default: `'false'`)
 
 - `upload-name-suffix`: A suffix to append to the artifact names to make them unique for `upload-artifact@v4`.
