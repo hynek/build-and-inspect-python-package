@@ -15,6 +15,10 @@ inputs:
     description: Only build the source distribution.
     required: false
     default: 'false'
+  skip-sdist:
+    description: Only build the wheel.
+    required: false
+    default: 'false'
   upload-name-suffix:
     description: Suffix to append to the artifact names.
     required: false
@@ -135,11 +139,18 @@ runs:
         unset UV_SYSTEM_PYTHON
         unset UV_PYTHON
 
+        if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" == "true" && "${BAIPP_INPUTS_SKIP_SDIST}" == "true" ]]; then
+          echo "::error::skip-wheel and skip-sdist cannot both be 'true'." >&2
+          exit 1
+        fi
+
         echo Setting SOURCE_DATE_EPOCH to $(git log -1 --pretty=%ct).
         export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
 
         if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" == "true" ]]; then
           uv build --sdist --out-dir /tmp/baipp/dist
+        elif [[ "${BAIPP_INPUTS_SKIP_SDIST}" == "true" ]]; then
+          uv build --wheel --out-dir /tmp/baipp/dist
         else
           uv build --out-dir /tmp/baipp/dist
         fi
@@ -150,6 +161,7 @@ runs:
       working-directory: ${{ inputs.path }}
       env:
         BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
+        BAIPP_INPUTS_SKIP_SDIST: ${{ inputs.skip-sdist }}
 
     - name: Optimize uv cache for CI
       run: uv cache prune --ci
@@ -197,28 +209,43 @@ runs:
         /tmp/baipp/dist/*
 
     - name: Extract built package
+      id: unpack
       working-directory: ${{ inputs.path }}
       shell: bash
       run: |
         cd /tmp/baipp/dist
-        mkdir -p out/sdist
-        tar xf *.tar.gz -C out/sdist
+
+        if [[ "${BAIPP_INPUTS_SKIP_SDIST}" != 'true' ]]; then
+            mkdir -p out/sdist
+            tar xf *.tar.gz -C out/sdist
+        fi
 
         if [[ "${BAIPP_INPUTS_SKIP_WHEEL}" != 'true' ]]; then
             mkdir -p out/wheels
             /tmp/baipp/bin/python -m wheel unpack --dest out/wheels *.whl
         fi
+
+        # Canonical metadata file: prefer sdist's PKG-INFO, fall back to
+        # the wheel's METADATA (same Core Metadata format) when no sdist
+        # was built.
+        if [[ "${BAIPP_INPUTS_SKIP_SDIST}" != 'true' ]]; then
+            echo "metadata-file=$(ls /tmp/baipp/dist/out/sdist/*/PKG-INFO)" >>$GITHUB_OUTPUT
+        else
+            echo "metadata-file=$(ls /tmp/baipp/dist/out/wheels/*/*.dist-info/METADATA)" >>$GITHUB_OUTPUT
+        fi
       env:
         BAIPP_INPUTS_SKIP_WHEEL: ${{ inputs.skip-wheel }}
+        BAIPP_INPUTS_SKIP_SDIST: ${{ inputs.skip-sdist }}
 
     - name: Extract packaging metadata
       id: metadata-setter
       shell: bash
-      working-directory: /tmp/baipp/dist/out/sdist/
+      working-directory: /tmp/baipp
       env:
         INCLUDE_FREE_THREADED: ${{ inputs.include-free-threaded }}
+        METADATA_FILE: ${{ steps.unpack.outputs.metadata-file }}
       run: |
-          cat */PKG-INFO | python -c '
+          cat "$METADATA_FILE" | python -c '
           import email.parser
           import json, os, pathlib, re, sys
 
@@ -255,26 +282,30 @@ runs:
 
 
     - name: Show package contents hierarchically, including metadata.
-      working-directory: /tmp/baipp/dist/out/sdist/
+      working-directory: /tmp/baipp/dist/out
       shell: bash
+      env:
+        METADATA_FILE: ${{ steps.unpack.outputs.metadata-file }}
       run: |
         if ! command -v tree &> /dev/null; then
             sudo apt-get install tree
         fi
 
-        echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-        tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY
-        echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
+        if [ -d "sdist" ]; then
+            echo -e '\n<details><summary>SDist contents</summary>\n' >> $GITHUB_STEP_SUMMARY
+            (cd sdist && tree -Da --timefmt="%Y-%m-%dT%H:%M:%SZ" * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+            echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
+        fi
 
-        if [ -d "../wheels" ]; then
+        if [ -d "wheels" ]; then
             echo -e '\n<details><summary>Wheel contents</summary>\n' >> $GITHUB_STEP_SUMMARY
-            (cd ../wheels && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
+            (cd wheels && tree -a * | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY)
             echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
         fi
 
         echo ----- Metadata Follows -----
         echo -e '\n<details><summary>Metadata</summary>\n' >> $GITHUB_STEP_SUMMARY
-        cat */PKG-INFO | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY
+        cat "$METADATA_FILE" | sed 's/^/    /' | tee -a $GITHUB_STEP_SUMMARY
         echo -e '\n</details>\n' >> $GITHUB_STEP_SUMMARY
         echo ----- End of Metadata  -----
 
@@ -282,13 +313,15 @@ runs:
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: Package Metadata${{ inputs.upload-name-suffix }}
-        path: /tmp/baipp/dist/out/sdist/*/PKG-INFO
+        path: ${{ steps.unpack.outputs.metadata-file }}
 
     - name: Extract PyPI README
       shell: bash
-      working-directory: /tmp/baipp/dist/out/sdist/
+      working-directory: /tmp/baipp/dist
+      env:
+        METADATA_FILE: ${{ steps.unpack.outputs.metadata-file }}
       run: |
-        cat */PKG-INFO | python -c '
+        cat "$METADATA_FILE" | python -c '
         import email.parser
         import sys
 
@@ -305,4 +338,4 @@ runs:
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: PyPI README${{ inputs.upload-name-suffix }}
-        path: /tmp/baipp/dist/out/sdist/PyPI-README.*
+        path: /tmp/baipp/dist/PyPI-README.*

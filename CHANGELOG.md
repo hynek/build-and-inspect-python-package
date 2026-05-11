@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.17.0...main)
 
+### Added
+
+- New input: `skip-sdist` to skip building the source distribution.
+
 
 ## [2.17.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.16.0...v2.17.0) - 2026-03-27
 
@@ -20,7 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- New `include-free-threaded` input.
+- New input: `include-free-threaded`
   When set to `'true'`, free-threaded Python siblings (for example, `3.14t`) are included in the version outputs for Python 3.14 and later, inserted inline after each matching version.
   [#208](https://github.com/hynek/build-and-inspect-python-package/issues/208)
 
