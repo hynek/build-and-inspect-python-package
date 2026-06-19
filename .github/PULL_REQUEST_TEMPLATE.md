@@ -14,7 +14,7 @@ You may check boxes that don't apply to your pull request to indicate that there
 -->
 
 - [ ] I acknowledge this project's [**AI policy**](https://github.com/hynek/build-and-inspect-python-package/blob/main/.github/AI_POLICY.md).
-- [ ] This pull requests is [**not** from my `main` branch](https://hynek.me/articles/pull-requests-branch/).
+- [ ] This pull request is [**not** from my `main` branch](https://hynek.me/articles/pull-requests-branch/).
   - Consider granting [push permissions to the PR branch](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork), so maintainers can fix minor issues themselves without pestering you.
 - [ ] The changes are somehow exercised by our CI workflows such that it's possible to at least visually confirm they're doing what they're supposed to do.
 - [ ] The **documentation** has been updated.
