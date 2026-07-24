@@ -23,9 +23,9 @@ Prints the **tree of both *SDist* and *wheel*** in the CI output, so you don’t
 Prints and uploads the **packaging metadata** as a GitHub Actions artifact.
 
 
-## Popular Use Cases
+## Popular use cases
 
-### Build Once – Use Across Jobs
+### Build once – use across jobs
 
 To increase the fidelity of your tests to what your users will experience, you can build and store your package as a first step, depend on the step in the remaining steps, and – instead of checking out the source tree – retrieve the built packages and run your tests against *that*.
 For example, by unpacking the tests and config from the SDist and using `tox run --installpkg dist/*.whl ...` to run the tests against the built wheel without access to the package source code.
@@ -33,7 +33,7 @@ For example, by unpacking the tests and config from the SDist and using `tox run
 You can see this technique in action in [*structlog*’s CI](https://github.com/hynek/structlog/blob/main/.github/workflows/ci.yml).
 
 
-### Automatic Uploading
+### Automatic uploading
 
 You can use a workflow that builds your package and – depending on the CI event (push to main, new tag, new release, ...) – uses [PyPI’s trusted publisher feature](https://blog.pypi.org/posts/2023-04-20-introducing-trusted-publishers/) to upload it to [Test PyPI](https://test.pypi.org)[^unique], PyPI, or both.
 This way you can continuously check how the package will look on PyPI.
@@ -45,7 +45,7 @@ It uploads every commit on `main` to [Test PyPI](https://test.pypi.org/project/s
   This is easily achievable using tools like [*setuptools-scm*](https://setuptools-scm.readthedocs.io/) or [*hatch-vcs*](https://github.com/ofek/hatch-vcs), but beyond the scope of this humble README.
 
 
-### Define Python Version Matrix Based On Package Metadata
+### Define Python version matrix based on package metadata
 
 *build-and-inspect-python-package* extracts the Python versions your package supports from the trove classifiers in your package’s metadata and offers them as an action output.
 
@@ -200,7 +200,7 @@ After a successful run, you’ll find the following artifacts in the run’s Sum
   [PEP 621](https://peps.python.org/pep-0621/) calls it `readme`, in classic *setuptools* it’s `long_description`.
 
 
-### Job Summaries
+### Job summaries
 
 To save you from downloading the artifacts just to check their contents, *build-and-inspect-python-package* creates the following job summaries:
 
