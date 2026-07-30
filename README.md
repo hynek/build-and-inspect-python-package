@@ -61,28 +61,45 @@ If you package an **application** as a Python package, this action is useful to 
 
 *build-and-inspect-python-package* only works on Linux runners:
 
+<!-- [[[cog
+import pathlib
+
+example = pathlib.Path("_readme_example.yml").read_text()
+
+cog.outl("```yaml")
+cog.outl(example.partition("  upload-to-pypi:")[0].rstrip())
+cog.outl("```")
+]]] -->
 ```yaml
 jobs:
   build-and-inspect-package:
-    name: Build & inspect package.
+    name: Build & inspect package
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: hynek/build-and-inspect-python-package@v3.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: hynek/build-and-inspect-python-package@2abe76da66d0a6a4a227101f9348ee855797cfa5 # v3.0.1
 ```
+<!-- [[[end]]] -->
 
 To also upload to PyPI:
 
+<!-- [[[cog
+import pathlib
+
+cog.outl("```yaml")
+cog.outl(pathlib.Path("_readme_example.yml").read_text().rstrip())
+cog.outl("```")
+]]] -->
 ```yaml
 jobs:
   build-and-inspect-package:
-    name: Build & inspect package.
+    name: Build & inspect package
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: hynek/build-and-inspect-python-package@v3.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: hynek/build-and-inspect-python-package@2abe76da66d0a6a4a227101f9348ee855797cfa5 # v3.0.1
 
 
   upload-to-pypi:
@@ -96,12 +113,13 @@ jobs:
 
     steps:
       - name: Download built artifact to dist/
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: Packages
           path: dist
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
 ```
+<!-- [[[end]]] -->
 
 > [!IMPORTANT]
 > For security reasons, keep the job that has the `id-token: write` permission as short as possible.

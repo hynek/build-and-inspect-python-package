@@ -3,6 +3,16 @@ ci:
   autoupdate_schedule: monthly
 
 repos:
+  - repo: local
+    hooks:
+      - id: cog-check
+        name: check README.md is in sync with _readme_example.yml
+        language: python
+        additional_dependencies: [cogapp]
+        entry: cog --check README.md
+        files: ^(README\.md|_readme_example\.yml)$
+        pass_filenames: false
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
