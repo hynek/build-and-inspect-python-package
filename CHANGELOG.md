@@ -9,6 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v3.0.0...HEAD)
 
+### Fixed
+
+- To avoid *uv* configuration interference with the project that is being built, the installation of our own tools is now ran in a different directory.
+  Additionally, `UV_EXCLUDE_NEWER` is unset.
+  [#240](https://github.com/hynek/build-and-inspect-python-package/pull/240)
+
 
 ## [3.0.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.18.0...v3.0.0) - 2026-07-30
 
