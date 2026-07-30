@@ -119,6 +119,7 @@ runs:
         unset UV_PYTHON
 
         uv pip sync \
+          --directory=$VIRTUAL_ENV \
           ${GITHUB_ACTION_PATH}/requirements/tools.txt
       shell: bash
       env:
