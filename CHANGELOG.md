@@ -9,6 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.18.0...HEAD)
 
+### Security
+
+- Given the increase and supply-chain attacks and advancements in tooling (for example, [*pinact*](https://github.com/suzuki-shunsuke/pinact) or GitHub's Dependabot), this action will stop force-tagging minor and micro releases.
+  This means, there will be no `@v3` or `@v3.0` tag that gets updated and force-pushed with each update.
+  Always tag with the full version and commit hash; use [Zizmor](https://zizmor.sh) to secure your actions if you can.
+
+
 ### Changed
 
 - Only updates of actions and build dependencies, notably including Twine 7 that adds support for packaging metadata 2.5 and [PEP 794 – Import Name Metadata](https://peps.python.org/pep-0794/).
@@ -76,9 +83,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
-- All GitHub actions are now pinned to exact hashes for better reproducibility and mild security improvements[^st].
-
-[^st]: Chosen prefix SHA-1 hash collision attacks [exist](https://eprint.iacr.org/2020/014.pdf). Against serious attackers, this is but security theater.
+- All GitHub actions are now pinned to exact hashes for better reproducibility and security improvements.
 
 
 ## [2.12.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.11.0...v2.12.0) - 2025-01-22

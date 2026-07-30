@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: hynek/build-and-inspect-python-package@v2
+      - uses: hynek/build-and-inspect-python-package@v3.0.0
 ```
 
 To also upload to PyPI:
@@ -82,7 +82,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: hynek/build-and-inspect-python-package@v2
+      - uses: hynek/build-and-inspect-python-package@v3.0.0
 
 
   upload-to-pypi:
