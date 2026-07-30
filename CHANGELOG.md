@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v2.18.0...HEAD)
 
+### Changed
+
+- Only updates of actions and build dependencies, notably including Twine 7 that adds support for packaging metadata 2.5 and [PEP 794 – Import Name Metadata](https://peps.python.org/pep-0794/).
+
 
 ## [2.18.0](https://github.com/hynek/build-and-inspect-python-package/compare/v2.17.0...v2.18.0) - 2026-05-11
 
