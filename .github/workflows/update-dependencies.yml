@@ -43,6 +43,7 @@ jobs:
           --generate-hashes
           --output-file=requirements/tools.txt
           --exclude-newer P1W
+          --python-platform linux
           requirements/tools.in
       # END PYTHON DEPENDENCIES
 
