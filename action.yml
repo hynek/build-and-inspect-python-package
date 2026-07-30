@@ -105,6 +105,7 @@ runs:
       run: |
         unset UV_SYSTEM_PYTHON
         unset UV_PYTHON
+        unset UV_EXCLUDE_NEWER
 
         uv venv \
           /tmp/baipp \
