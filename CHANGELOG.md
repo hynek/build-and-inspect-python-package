@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/hynek/build-and-inspect-python-package/compare/v3.0.1...HEAD)
 
+- Bump certifi to 2026.10.19 to address [GHSA-6q48-6c7w-9gw2](https://github.com/certifi/python-certifi/security/advisories/GHSA-6q48-6c7w-9gw2).
 
 ## [3.0.1](https://github.com/hynek/build-and-inspect-python-package/compare/v3.0.0...v3.0.1) - 2026-07-30
 
