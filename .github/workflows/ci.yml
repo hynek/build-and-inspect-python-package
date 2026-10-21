@@ -36,7 +36,7 @@ jobs:
           path: action
           persist-credentials: false
 
-      - uses: ./action
+      - uses: $/action
         id: baipp
         with:
           path: hynek/argon2-cffi-bindings
@@ -58,7 +58,7 @@ jobs:
           path: action
           persist-credentials: false
 
-      - uses: ./action
+      - uses: $/action
         id: baipp
         with:
           path: hynek/svcs
@@ -87,7 +87,7 @@ jobs:
           path: action
           persist-credentials: false
 
-      - uses: ./action
+      - uses: $/action
         id: baipp
         with:
           path: structlog
@@ -116,7 +116,7 @@ jobs:
           path: action
           persist-credentials: false
 
-      - uses: ./action
+      - uses: $/action
         id: baipp
         with:
           path: attrs
@@ -139,7 +139,7 @@ jobs:
           path: action
           persist-credentials: false
 
-      - uses: ./action
+      - uses: $/action
         id: baipp
         with:
           path: pytest

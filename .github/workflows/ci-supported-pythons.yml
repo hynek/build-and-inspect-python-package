@@ -32,7 +32,7 @@ jobs:
         with:
           path: action
           persist-credentials: false
-      - uses: ./action
+      - uses: $/action
         id: baipp
         with:
           path: structlog
@@ -104,7 +104,7 @@ jobs:
         with:
           path: action
           persist-credentials: false
-      - uses: ./action
+      - uses: $/action
         id: baipp
         with:
           path: argon2-cffi-bindings
