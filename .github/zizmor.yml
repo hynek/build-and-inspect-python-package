@@ -1,0 +1,6 @@
+---
+rules:
+  self-repository:
+    ignore:
+      - ci.yml
+      - ci-supported-pythons.yml
